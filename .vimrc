@@ -20,6 +20,7 @@ Plugin 'vim-syntastic/syntastic'
 Plugin 'nvie/vim-flake8'
 Plugin 'jnurmine/Zenburn'
 Plugin 'altercation/vim-colors-solarized'
+"Plugin 'Valloric/YouCompleteMe'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -40,7 +41,7 @@ else
 endif
 
 " Switching dark-light zenburn solarized theme by pressing F5
-call togglebg#map("<F5>")
+"call togglebg#map("<F5>")
 
 "------------Start Python PEP 8 stuff----------------
 " Number of spaces that a pre-existing tab is equal to.
@@ -64,6 +65,11 @@ au BufRead,BufNewFile *.py,*.pyw, set textwidth=100
 
 " Use UNIX (\n) line endings.
 au BufNewFile *.py,*.pyw,*.c,*.h set fileformat=unix
+
+" Auto-Complete
+"let g:ycm_autoclose_preview_window_after_completition=1
+"nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
+"map <F6> :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
 " Set the default file encoding to UTF-8:
 set encoding=utf-8
