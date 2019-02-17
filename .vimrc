@@ -20,7 +20,8 @@ Plugin 'vim-syntastic/syntastic'
 Plugin 'nvie/vim-flake8'
 Plugin 'jnurmine/Zenburn'
 Plugin 'altercation/vim-colors-solarized'
-"Plugin 'Valloric/YouCompleteMe'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'Lokatlog/powerline', {'rtp': 'powerline/bindings/vim'}
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -66,13 +67,27 @@ au BufRead,BufNewFile *.py,*.pyw, set textwidth=100
 " Use UNIX (\n) line endings.
 au BufNewFile *.py,*.pyw,*.c,*.h set fileformat=unix
 
-" Auto-Complete
-"let g:ycm_autoclose_preview_window_after_completition=1
-"nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
-"map <F6> :YcmCompleter GoToDefinitionElseDeclaration<CR>
+" Jedi Auto-Complete
+"let g:jedi#popup_on_dot = 0
+"let g:jedi#popup_select_first = 0
 
-" Set the default file encoding to UTF-8:
+" YouCompleteMe binding space-g
+let g:ycm_autoclose_preview_window_after_completion=1
+map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+
+"python with virtualenv support
+py3 << EOF
+import os
+import sys
+if 'VIRTUAL_ENV' in os.environ:
+  project_base_dir = os.environ['VIRTUAL_ENV']
+  activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
+  execfile(activate_this, dict(__file__=activate_this))
+EOF
+
+" Set the default file encoding to UTF-8 and Line Numbering
 set encoding=utf-8
+set nu
 
 " For full syntax highlighting:
 let python_highlight_all=1
