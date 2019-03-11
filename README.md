@@ -1,5 +1,7 @@
 # Config files backup
 A repository helping to set up and maintain the linux desktop environment. Most of the instructions are written for my own personal usage.
+## Features
+
 ## Tech
 This repository consists configuration for such applications:
  1. Git
@@ -30,5 +32,5 @@ I've got a lot for my system config back-up from [the unofficial guide to dotfil
 - [ ] List VIM-extensions
 - [ ] Add screenshots of IDE
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTUxMzU4ODA3MiwxMDQwNTg3NTk2XX0=
+eyJoaXN0b3J5IjpbOTg2NDc0NTk1LDEwNDA1ODc1OTZdfQ==
 -->
