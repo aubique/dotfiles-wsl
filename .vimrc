@@ -18,10 +18,10 @@ Plugin 'vim-scripts/indentpython.vim'
 Plugin 'tmhedberg/SimpylFold'
 Plugin 'vim-syntastic/syntastic'
 Plugin 'nvie/vim-flake8'
-Plugin 'jnurmine/Zenburn'
+"Plugin 'jnurmine/Zenburn'
 Plugin 'altercation/vim-colors-solarized'
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'Lokatlog/powerline', {'rtp': 'powerline/bindings/vim'}
+"Plugin 'Valloric/YouCompleteMe'
+Plugin 'powerline/powerline', {'rtp': 'powerline/bindings/vim'}
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -37,8 +37,8 @@ nnoremap <C-H> <C-W><C-H>
 if has('gui_running')
   set background=dark
   colorscheme solarized
-else
-  colorscheme zenburn
+"else
+"  colorscheme zenburn
 endif
 
 " Switching dark-light zenburn solarized theme by pressing F5
@@ -76,7 +76,8 @@ let g:ycm_autoclose_preview_window_after_completion=1
 map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
 "python with virtualenv support
-py3 << EOF
+"py3 << EOF
+py << EOF
 import os
 import sys
 if 'VIRTUAL_ENV' in os.environ:
