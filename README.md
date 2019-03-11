@@ -29,3 +29,6 @@ I've got a lot for my system config back-up from [the unofficial guide to dotfil
 ## TODO
  - List VIM-extensions
  - Add screenshots of IDE
+<!--stackedit_data:
+eyJoaXN0b3J5IjpbMTA0MDU4NzU5Nl19
+-->
