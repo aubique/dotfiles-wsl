@@ -1,11 +1,11 @@
 # Config files backup
-A repository helping to set up and maintain the linux desktop environment. Most of the instructions are written for own personal usage.
+A repository helping to set up and maintain the linux desktop environment. Most of the instructions are written for my own personal usage.
 ## Tech
 This repository consists configuration for such applications:
- - Git
- - [Tmux](https://github.com/tmux/tmux/wiki)
- - [Tmuxp](https://tmuxp.git-pull.com/en/latest/)
- - Vim ver. 7.4+
+ 1. Git
+ 2. [Tmux](https://github.com/tmux/tmux/wiki)
+ 3. [Tmuxp](https://tmuxp.git-pull.com/en/latest/)
+ 4. Vim ver. 7.4+
  > The VIM version should be higher than 7.4.1578+ to be working properly with ***YouCompleteMe*** extension. Currently CentOS 7 doesn't support such version.
 ## Installation
 Clone this project to your preferred folder. You can choose user download folder, `$HOME/Downloads`:
@@ -27,8 +27,8 @@ Afterward, you have to open VIM and run `:PluginInstall` what would let you down
 ## Sources
 I've got a lot for my system config back-up from [the unofficial guide to dotfiles on GitHub](https://dotfiles.github.io/). And the whole idea of exploiting at its finest VIM-based IDE was inspired particularly by RealPython article called [VIM and Python – A Match Made in Heaven](https://realpython.com/vim-and-python-a-match-made-in-heaven/).
 ## TODO
- - List VIM-extensions
- - Add screenshots of IDE
+- [ ] List VIM-extensions
+- [ ] Add screenshots of IDE
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTA0MDU4NzU5Nl19
+eyJoaXN0b3J5IjpbLTUxMzU4ODA3MiwxMDQwNTg3NTk2XX0=
 -->
