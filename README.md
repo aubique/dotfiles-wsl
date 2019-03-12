@@ -1,8 +1,7 @@
 # Config files backup
 A repository helping to set up and maintain the linux desktop environment. Most of the instructions are written for my own personal usage.
 ## Features
-A copy of working space so there is no need to reconfigure most of the applications I work on with.
-Tmux + Vim is representing itself a replacement of IDE for Python developing.
+
 Bunch of Vim extensions get along with creating a minimalist IDE.
 ## Tech
 This repository consists configuration for  applications and requires such preinstalled packages:
@@ -36,6 +35,6 @@ I've got a lot for my system config back-up from [the unofficial guide to dotfil
 - [ ] List VIM-extensions
 - [ ] Add screenshots of IDE
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTg0NjQ0MTc5Niw3NDMzMDIwNTYsMTA0MD
-U4NzU5Nl19
+eyJoaXN0b3J5IjpbLTEyNTc4ODA0MDYsNzQzMzAyMDU2LDEwND
+A1ODc1OTZdfQ==
 -->
