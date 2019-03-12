@@ -29,8 +29,10 @@ Afterward, you have to open VIM and run `:PluginInstall` what would let you down
 ## Sources
 I've got a lot for my system config back-up from [the unofficial guide to dotfiles on GitHub](https://dotfiles.github.io/). And the whole idea of exploiting at its finest VIM-based IDE was inspired particularly by RealPython article called [VIM and Python – A Match Made in Heaven](https://realpython.com/vim-and-python-a-match-made-in-heaven/).
 ## TODO
+- [ ] Fill the feature paragraph
 - [ ] List VIM-extensions
 - [ ] Add screenshots of IDE
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbOTg2NDc0NTk1LDEwNDA1ODc1OTZdfQ==
+eyJoaXN0b3J5IjpbNzQzMzAyMDU2LDk4NjQ3NDU5NSwxMDQwNT
+g3NTk2XX0=
 -->
