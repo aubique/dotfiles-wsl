@@ -36,6 +36,6 @@ I've got quite a lot from [the unofficial guide to dotfiles on GitHub](https://d
 - [ ] List VIM-extensions
 - [ ] Add screenshots of Vim-IDE
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEyNTc4ODA0MDYsNzQzMzAyMDU2LDEwND
-A1ODc1OTZdfQ==
+eyJoaXN0b3J5IjpbMTY4ODY1NzAzNSwtMTI1Nzg4MDQwNiw3ND
+MzMDIwNTYsMTA0MDU4NzU5Nl19
 -->
