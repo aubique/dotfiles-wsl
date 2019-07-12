@@ -1,4 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =2
-let g:netrw_dirhist_1='/home/ubi32/.tmuxp'
-let g:netrw_dirhist_2='/home/ubi32/.python3_tutorial'

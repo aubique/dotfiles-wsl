@@ -1,0 +1,6 @@
+ranger
+neofetch
+python-pip
+tmux
+tmuxp
+chromium
