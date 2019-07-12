@@ -4,3 +4,6 @@ python-pip
 tmux
 tmuxp
 chromium
+rofi
+snapd
+xclip
