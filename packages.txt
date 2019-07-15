@@ -3,7 +3,11 @@ neofetch
 python-pip
 tmux
 tmuxp
-chromium
-rofi
+chromiumrofi
 snapd
-xclip
+unzip
+tlp
+tlpui
+tlp-rdw
+lolcat
+feh

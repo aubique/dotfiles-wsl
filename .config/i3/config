@@ -1,11 +1,12 @@
-# i3 config file (v4)
-# Please see http://i3wm.org/docs/userguide.html for a complete reference!
-
-# Set mod key (Mod1=<Alt>, Mod4=<Super>)
+###############################################################################################################
+#   Filename: ~/.config/i3/config                                                                             #
+# Maintainer: Alexandre M. <alexander.matveev@univ-ubs.fr>                                                    #
+#        URL: http://github.com/aubique/dotfiles/                                                             #
+#                                                                                                             #
+# Sets i3 settings for the session                                                                            #
+###############################################################################################################
 set $mod Mod4
-
-# set default desktop layout (default is tiling)
-# workspace_layout tabbed <stacking|tabbed>
+set $terminal urxvt
 
 # Configure border style <normal|1pixel|pixel xx|none|pixel>
 new_window pixel 1
@@ -27,13 +28,16 @@ font xft:URWGothic-Book 10
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec urxvt -e tmux new -s $(date '+%Hh%M(%S)')
+bindsym $mod+Return exec $terminal -e tmux new -s $(date '+%Hh%M(%S)')
 
 # kill focused window
 bindsym $mod+Shift+q kill
 
 # start program launcher
-bindsym $mod+d exec rofi -show run -lines 3 -eh 2
+bindsym $mod+d exec "rofi -show-icons -modi combi -show combi -combi-modi drun,run -location 1 -width 100 -lines 5 -line-margin 0 -line-padding 1 -hide-scrollbar -color-window '$term_fg'"
+
+# tab between workspaces
+bindsym $mod+Ctrl+d exec rofi -show-icons -show window
 
 # launch categorized menu
 bindsym $mod+z exec --no-startup-id morc_menu
@@ -43,7 +47,7 @@ bindsym $mod+z exec --no-startup-id morc_menu
 ################################################################################################
 
 exec --no-startup-id volumeicon
-bindsym $mod+Ctrl+m exec terminal -e 'alsamixer'
+bindsym $mod+Ctrl+m exec $terminal -e 'alsamixer'
 #exec --no-startup-id pulseaudio
 #exec --no-startup-id pa-applet
 #bindsym $mod+Ctrl+m exec pavucontrol
@@ -51,18 +55,17 @@ bindsym $mod+Ctrl+m exec terminal -e 'alsamixer'
 ################################################################################################
 
 # Screen brightness controls
-# bindsym XF86MonBrightnessUp exec "xbacklight -inc 10; notify-send 'brightness up'"
-# bindsym XF86MonBrightnessDown exec "xbacklight -dec 10; notify-send 'brightness down'"
+#bindsym XF86MonBrightnessUp exec "light -A 5; notify-send 'brightness up'";
+#bindsym XF86MonBrightnessDown exec "light -U 5; notify-send 'brightness down'";
 
 # Start Applications
-bindsym $mod+F1 exec xdg-open /usr/share/doc/manjaro/i3_help.pdf
-bindsym $mod+F2 exec palemoon
+bindsym $mod+F1 workspace $ws1; exec chromium
 # bindsym $mod+F3 exec pcmanfm
 # bindsym $mod+Shift+F3 exec gksu pcmanfm
-bindsym $mod+F3 exec ranger
-bindsym $mod+F5 exec terminal -e 'mocp'
-bindsym $mod+t exec --no-startup-id pkill compton
-bindsym $mod+Ctrl+t exec --no-startup-id compton -b
+bindsym $mod+Ctrl+e exec $terminal -e ranger
+bindsym $mod+F5 exec $terminal -e 'mocp'
+#bindsym $mod+t exec --no-startup-id pkill compton
+#bindsym $mod+Ctrl+t exec --no-startup-id compton -b
 bindsym $mod+Shift+d --release exec "killall dunst; exec notify-send 'restart dunst'"
 bindsym Print exec --no-startup-id i3-scrot
 bindsym $mod+Print --release exec --no-startup-id i3-scrot -w
@@ -96,9 +99,7 @@ bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
 # workspace back and forth (with/without active container)
-#workspace_auto_back_and_forth yes
-#bindsym $mod+a+l workspace back_and_forth
-#bindsym $mod+Shift+a+l move container to workspace back_and_forth; workspace back_and_forth
+workspace_auto_back_and_forth no
 
 # split orientation
 bindsym $mod+b split h;exec notify-send 'tile horizontally'
@@ -136,18 +137,20 @@ bindsym $mod+minus scratchpad show
 bindsym $mod+Ctrl+Right workspace next
 bindsym $mod+Ctrl+Left workspace prev
 
+# Set workspace name
+#bindsym $mod+F2 exec i3-input -F 'rename workspace to %s' -P 'New name: '
+
 # Workspace names
 # to display names or symbols instead of plain workspace numbers you can use
 # something like: set $ws1 1:mail
-#                 set $ws2 2:
-set $ws1 1
-set $ws2 2
-set $ws3 3
-set $ws4 4
-set $ws5 5
-set $ws6 6
-set $ws7 7
-set $ws8 8
+set $ws1 1:1 /web/
+set $ws2 2:2 /s/
+set $ws3 3:3 /pr/
+set $ws4 4:4 /hw/
+set $ws5 5:5 /mu/
+set $ws6 6:6 /tv/
+set $ws7 7:7 misc
+set $ws8 8:8 misc
 
 # switch to workspace
 bindsym $mod+1 workspace $ws1
@@ -184,6 +187,9 @@ bindsym $mod+Shift+8 move container to workspace $ws8; workspace $ws8
 # assign [class="Pale moon"] $ws2
 # assign [class="Pcmanfm"] $ws3
 # assign [class="Skype"] $ws5
+assign [class="chromium"] $ws1
+assign [class="Spotify"] $ws5
+assign [class="mpv"] $ws6
 
 # Open specific applications in floating mode
 for_window [title="alsamixer"] floating enable border pixel 1
@@ -212,6 +218,14 @@ for_window [class="Skype"] floating enable border normal
 for_window [class="Timeset-gui"] floating enable border normal
 for_window [class="(?i)virtualbox"] floating enable border normal
 for_window [class="Xfburn"] floating enable
+for_window [class="Spotify"] border normal; move window to workspace $ws5
+
+# chrome extension popups
+for_window [instance="^crx.*$" window_role="pop-up"] floating enable
+for_window [instance="^crx.*$" window_role="pop-up"] sticky enable
+
+# Prepend title with program name
+for_window [class=".*"] title_format "%class - %title"
 
 # switch to workspace with urgent window automatically
 for_window [urgent=latest] focus
@@ -271,7 +285,8 @@ bindsym $mod+9 exec --no-startup-id blurlock
 
 # Autostart applications
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-exec --no-startup-id nitrogen --restore; sleep 1; compton -b
+exec --no-startup-id compton -b
+exec --no-startup-id nitrogen --restore
 #exec --no-startup-id manjaro-hello
 exec --no-startup-id nm-applet
 exec --no-startup-id xfce4-power-manager
