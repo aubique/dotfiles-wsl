@@ -3,7 +3,8 @@ neofetch
 python-pip
 tmux
 tmuxp
-chromiumrofi
+chromium
+rofi
 snapd
 unzip
 tlp
@@ -11,3 +12,8 @@ tlpui
 tlp-rdw
 lolcat
 feh
+powertop
+ctags
+py3status
+yay
+chromium-widevine [aur]

@@ -1,0 +1,29 @@
+session_name: p3quiz_bot
+start_directory: '~/.py3env/quiz_bot/app'
+windows:
+- window_name: p3env0
+  layout: main-horizontal
+  options:
+    main-pane-height: 45
+  shell_command_before:
+  - source ../venv/bin/activate
+  panes:
+  - shell_command:
+    - vim bot.py
+    focus: true
+  - ls -la
+- window_name: p3env1
+  panes:
+  - shell_command:
+    - source ../venv/bin/activate
+    - vim core.py
+- window_name: p3env2
+  panes:
+  - shell_command:
+    - source ../venv/bin/activate
+    - vim data.py
+- window_name: p3exm
+  panes:
+  - shell_command:
+    - cd ~/.py3env/python3_tasks
+    - ls -l

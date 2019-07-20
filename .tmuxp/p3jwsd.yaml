@@ -1,0 +1,22 @@
+session_name: p3jwsd
+start_directory: '~/.py3env/jws_dl/app'
+windows:
+- window_name: p3env
+  layout: main-horizontal
+  options:
+    main-pane-height: 45
+  shell_command_before:
+  - source ../venv/bin/activate
+  panes:
+  - shell_command:
+    - vim jws_dl.py
+  - ls -la
+- window_name: p3env2
+  panes:
+  - shell_command:
+    - source ../venv/bin/activate
+    - vim config.py
+- window_name: p3aux
+  panes:
+  - shell_command:
+    - clear && ls -la

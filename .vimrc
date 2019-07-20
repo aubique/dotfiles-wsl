@@ -32,18 +32,18 @@ imap <F2> <C-O>:set invpaste paste?<CR>
 set pastetoggle=<F2>
 
 "----------Add the VirtualEnv site-packages to vim-path-----------------
-if has('python')
-py3 << EOF
-import os.path
-import sys
-import vim
-if 'VIRTUAL_ENV' in os.environ:
-    project_base_dir = os.environ['VIRTUAL_ENV']
-    sys.path.insert(0, project_base_dir)
-    activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
-    execfile(activate_this, dict(__file__=activate_this))
-EOF
-endif
+"if has('python3')
+"py3 << EOF
+"import os.path
+"import sys
+"import vim
+"if 'VIRTUAL_ENV' in os.environ:
+"    project_base_dir = os.environ['VIRTUAL_ENV']
+"    sys.path.insert(0, project_base_dir)
+"    activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
+"    execfile(activate_this, dict(__file__=activate_this))
+"EOF
+"endif
 "--------------End-of-Python-script-------------------------------------
 
 " Clipboard working quite good with vim-gtk
@@ -134,8 +134,8 @@ colorscheme gruvbox
 " ---------------------------------- "
 nnoremap <F9> :TagbarToggle<CR>
 " Minimum indent and width required to get along with 73 colorcolumn
+let g:tagbar_width = 25
 "let g:tagbar_indent = 0
-"let g:tagbar_width = 16
 "let g:tagbar_compact = 1
 
 " ---------------------------------- "

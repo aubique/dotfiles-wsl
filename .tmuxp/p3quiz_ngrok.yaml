@@ -1,0 +1,19 @@
+session_name: p3quiz_ngrok
+start_directory: '~/.py3env/quiz_bot/app'
+windows:
+- window_name: p3run
+  panes:
+  - shell_command:
+    - source ../venv/bin/activate
+    - ls -la
+- window_name: ngrok
+  layout: main-horizontal
+  options:
+    main-pane-height: 30
+  panes:
+  - shell_command:
+    - cd ~/Binary
+    - ./ngrok http 5000
+  - shell_command:
+    - cd ~/.py3env/python3_tasks
+    - vim p3_190617_2336_x.py
