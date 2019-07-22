@@ -183,11 +183,8 @@ bindsym $mod+Shift+7 move container to workspace $ws7; workspace $ws7
 bindsym $mod+Shift+8 move container to workspace $ws8; workspace $ws8
 
 # Open applications on specific workspaces
-# assign [class="Thunderbird"] $ws1
-# assign [class="Pale moon"] $ws2
-# assign [class="Pcmanfm"] $ws3
-# assign [class="Skype"] $ws5
 assign [class="chromium"] $ws1
+#assign [class="URxvt"] $ws2
 assign [class="Spotify"] $ws5
 assign [class="mpv"] $ws6
 
@@ -219,6 +216,7 @@ for_window [class="Timeset-gui"] floating enable border normal
 for_window [class="(?i)virtualbox"] floating enable border normal
 for_window [class="Xfburn"] floating enable
 for_window [class="Spotify"] border normal; move window to workspace $ws5
+for_window [class="Tlp-UI"] floating enable
 
 # chrome extension popups
 for_window [instance="^crx.*$" window_role="pop-up"] floating enable
@@ -300,6 +298,10 @@ exec_always --no-startup-id ff-theme-util
 exec_always --no-startup-id fix_xcursor
 #exec_always xrandr --dpi 120
 
+# Autoload keyboard-layouts
+exec_always "setxkbmap -model pc105 -layout us,ru -variant ,, -option grp:alt_shift_toggle"
+#exec_always "xmodmap ~/.Xmodmap"
+
 # Color palette used for the terminal ( ~/.Xresources file )
 # Colors are gathered based on the documentation:
 # https://i3wm.org/docs/userguide.html#xresources
@@ -334,7 +336,7 @@ set_from_resource $tcolor15    color15
 # Start i3bar to display a workspace bar (plus the system information i3status if available)
 bar {
 #	i3bar_command i3bar
-	status_command i3status
+	status_command py3status
 	position top
 
 ## please set your primary output first. Example: 'xrandr --output eDP1 --primary'
