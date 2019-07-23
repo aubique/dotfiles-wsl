@@ -84,6 +84,18 @@ To verify whether keycodes are working in the intended way watch X display event
 xev | grep -Fi key
 ```
 
+## Multimedia
+
+**VLC** is a default video player in the most of Linux distros.
+
+### Streaming to Chromecast
+
+Starting with 3.0 release (Vetinari branch), **VLC** can stream to chromecast devices on the same wireless network.
+
+Install packages:
+ 1. `libmicrodns` - VLC can find the chromecast device and it shows up in **Playback > Renderer** menu
+ 2. `protobuf` - enables streaming to the selected device in **Playback > Renderer** menu
+
 ## Sources
 
 I've got quite a lot from [the unofficial guide to dotfiles on GitHub](https://dotfiles.github.io/) to make a backup of my system configuration. And the whole idea of putting Vim to a good use as IDE was inspired particularly by RealPython article called [VIM and Python – A Match Made in Heaven](https://realpython.com/vim-and-python-a-match-made-in-heaven/).
