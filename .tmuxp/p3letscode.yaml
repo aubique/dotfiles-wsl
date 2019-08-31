@@ -1,27 +1,25 @@
 session_name: p3quiz_bot
-start_directory: '~/dev/quiz_bot/app'
+start_directory: '~/dev/flask-letscode'
 windows:
-- window_name: p3env0
+- window_name: p3dev0
   layout: main-horizontal
   options:
     main-pane-height: 45
   shell_command_before:
-  - source ../env/bin/activate
+  - source virtualenv/bin/activate
   panes:
   - shell_command:
-    - vim bot.py
+    - vim -p start.py `find . -name \*.html`
     focus: true
-  - ls -la
-- window_name: p3env1
+  - shell_command:
+    - export FLASK_APP=start.py
+    - export FLASK_DEBUG=1
+    - ls -la
+- window_name: p3dev1
   panes:
   - shell_command:
-    - source ../env/bin/activate
-    - vim core.py
-- window_name: p3env2
-  panes:
-  - shell_command:
-    - source ../env/bin/activate
-    - vim data.py
+    - cd templates
+    - ls -lah
 - window_name: p3exm
   panes:
   - shell_command:

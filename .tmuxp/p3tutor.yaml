@@ -1,11 +1,11 @@
 session_name: p3tutor
-start_directory: '~/.py3env/python3_tasks/'
+start_directory: '~/dev/python3_tasks/'
 windows:
 - window_name: p3dev
   focus: true
   layout: main-horizontal
   options:
-    main-pane-height: 35
+    main-pane-height: 40
   panes:
   - shell_command:
     - vim p3_template.py

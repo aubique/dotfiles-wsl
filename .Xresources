@@ -66,7 +66,8 @@ URxvt.color246: #a89984
 URxvt.color248: #bdae93
 URxvt.color250: #d5c4a1
 ! urxvt - settings
-URxvt.font:                       9x15,xft:TerminessTTFNerdFontMono
+URxvt.font:                       10x20,xft:TerminessTTFNerdFontMono
+URxvt.letterSpace:                0
 ! Xcursor.theme: xcursor-breeze
 Xcursor.size:                     0
 URxvt*scrollBar:                  false
@@ -89,7 +90,7 @@ URxvt.keysym.Shift-Control-Up:    \033[1;6A
 URxvt.keysym.Control-Down:        \033[1;5B
 URxvt.keysym.Shift-Control-Down:  \033[1;6B
 ! Xft-font
-Xft.dpi:       96
+Xft.dpi:       116
 Xft.antialias: true
 Xft.hinting:   true
 Xft.rgba:      rgb

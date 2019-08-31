@@ -1,0 +1,13 @@
+.config/i3/config
+.config/i3-scrot.conf
+.config/neofetch/config.conf
+.config/py3status/config
+.config/tlpui/tlpui.cfg
+.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-power-manager.xml
+.config/user-dirs.dirs
+.ssh/config
+.tmux.conf
+.tmuxp/
+.vim/bundle/Vundle.vim
+.vimrc
+.Xresources

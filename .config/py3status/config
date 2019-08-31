@@ -108,6 +108,6 @@ battery all {
 }
 
 tztime local {
-	format = " %Y  %m/%d  %H:%M"
-#        format = " %y|%m|%d CEST %Hh%M"
+	format = "   %Y/%m %a %d   %H:%M"
+#	format = "  %y|%m|%d  CEST %Hh%M"
 }

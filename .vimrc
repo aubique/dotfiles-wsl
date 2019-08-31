@@ -83,11 +83,11 @@ au FileType python set foldmethod=indent
 " ---------------------------------- "
 " Configure SimplylFold
 " ---------------------------------- "
-let g:SimpylFold_docstring_preview = 1
+let g:SimpylFold_docstring_preview = 0
 " Use <space> to open/close folds
 nnoremap <space> za
 " Set SimplylFold to work along with mouse
-set foldcolumn=1
+set foldcolumn=2
 
 " ---------------------------------- "
 " Configure VUNDLE
@@ -98,7 +98,6 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 " List of Vundle-plugins
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'chrisbra/csv.vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
@@ -134,7 +133,7 @@ colorscheme gruvbox
 " ---------------------------------- "
 nnoremap <F9> :TagbarToggle<CR>
 " Minimum indent and width required to get along with 73 colorcolumn
-let g:tagbar_width = 25
+let g:tagbar_width = 14
 "let g:tagbar_indent = 0
 "let g:tagbar_compact = 1
 

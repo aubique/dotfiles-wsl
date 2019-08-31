@@ -16,6 +16,8 @@ powertop
 ctags
 py3status
 yay
-chromium-widevine [aur]
 xorg-xev
 evtest
+libmicrodns
+protobuf
+pyenv

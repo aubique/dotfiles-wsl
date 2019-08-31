@@ -20,15 +20,28 @@ This repository consists configuration for applications and requires the preinst
 
 ## Installation
 
-Clone this project to your preferred folder. You can choose user download folder, `$HOME/Downloads`:
+It's quite easy to setup files manually with `rsync` command.
+
+### Download
+
+Clone this project to your preferred folder.
 ```bash
-$ git clone https://github.com/aubique/dotfiles.git ~/Downloads/dotfiles/
-$ cd ~/Downloads/dotfiles
+$ git clone https://github.com/aubique/dotfiles.git
 ```
 
-Check out the downloaded files and pick some of them to the home-directory. For example, copy the content of repo:
+Go to the cloned directory with `cd` command.
+Then synchronize the content of cloned repo by taking relative paths from textfile:
 ```bash
-$ cp -r * ~/
+$ rsync -av --files-from=rel_paths.txt . $HOME
+```
+
+### Update
+
+In case you want to update the local repo synchronize system files from local machine.
+Thereafter you can push it to the remote Git repository:
+```bash
+$ rsync -av --files-from=rel_paths.txt $HOME .
+$ git push
 ```
 
 ### Putting VIM on its feet
