@@ -11,3 +11,4 @@ chromium
 tlp-rdw
 tlpui
 snapd
+rofi

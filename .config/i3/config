@@ -200,7 +200,7 @@ exec --no-startup-id clipit
 exec_always --no-startup-id fix_xcursor
 
 # Autoload keyboard-layouts
-exec_always "setxkbmap -model pc105 -layout us,ru -variant ,, -option grp:alt_shift_toggle"
+exec_always "setxkbmap -model pc105 -layout us,ru -variant ,, -option grp:alt_shift_toggle -option compose:ralt"
 
 # Apply .Xresource. As far as I know, only needed here if using starx (dont have a login manager)
 exec_always --no-startup-id xrdb ~/.Xresources
@@ -210,7 +210,7 @@ exec_always --no-startup-id wal -R -n
 
 # Apply a background different than the one used by wal
 # If this isn't needed, remove it and remove -n flag from the above command
-exec_always --no-startup-id feh --bg-fill ~/pics/wal/bg1.jpg
+exec_always --no-startup-id feh --bg-fill ~/pics/wal/bg2.jpg
 
 # Execute polybar on launch. Script kills current ones on i3 refresh, otherwise they duplicate
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh

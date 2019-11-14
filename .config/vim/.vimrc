@@ -143,6 +143,8 @@ Plugin 'gko/vim-coloresque'
 " JS
 Plugin 'elzr/vim-json'
 Plugin 'pangloss/vim-javascript'
+" Markdown
+Plugin 'plasticboy/vim-markdown'
 " Color themes
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'morhetz/gruvbox'
