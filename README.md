@@ -1,57 +1,92 @@
-# Config files backup
+![2019-11-15-010657_1366x768_scrot](https://user-images.githubusercontent.com/36281550/68906567-0bc7c200-0745-11ea-8096-b61303a19fc4.png)
 
-A repository helping to set up and maintain the linux desktop environment. Most of the instructions are written for my personal workflow.
+# Configuration files
+
+That's the repository that helps to maintain my linux desktop environment. Most of the instructions are written for my personal workflow.
 
 ## Features
 
-- Set of `Vim` extensions to create **a minimalist developer IDE**.
-- `Tmux` terminal multiplexer build which is **an appropriate alternative of `Screen`**.
-- `Tmuxp` session manager designed for **automation and configuration of `Tmux` workflow**.
+- Customize minimalist IDE with essential tools
+- Manage multiple terminal sessions
+- Configure and automate development workflow
 
-## Tech
+## Prerequisites
 
-This repository consists configuration for applications and requires the preinstalled packages listed below:
+This repository consists a configuration for various applications most of which need the packages listed below:
 
- 1. Git
- 2. Pip for Python 3.7
- 3. [Tmux](https://github.com/tmux/tmux/wiki)
- 4. [Tmuxp](https://tmuxp.git-pull.com/en/latest/)
- 5. Vim 8+
+ 1. SVN system -`git`
+ 2. Based text editor - `vim`
+ 3. Terminal multiplexer - `tmux`
+ 4. Session manager - `tmuxp`
+ 5. Python package installer - `pip`
 
 ## Installation
 
-It's quite easy to setup files manually with `rsync` command.
+Well, we wanna make `$HOME` the git *work-tree* but we don't want the entire user folder to be in a repo?
 
-### Download
+That's where a git *bare* repository comes to play, the method I came across with recently. That looks more simple and elegant for versioning your configuration that symlink though.
 
-Clone this project to your preferred folder.
+So let's get started!
+
+### Git Bare Repository
+
+We create a dummy folder and initialize a *bare git repository*, essentially a repo with no working directory in there.
+
+We gonna set an alias with a *dummy folder* for git files and *$HOME* for work directory. We don't mess up other repos and git commands in *$HOME* if we run the git commands this way.
+
+So let's get started!
+
+#### First Time Setup
+
+Create a git bare repository.
+
 ```bash
-$ git clone https://github.com/aubique/dotfiles.git
+$ mkdir .dotfiles
+$ git init --bare $HOME/.dotfiles
+```
+Append the alias to `.bashrc`:
+
+```bash
+$ echo 'alias dotfiles="/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME"' >> $HOME/.bashrc
 ```
 
-Go to the cloned directory with `cd` command.
-Then synchronize the content of cloned repo by taking relative paths from textfile:
+Then using this command add a remote and set *status* not to show untracked files:
+
 ```bash
-$ rsync -av --files-from=rel_paths.txt . $HOME
+$ dotfiles config --local status.showUntrackedFiles no
+$ dotfiles remote add origin git@github.com:aubique/dotfiles.git
 ```
 
-### Update
+### Setting Up a New Machine
 
-In case you want to update the local repo synchronize system files from local machine.
-Thereafter you can push it to the remote Git repository:
+There are like two ways of fetching your dotfiles on your new machine. The first one is simply clone to your user folder.
+
+However, in your *$HOME* directory git might find existing config files. So you can clone it to a temporary folder:
+
 ```bash
-$ rsync -av --files-from=rel_paths.txt $HOME .
-$ git push
+$ git clone --separate-git-dir=$HOME/.dotfiles https://github.com/aubique/dotfiles.git tmpdotfiles
 ```
 
-### Putting VIM on its feet
+Copy by `rsync` your configs to *$HOME*-directory.
 
-If you'd like to set up your Vim-environment properly you need to install [Vundle](https://github.com/VundleVim/Vundle.vim) extension manager. Let's get it installed:
+Once we're done with synchronizing our config files we delete temporary folder:
+
+```bash
+$ rsync --recursive --verbose --exclude '.git' tmpdotfiles/ $HOME/
+$ rm -r tmpdotfiles
+```
+
+#### Putting Vim on its Feet
+
+This repo contains a [Vundle](https://github.com/gmarik/Vundle.vim) submodule repository.
+That's an extenstion manager that helps to manage environment with plugins properly.
+
+Let's get it installed:
 ```bash
 $ git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 ```
 
-Afterward, you have to open **Vim** and run `:PluginInstall` what would let you download and  all the plugins listed in *.vimrc*.
+Afterward, you have to open **Vim** and run `:PluginInstall` that downloads the plugins listed in your `.vimrc`.
 
 ## Keyboard Layouts
 
@@ -73,10 +108,11 @@ $ setxkbmap -print -verbose 10
 
 The simplest and explicit way to set multiple keyboard-layouts is `setxkbmap` included in i3-config:
 ```bash
-$ setxkbmap -model pc105 -layout us,ru -variant ,, -option grp:alt_shift_toggle
+$ setxkbmap -model pc105 -layout us,ru -variant ,, -option grp:alt_shift_toggle -option compose:ralt
 ```
 
 ### Hardware Database files
+> **This section is deprecated!**
 
 `hwdb` is a key-value store for associating modalias-like keys to `udev`-property-like values. It maps the scan codes from your keyboard to standard key codes, and `/etc/udev/hwdb.d/` provides a means of customization, which allows overriding the way scan codes are mapped.
 
@@ -87,14 +123,14 @@ $ setxkbmap -model pc105 -layout us,ru -variant ,, -option grp:alt_shift_toggle
 The actual rules read by udev upon boot is a compiled binary file called `hwdb.bin`, so one will need to compile the configuration files into binary.
 
 Copy `90-isa-aerbook.hwdb` to the local administration directory `/etc/udev/hwdb.d/` then run commands to make the changes take effect immediately:
-```bash
+```
 # systemd-hwdb update
 # udevadm trigger
 ```
 
 To verify whether keycodes are working in the intended way watch X display events with `xev`:
 ```bash
-xev | grep -Fi key
+$ xev | grep -Fi key
 ```
 
 ## Multimedia
@@ -111,15 +147,19 @@ Install packages:
 
 ## Sources
 
-I've got quite a lot from [the unofficial guide to dotfiles on GitHub](https://dotfiles.github.io/) to make a backup of my system configuration. And the whole idea of putting Vim to a good use as IDE was inspired particularly by RealPython article called [VIM and Python – A Match Made in Heaven](https://realpython.com/vim-and-python-a-match-made-in-heaven/).
-
 [ArchWiki](https://wiki.archlinux.org/) always helps a lot to get valuable information that is collected in a single place.
 
+I've got inspired by the [the unofficial guide to dotfiles on GitHub](https://dotfiles.github.io/) to make my own backup for the system configuration files I'm currently using and therefore make it more easy to pass them on other machines.
+
 I also used these articles to create my own dotfiles configuration:
+
+- RealPython: [VIM and Python – A Match Made in Heaven](https://realpython.com/vim-and-python-a-match-made-in-heaven/).
+- Anand Iyer Blog: [A simpler way to manage your dotfiles](https://www.anand-iyer.com/blog/2018/a-simpler-way-to-manage-your-dotfiles.html)
 - Yulistic Gitlab: [Linux keymapping with udev hwdb](https://yulistic.gitlab.io/2017/12/linux-keymapping-with-udev-hwdb/)
 - Zhanghai blog: [Remapping ThinkPad Keys with udev hwdb](https://blog.zhanghai.me/remapping-keys-with-udev-hwdb)
 
 ## TODO
 
-- [ ] Fill the features paragraph
-- [ ] Add screenshots of Vim-IDE
+- [x] Merge with `xubuntu` branch
+- [x] Add screenshots with Cirno
+- [ ] Throw away the outdated `hwdb` section

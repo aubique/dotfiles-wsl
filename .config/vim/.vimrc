@@ -163,6 +163,7 @@ set foldcolumn=2
 " ---------------------------------- "
 " Configure GruvBox colors
 " ---------------------------------- "
+colorscheme gruvbox
 let g:gruvbox_italic=1
 let g:gruvbox_termcolors=256
 let g:gruvbox_improved_strings=0
