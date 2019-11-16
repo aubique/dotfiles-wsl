@@ -1,0 +1,80 @@
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"   Filename: ~/.ideavimrc                                                                                        "
+" Maintainer: Alexandre M. <alexander.matveev@univ-ubs.fr>                                                    "
+"        URL: http://github.com/aubique/dotfiles/                                                             "
+"                                                                                                             "
+" IdeaVim plug-in settings for IntelliJ IDEA
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Plugins
+set surround
+set commentary
+
+" Binds
+let mapleader="\"
+noremap <C-a-e> :action RecentFiles<CR>
+noremap <C-a-n> :action GotoClass<CR>
+noremap <C-a-q> :action QuickJavaDoc<CR>
+noremap <C-h> :action TypeHierarchy<CR>
+lnoremap <C-v> <Esc>:action $Paste<CR>
+nnoremap <leader>== :action ReformatCode<CR>
+nnoremap <leader>=+ :action Run<CR>
+nnoremap <leader>qd :action QuickImplementations<CR>
+nnoremap <leader>gd :action GotoDeclaration<CR>
+nnoremap <leader>gb :action Back<CR>
+nnoremap <leader>gf :action Forward<CR>
+nnoremap <leader>x :action ReopenClosedTab<CR>
+nnoremap <leader>Q :action CloseEditor<CR>
+nnoremap <leader>w :action EditorSelectWord<CR>
+
+" Turn absolute numbers on
+set number
+set nu
+
+" Highlight current line and matching brackets
+set cursorline
+set showmatch
+
+" Show command in bottom bar and autocomplete for command menu
+set showcmd
+set wildmenu
+set timeoutlen=500
+
+" Autoindent
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
+set expandtab
+filetype indent on
+
+" Make backspace more powerful
+set backspace=indent,eol,start
+
+" Display 5 lines above/below the cursor when scrolling with a mouse.
+set scrolloff=5
+
+" Highlight matces, incremental, case-insenstive and smartcase search
+set hlsearch
+set incsearch
+set ignorecase
+set smartcase
+
+" Display different types of white spaces
+set list
+set listchars=tab:›\ ,trail:•,extends:#,nbsp:.
+
+" Prevent x from overriding what's in the clipboard.
+noremap x "_x
+noremap X "_X
+
+" Integrate with system clipboard
+set clipboard=unnamed,unnamedplus
+
+nnoremap <leader>ee :action GotoNextError<CR>
+nnoremap <leader>EE :action GotoPreviousError<CR>
+" code navigation
+nnoremap <leader>gi :action GotoImplementation<cr>
+nnoremap <leader>gs :action GotoSuperMethod<cr>
+nnoremap <leader>fu :action FindUsages<cr>
+" code refactoring
+nnoremap <leader>rr :action RenameElement<cr>

@@ -11,7 +11,7 @@
     <property name="inactivity-sleep-mode-on-battery" type="uint" value="2"/>
     <property name="dpms-enabled" type="bool" value="true"/>
     <property name="lid-action-on-battery" type="uint" value="1"/>
-    <property name="logind-handle-lid-switch" type="bool" value="true"/>
+    <property name="logind-handle-lid-switch" type="bool" value="false"/>
     <property name="lid-action-on-ac" type="uint" value="0"/>
     <property name="brightness-on-battery" type="uint" value="9"/>
     <property name="presentation-mode" type="bool" value="false"/>
