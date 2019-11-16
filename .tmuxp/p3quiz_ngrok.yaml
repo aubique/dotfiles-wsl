@@ -14,5 +14,5 @@ windows:
   - shell_command:
     - ngrok http 5000 --region eu
   - shell_command:
-    - cd ~/dev/python3_tasks
+    - cd ~/dev/daily-code/py3
     - vim p3_190617_2336_x.py

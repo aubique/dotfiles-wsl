@@ -12,3 +12,5 @@ tlp-rdw
 tlpui
 snapd
 rofi
+intellij-idea-community-edition
+xclip

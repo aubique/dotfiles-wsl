@@ -1,5 +1,5 @@
 session_name: p3tutor
-start_directory: '~/dev/python3_tasks/'
+start_directory: '~/dev/daily-code/py3'
 windows:
 - window_name: p3dev
   focus: true

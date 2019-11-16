@@ -25,5 +25,5 @@ windows:
 - window_name: p3exm
   panes:
   - shell_command:
-    - cd ~/dev/python3_tasks
+    - cd ~/dev/daily-code/py3
     - ls -l
