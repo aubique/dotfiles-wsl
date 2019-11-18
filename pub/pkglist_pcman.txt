@@ -12,5 +12,7 @@ tlp-rdw
 tlpui
 snapd
 rofi
+java-runtime-common
+java-environment-common
 intellij-idea-community-edition
 xclip

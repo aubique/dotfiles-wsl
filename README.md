@@ -1,4 +1,4 @@
-![2019-11-15-010657_1366x768_scrot](https://user-images.githubusercontent.com/36281550/68906567-0bc7c200-0745-11ea-8096-b61303a19fc4.png)
+![2019-11-19-002159_1366x768_scrot](https://user-images.githubusercontent.com/36281550/69102426-b7815280-0a62-11ea-985b-8ecdc5f0cc09.png)
 
 # Configuration files
 
