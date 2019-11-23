@@ -13,44 +13,49 @@ set commentary
 let mapleader="\"
 " Shortcuts overwritten in .ideavimrc
 lnoremap <C-v> <Esc>:action $Paste<CR>
-noremap <C-a-e> :action RecentFiles<CR>
-noremap <C-a-n> :action GotoClass<CR>
-noremap <C-a-q> :action QuickJavaDoc<CR>
-noremap <C-a-Up> :action MoveLineUp<CR>
-noremap <C-a-Down> :action MoveLineDown<CR>
 noremap <C-h> :action TypeHierarchy<CR>
 nnoremap <C-z> :action RecentChanges<CR>
 
 " Shortcuts overwritten in IntelliJ keyboard settings
+"noremap <C-a-n> :action GotoClass<CR>
+"noremap <C-s-n> :action GotoSymbol<CR>
+"noremap <C-a-q> :action QuickJavaDoc<CR>
+"noremap <C-a-e> :action RecentFiles<CR>
 "nnoremap <C-a-w> :action EditorSelectWord<CR>
 "inoremap <C-a-j> :action InsertLiveTemplate<CR>
 "nnoremap <C-a-r> :action RefactoringMenu<CR>
+"nnoremap <C-a-u> :action GotoSuperMethod<CR>
+"noremap <C-a-Up> :action MoveLineUp<CR>
+"noremap <C-a-Down> :action MoveLineDown<CR>
+"nnoremap <C-a-o> :action Back<CR>
+"nnoremap <C-a-i> :action Forward<CR>
 
 " Run and debug
 nnoremap <leader>ff :action ReformatCode<CR>
+nnoremap <leader>fF :action ShowReformatFileDialog<CR>
 nnoremap <leader>fr :action Run<CR>
 nnoremap <leader>fd :action Debug<CR>
 
 " Editor binding
+noremap <leader>E :action RecentFiles<CR>
+noremap <leader>W :action RecentLocations<CR>
 noremap <leader><Return> :action EditorCompleteStatement<CR>
-nnoremap <leader>qa :action EditorSelectWord<CR>
-nnoremap <leader>qw :action EditorSelectLine<CR>
-nnoremap <leader>x :action CloseEditor<CR>
-nnoremap <leader>X :action ReopenClosedTab<CR>
+nnoremap <leader>q! :action CloseEditor<CR>
 noremap <Leader>[ :action EditorCodeBlockStart<CR>
 noremap <Leader>] :action EditorCodeBlockEnd<CR>
+noremap <Leader>gut :action EditorToggleShowGutterIcons<CR>
 
 " Jedi-like binding
 nnoremap <leader>R :action RenameElement<CR>
-nnoremap <leader>U :action FindUsages<CR>
-nnoremap <leader>gs :action GotoSuperMethod<CR>
-nnoremap <leader>gq :action QuickImplementations<CR>
-nnoremap <leader>gd :action GotoDeclaration<CR>
-nnoremap <leader>gi :action GotoImplementation<CR>
-nnoremap <leader>gt :action Forward<CR>
-nnoremap <leader>gT :action Back<CR>
-nnoremap <leader>et :action GotoNextError<CR>
-nnoremap <leader>eT :action GotoPreviousError<CR>
+nnoremap <leader>U :action HighlightUsagesInFile<CR>
+nnoremap gD :action ShowUsages<CR>
+nnoremap gd :action GotoDeclaration<CR>
+nnoremap gb :action GotoImplementation<CR>
+nnoremap gB :action QuickImplementations<CR>
+nnoremap gs :action GotoSuperMethod<CR>
+nnoremap gS :action GotoTypeDeclaration<CR>
+nnoremap <leader>oo :action ExpressionTypeInfo<CR>
+nnoremap <leader>op :action ParameterInfo<CR>
 
 " Turn absolute numbers on
 set number
@@ -94,3 +99,4 @@ noremap X "_X
 
 " Integrate with system clipboard
 set clipboard=unnamed,unnamedplus
+set clipboard+=ideaput

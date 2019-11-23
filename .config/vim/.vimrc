@@ -109,6 +109,8 @@ au FileType html,xhtml,xml,css,htmldjango setlocal shiftwidth=2 tabstop=2
 au FileType html,xhtml,xml,css,htmldjango,javascript,json setlocal expandtab
 " Ensure tabs don't get converted to spaces in Makefiles
 autocmd FileType make setlocal noexpandtab
+" Spell check per filetype
+autocmd FileType markdown,gitcommit setlocal spell
 
 " ---------------------------------- "
 " Configure VUNDLE
@@ -163,11 +165,12 @@ set foldcolumn=2
 " ---------------------------------- "
 " Configure GruvBox colors
 " ---------------------------------- "
-colorscheme gruvbox
 let g:gruvbox_italic=1
 let g:gruvbox_termcolors=256
 let g:gruvbox_improved_strings=0
 let g:gruvbox_improved_warnings=1
+let g:gruvbox_guisp_fallback = "bg"
+colorscheme gruvbox
 
 " ---------------------------------- "
 " Configure Tagbar

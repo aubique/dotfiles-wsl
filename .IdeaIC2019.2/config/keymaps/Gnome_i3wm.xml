@@ -1,0 +1,66 @@
+<keymap version="1" name="Gnome_i3wm" parent="Default for GNOME">
+  <action id="AutoIndentLines" />
+  <action id="Back">
+    <mouse-shortcut keystroke="button4" />
+    <keyboard-shortcut first-keystroke="ctrl alt left" />
+    <keyboard-shortcut first-keystroke="ctrl alt o" />
+  </action>
+  <action id="ChangesView.UnshelveSilently" />
+  <action id="Console.History.Browse" />
+  <action id="EditorSelectWord">
+    <keyboard-shortcut first-keystroke="ctrl alt w" />
+  </action>
+  <action id="EditorShowGutterIconTooltip" />
+  <action id="EditorStartNewLine" />
+  <action id="EditorStartNewLineBefore" />
+  <action id="FindUsages">
+    <keyboard-shortcut first-keystroke="ctrl alt released f7" />
+  </action>
+  <action id="Forward">
+    <mouse-shortcut keystroke="button5" />
+    <keyboard-shortcut first-keystroke="ctrl alt right" />
+    <keyboard-shortcut first-keystroke="ctrl alt i" />
+  </action>
+  <action id="GotoClass">
+    <keyboard-shortcut first-keystroke="ctrl alt n" />
+  </action>
+  <action id="GotoFile" />
+  <action id="GotoSuperMethod">
+    <keyboard-shortcut first-keystroke="ctrl alt u" />
+  </action>
+  <action id="GotoSymbol">
+    <keyboard-shortcut first-keystroke="shift ctrl n" />
+  </action>
+  <action id="Inline" />
+  <action id="InsertLiveTemplate">
+    <keyboard-shortcut first-keystroke="ctrl alt j" />
+  </action>
+  <action id="Kotlin.RunScratch" />
+  <action id="MoveElementLeft" />
+  <action id="MoveElementRight" />
+  <action id="MoveLineDown">
+    <keyboard-shortcut first-keystroke="ctrl alt down" />
+  </action>
+  <action id="MoveLineUp">
+    <keyboard-shortcut first-keystroke="ctrl alt up" />
+  </action>
+  <action id="OptimizeImports">
+    <keyboard-shortcut first-keystroke="shift ctrl o" />
+  </action>
+  <action id="QuickJavaDoc">
+    <mouse-shortcut keystroke="alt button2" />
+    <keyboard-shortcut first-keystroke="ctrl alt q" />
+  </action>
+  <action id="RecentFiles">
+    <keyboard-shortcut first-keystroke="ctrl alt e" />
+  </action>
+  <action id="Refactorings.QuickListPopupAction">
+    <keyboard-shortcut first-keystroke="ctrl alt r" />
+  </action>
+  <action id="Replace" />
+  <action id="SelectIn">
+    <keyboard-shortcut first-keystroke="alt f1" />
+  </action>
+  <action id="ShowSettingsAndFindUsages" />
+  <action id="SurroundWithLiveTemplate" />
+</keymap>

@@ -3,4 +3,4 @@ chromium-widevine
 ngrok
 cnijfilter2
 rosa-image-writer
-amazon-corretto-11
+losslesscut

@@ -48,6 +48,7 @@ Append the alias to `.bashrc`:
 
 ```bash
 $ echo 'alias dotfiles="/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME"' >> $HOME/.bashrc
+$ source $HOME/.bashrc
 ```
 
 Then using this command add a remote and set *status* not to show untracked files:
@@ -60,6 +61,9 @@ $ dotfiles remote add origin git@github.com:aubique/dotfiles.git
 ### Setting Up a New Machine
 
 There are like two ways of fetching your dotfiles on your new machine. The first one is simply clone to your user folder.
+
+> Your alias in `$HOME/.bashrc` should be already set up.
+> The commands you can find in section above.
 
 However, in your *$HOME* directory git might find existing config files. So you can clone it to a temporary folder:
 
@@ -87,6 +91,38 @@ $ git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 ```
 
 Afterward, you have to open **Vim** and run `:PluginInstall` that downloads the plugins listed in your `.vimrc`.
+
+### GitHub SSH key
+
+In case you access a github server via SSH you should generate a new key on your new machine.
+GitHub documentation proposes to use a `ssh-agent` for managing keys.
+That's a temporary solution that has to be done every session.
+
+Beforehand you should generate a new SSH key:
+```bash
+$ ssh-keygen -t rsa -b 4096 -C "email"
+```
+
+Then it would propose you to choose a directory and filename for the key.
+> For directory you should use absolute path from the root
+
+Once generated you can force the key files to be kept permanently in your `~/.ssh/config` file.
+To set the key specific to one host, you can do the following in config:
+```
+Host github.com
+    User git
+    IdentityFile ~/.ssh/id_rsa_github
+```
+
+After setting up a local configuration for SSH you should add the private key to GitHub account.
+Copy the SSH key to your clipboard:
+
+> Make sure you have `xclip` installed.
+```bash
+$ xclip -sel c < ~/.ssh/id_rsa_github.pub
+```
+
+Then go to GitHub account, click **Settings -> SSH and GPG keys -> New SSH Key** and paste it into the **Key** field.
 
 ## Keyboard Layouts
 
@@ -155,6 +191,7 @@ I also used these articles to create my own dotfiles configuration:
 
 - RealPython: [VIM and Python – A Match Made in Heaven](https://realpython.com/vim-and-python-a-match-made-in-heaven/).
 - Anand Iyer Blog: [A simpler way to manage your dotfiles](https://www.anand-iyer.com/blog/2018/a-simpler-way-to-manage-your-dotfiles.html)
+- Github docs: [Generating a new SSH key](https://help.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)
 - Yulistic Gitlab: [Linux keymapping with udev hwdb](https://yulistic.gitlab.io/2017/12/linux-keymapping-with-udev-hwdb/)
 - Zhanghai blog: [Remapping ThinkPad Keys with udev hwdb](https://blog.zhanghai.me/remapping-keys-with-udev-hwdb)
 
@@ -162,4 +199,6 @@ I also used these articles to create my own dotfiles configuration:
 
 - [x] Merge with `xubuntu` branch
 - [x] Add screenshots with Cirno
+- [x] Generate SSH keys for Github with an example of `.ssh/config`
+- [ ] Describe how to switch between JVM
 - [ ] Throw away the outdated `hwdb` section
