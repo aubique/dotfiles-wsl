@@ -1,0 +1,28 @@
+{
+    "wallpaper": "/home/ubique/.config/wpg/wallpapers/cirno_blue.jpg",
+    "alpha": "100",
+
+    "special": {
+        "background": "#212a3d",
+        "foreground": "#fffff9",
+        "cursor": "#fffff9"
+    },
+    "colors": {
+        "color0": "#212a3d",
+        "color1": "#106ffe",
+        "color2": "#4591ff",
+        "color3": "#ff75dd",
+        "color4": "#8a9c43",
+        "color5": "#9de8ff",
+        "color6": "#1c89ff",
+        "color7": "#e9e5e0",
+        "color8": "#32405d",
+        "color9": "#038cff",
+        "color10": "#44b8ff",
+        "color11": "#ff7fff",
+        "color12": "#bcd948",
+        "color13": "#a8ffff",
+        "color14": "#11b1ff",
+        "color15": "#fffff9"
+    }
+}

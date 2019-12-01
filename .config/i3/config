@@ -210,11 +210,12 @@ exec_always "setxkbmap -model pc105 -layout us,ru -variant ,, -option grp:alt_sh
 exec_always --no-startup-id xrdb ~/.Xresources
 
 # Apply the last colorscheme generated without changing the background by using -n 
-exec_always --no-startup-id wal -R -n
+#exec_always --no-startup-id wal -R -n
+exec_always --no-startup-id ~/.config/wpg/wp_init.sh
 
 # Apply a background different than the one used by wal
 # If this isn't needed, remove it and remove -n flag from the above command
-exec_always --no-startup-id feh --bg-fill ~/pics/wp/cirno_blue.jpg
+#exec_always --no-startup-id feh --bg-fill ~/pics/wp/cirno_blue.jpg
 
 # Execute polybar on launch. Script kills current ones on i3 refresh, otherwise they duplicate
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
@@ -246,9 +247,10 @@ for_window [title="Welcome to PyCharm"] floating disable
 
 # Enable floating for some apps
 for_window [title="alsamixer"] floating enable border pixel 1
+for_window [title="File Transfer*"] floating enable
 for_window [class="calamares"] floating enable border normal
 for_window [class="Clipgrab"] floating enable
-for_window [title="File Transfer*"] floating enable
+for_window [class = "Wpg"] floating enable
 for_window [class="Galculator"] floating enable border pixel 1
 for_window [class="GParted"] floating enable border normal
 for_window [class="Gimp"] border normal

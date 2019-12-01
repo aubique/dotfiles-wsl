@@ -1,3 +1,4 @@
+wpgtk-git
 tor-browser
 chromium-widevine
 ngrok

@@ -20,6 +20,7 @@ nnoremap <C-z> :action RecentChanges<CR>
 "noremap <C-a-n> :action GotoClass<CR>
 "noremap <C-s-n> :action GotoSymbol<CR>
 "noremap <C-a-q> :action QuickJavaDoc<CR>
+"noremap <C-s-q> :action QuickImplementations<CR>
 "noremap <C-a-e> :action RecentFiles<CR>
 "nnoremap <C-a-w> :action EditorSelectWord<CR>
 "inoremap <C-a-j> :action InsertLiveTemplate<CR>
