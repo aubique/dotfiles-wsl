@@ -80,6 +80,25 @@ $ rsync --recursive --verbose --exclude '.git' tmpdotfiles/ $HOME/
 $ rm -r tmpdotfiles
 ```
 
+#### Git and Bash configuration
+
+Restore the custom git configuration:
+
+```bash
+$ git config --global uesr.user=aubique
+$ git config --global user.email=email
+$ git config --global push.default=current
+$ git config --global alias.l=log --all --decorate --oneline --graph
+```
+
+For git-completion showing a current active git branch add the lines listed below to `.bashrc`:
+
+```bash
+[[ -f /usr/share/git/completion/git-completion.bash ]] && . /usr/share/git/completion/git-completion.bash
+[[ -f /usr/share/git/completion/git-prompt.sh ]] && . /usr/share/git/completion/git-prompt.sh
+PS1='\t \[\033[01;32m\]\u\[\033[01;34m\] \w\[\033[01;33m\]$(__git_ps1)\[\033[01;34m\] \$\[\033[00m\] '
+```
+
 #### Putting Vim on its Feet
 
 This repo contains a [Vundle](https://github.com/gmarik/Vundle.vim) submodule repository.

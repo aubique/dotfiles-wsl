@@ -5,3 +5,4 @@ ngrok
 cnijfilter2
 rosa-image-writer
 losslesscut
+pipman-git
