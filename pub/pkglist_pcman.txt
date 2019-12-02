@@ -13,3 +13,4 @@ java-runtime-common
 java-environment-common
 postgresql
 pgadmin4
+snapd

@@ -1,7 +1,0 @@
-<application>
-  <component name="UISettings">
-    <option name="EDITOR_TAB_PLACEMENT" value="0" />
-    <option name="HIDE_NAVIGATION_ON_FOCUS_LOSS" value="false" />
-    <option name="HIDE_TOOL_STRIPES" value="true" />
-  </component>
-</application>
