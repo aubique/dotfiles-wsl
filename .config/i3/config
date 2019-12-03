@@ -152,12 +152,12 @@ bindsym $mod+r mode "resize"
 
 # Start Applications
 bindsym $mod+F1 exec chromium
-bindsym $mod+F2 exec pcmanfm
-bindsym $mod+Ctrl+e exec $terminal -e ranger
+bindsym $mod+F3 exec pcmanfm
+bindsym $mod+F4 exec $terminal -e ranger
 bindsym $mod+Shift+d --release exec "killall dunst; exec notify-send 'restart dunst'"
 bindsym Print exec scrot '/tmp/lossless.png' -e 'ffmpeg -hide_banner -i $f -compression_level 100 ~/pics/scr/%Y%m%d%H_%M%S.jpg && rm $f'; exec  notify-send "Scrot a whole screen"
-bindsym $mod+Ctrl+Print --release exec scrot -u '/tmp/lossless.png' -e 'ffmpeg -hide_banner -i $f -compression_level 100 ~/pics/scr/%Y%m%d%H_%M%S.jpg && rm $f'; exec notify-send "Scrot a window"
-bindsym $mod+Shift+Print --release exec scrot -s '/tmp/lossless.png' -e 'ffmpeg -hide_banner -i $f -compression_level 100 ~/pics/scr/%Y%m%d%H_%M%S.jpg && rm $f'; exec notify-send "Scrot the selected area"
+bindsym $mod+Shift+Print --release exec scrot -u '/tmp/lossless.png' -e 'ffmpeg -hide_banner -i $f -compression_level 100 ~/pics/scr/%Y%m%d%H_%M%S.jpg && rm $f'; exec notify-send "Scrot a window"
+bindsym $mod+Ctrl+Shift+Print --release exec scrot -s '/tmp/lossless.png' -e 'ffmpeg -hide_banner -i $f -compression_level 100 ~/pics/scr/%Y%m%d%H_%M%S.jpg && rm $f'; exec notify-send "Scrot the selected area"
 bindsym $mod+Ctrl+x --release exec --no-startup-id xkill
 
 #############
@@ -204,7 +204,7 @@ exec --no-startup-id clipit
 exec_always --no-startup-id fix_xcursor
 
 # Autoload keyboard-layouts
-exec_always "setxkbmap -model pc105 -layout us,ru -variant ,, -option grp:alt_shift_toggle -option compose:ralt"
+exec_always "setxkbmap -model pc105 -layout us,ru -option grp:caps_toggle -option compose:ralt"
 
 # Apply .Xresource. As far as I know, only needed here if using starx (dont have a login manager)
 exec_always --no-startup-id xrdb ~/.Xresources
@@ -250,7 +250,7 @@ for_window [title="alsamixer"] floating enable border pixel 1
 for_window [title="File Transfer*"] floating enable
 for_window [class="calamares"] floating enable border normal
 for_window [class="Clipgrab"] floating enable
-for_window [class = "Wpg"] floating enable
+for_window [class="Wpg"] floating enable
 for_window [class="Galculator"] floating enable border pixel 1
 for_window [class="GParted"] floating enable border normal
 for_window [class="Gimp"] border normal

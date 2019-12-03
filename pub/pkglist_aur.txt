@@ -1,8 +1,8 @@
+pipman-git
 wpgtk-git
-tor-browser
 chromium-widevine
 ngrok
 cnijfilter2
 rosa-image-writer
 losslesscut
-pipman-git
+pomo

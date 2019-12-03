@@ -18,16 +18,15 @@ nnoremap <C-z> :action RecentChanges<CR>
 
 " Shortcuts overwritten in IntelliJ keyboard settings
 "noremap <C-a-n> :action GotoClass<CR>
-"noremap <C-s-n> :action GotoSymbol<CR>
 "noremap <C-a-q> :action QuickJavaDoc<CR>
 "noremap <C-s-q> :action QuickImplementations<CR>
+"nnoremap <C-s-s> :action GotoSuperMethod<CR>
 "noremap <C-a-e> :action RecentFiles<CR>
 "nnoremap <C-a-w> :action EditorSelectWord<CR>
 "inoremap <C-a-j> :action InsertLiveTemplate<CR>
 "nnoremap <C-a-r> :action RefactoringMenu<CR>
-"nnoremap <C-a-u> :action GotoSuperMethod<CR>
-"noremap <C-a-Up> :action MoveLineUp<CR>
-"noremap <C-a-Down> :action MoveLineDown<CR>
+"noremap <C-s-Up> :action MoveLineUp<CR>
+"noremap <C-s-Down> :action MoveLineDown<CR>
 "nnoremap <C-a-o> :action Back<CR>
 "nnoremap <C-a-i> :action Forward<CR>
 

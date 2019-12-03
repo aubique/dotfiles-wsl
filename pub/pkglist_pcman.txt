@@ -14,3 +14,4 @@ java-environment-common
 postgresql
 pgadmin4
 snapd
+etcher
