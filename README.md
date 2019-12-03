@@ -1,5 +1,3 @@
-![2019-11-19-002159_1366x768_scrot](https://user-images.githubusercontent.com/36281550/69102426-b7815280-0a62-11ea-985b-8ecdc5f0cc09.png)
-
 # Configuration files
 
 That's the repository that helps to maintain my linux desktop environment. Most of the instructions are written for my personal workflow.
