@@ -1,0 +1,107 @@
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"   Filename: ~/.ideavimrc                                                                                        "
+" Maintainer: Alexandre M. <alexander.matveev@univ-ubs.fr>                                                    "
+"        URL: http://github.com/aubique/dotfiles/                                                             "
+"                                                                                                             "
+" IdeaVim plug-in settings for IntelliJ IDEA
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Plugins
+set surround
+set commentary
+set multiple-cursors
+
+let mapleader="\"
+" Shortcuts overwritten in .ideavimrc
+lnoremap <C-v> <Esc>:action $Paste<CR>
+nnoremap <C-z> :action RecentChanges<CR>
+
+" Shortcuts overwritten in IntelliJ keyboard settings
+"noremap <C-a-e> :action RecentFiles<CR>
+"noremap <C-a-n> :action GotoClass<CR>
+"noremap <C-p> :action ParameterInfo<CR>
+"nnoremap <C-a-d> :action GotoDeclaration<CR>
+"nnoremap <C-s-u> :action GotoSuperMethod<CR>
+"nnoremap <C-a-q> :action QuickJavaDoc<CR>
+"nnoremap <C-s-i> :action QuickImplementations<CR>
+"nnoremap <C-a-i> :action ImplementMethods<CR>
+"nnoremap <C-a-o> :action OverrideMethods<CR>
+"nnoremap <C-a-h> :action TypeHierarchy<CR>
+"inoremap <C-s-j> :action InsertLiveTemplate<CR>
+"inoremap <C-a-j> :action SurroundWithLiveTemplate<CR>
+"noremap <C-s-Up> :action MoveLineUp<CR>
+"noremap <C-s-Down> :action MoveLineDown<CR>
+"nnoremap <C-o> :action Back<CR>
+"nnoremap <C-i> :action Forward<CR>
+"nnoremap <C-a-w> :action EditorSelectWord<CR>
+
+" Run and debug
+nnoremap <leader>ff :action ReformatCode<CR>
+nnoremap <leader>fF :action ShowReformatFileDialog<CR>
+nnoremap <leader>fr :action Run<CR>
+nnoremap <leader>fd :action Debug<CR>
+
+" Editor binding
+noremap <leader>E :action RecentFiles<CR>
+noremap <leader>W :action RecentLocations<CR>
+noremap <leader><Return> :action EditorCompleteStatement<CR>
+nnoremap <leader>q! :action CloseEditor<CR>
+noremap <Leader>[ :action EditorCodeBlockStart<CR>
+noremap <Leader>] :action EditorCodeBlockEnd<CR>
+noremap <Leader>gut :action EditorToggleShowGutterIcons<CR>
+
+" Jedi-like binding
+nnoremap <leader>R :action RenameElement<CR>
+nnoremap <leader>U :action HighlightUsagesInFile<CR>
+nnoremap gD :action ShowUsages<CR>
+nnoremap gd :action GotoDeclaration<CR>
+nnoremap gb :action GotoImplementation<CR>
+nnoremap gB :action QuickImplementations<CR>
+nnoremap gs :action GotoSuperMethod<CR>
+nnoremap gS :action GotoTypeDeclaration<CR>
+nnoremap <leader>pp :action ExpressionTypeInfo<CR>
+nnoremap <leader>pi :action ParameterInfo<CR>
+
+" Turn absolute numbers on
+set number
+set nu
+
+" Highlight current line and matching brackets
+set cursorline
+set showmatch
+
+" Show command in bottom bar and autocomplete for command menu
+set showcmd
+set wildmenu
+set timeoutlen=500
+
+" Autoindent
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
+set expandtab
+filetype indent on
+
+" Make backspace more powerful
+set backspace=indent,eol,start
+
+" Display 5 lines above/below the cursor when scrolling with a mouse.
+set scrolloff=5
+
+" Highlight matces, incremental, case-insenstive and smartcase search
+set hlsearch
+set incsearch
+set ignorecase
+set smartcase
+
+" Display different types of white spaces
+set list
+set listchars=tab:›\ ,trail:•,extends:#,nbsp:.
+
+" Prevent x from overriding what's in the clipboard.
+noremap x "_x
+noremap X "_X
+
+" Integrate with system clipboard
+set clipboard=unnamed,unnamedplus
+set clipboard+=ideaput

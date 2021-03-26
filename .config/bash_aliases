@@ -1,0 +1,22 @@
+export OPENVPN_PATH=/mnt/c/dev/vpn
+export DEV_PATH=/mnt/c/dev
+
+# Alias for aubique/dotfiles
+alias dotfiles="/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME"
+
+# WSL2 Appliance
+alias chrome_win="powershell.exe -Command start chrome"
+alias powershell="powershell.exe -Command start powershell -verb runAs"
+alias reboot_now="powershell.exe -Command shutdown /r /t 1;exit"
+alias shutdown_now="powershell.exe -Command shutdown /s /t 1;exit"
+
+# Custom Apps
+alias caffeine="explorer.exe 'C:\Users\MatveevA\Documents\bin\caffeine\caffeine64.exe'"
+
+# OpenVPN
+alias ovpn_on="sudo cp /etc/resolv.conf /tmp/resolvorig.conf && sudo cp $OPENVPN_PATH/resolvovpn.conf /etc/resolv.conf && echo 'OpenVPN mode ON'"
+alias ovpn_off="sudo cp /tmp/resolvorig.conf /etc/resolv.conf && echo 'OpenVPN mode OFF'"
+
+# Miscellaneous
+alias chrome="bash $DEV_PATH/bash/run/chrome_pulse.sh"
+alias mount_z="sudo mount -t drvfs Z: /mnt/z"
