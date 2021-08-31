@@ -1,2 +1,3 @@
-. ~/.profile
-case $- in *i*) . ~/.bashrc;; esac
+echo '===.BASH_PROFILE==='
+#. ~/.profile
+#case $- in *i*) . ~/.bashrc;; esac

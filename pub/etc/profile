@@ -1,6 +1,14 @@
 # /etc/profile: system-wide .profile file for the Bourne shell (sh(1))
 # and Bourne compatible shells (bash(1), ksh(1), ash(1), ...).
 
+# Show a loading order of the sourced files
+function show_sourced_file() {
+  [[ -n "$OUTP" ]] && printf 'Sourced: %s\n' "$1"
+}
+export -f show_sourced_file
+export OUTP=true
+show_sourced_file "$BASH_SOURCE"
+
 if [ "${PS1-}" ]; then
   if [ "${BASH-}" ] && [ "$BASH" != "/bin/sh" ]; then
     # The file bash.bashrc already sets the default PS1.
@@ -30,3 +38,10 @@ fi
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
+# XDG vars
+export BASH_COMPLETION_USER_FILE=$XDG_CONFIG_HOME/bash_completion
+export MPLAYER_HOME=$XDG_CONFIG_HOME/mplayer
+export SUBVERSION_HOME=$XDG_CONFIG_HOME/subversion
+export VIMDOTDIR=$XDG_CONFIG_HOME/vim
+export GNUPGHOME=$XDG_CONFIG_HOME/gnupg
+export PASSWORD_STORE_DIR=$XDG_DATA_HOME/pass

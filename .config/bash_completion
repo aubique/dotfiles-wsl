@@ -1,0 +1,7 @@
+echo 'Sourced: ~/.config/bash_completion'
+
+BASH_COMPLETION_USER_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/bash-completion/completions"
+
+for bcfile in $BASH_COMPLETION_USER_DIR/* ; do
+  . $bcfile
+done

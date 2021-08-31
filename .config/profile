@@ -4,6 +4,8 @@
 # see /usr/share/doc/bash/examples/startup-files for examples.
 # the files are located in the bash-doc package.
 
+show_sourced_file '~/.profile'
+
 # the default umask is set in /etc/profile; for setting the umask
 # for ssh logins, install and configure the libpam-umask package.
 #umask 022
@@ -12,7 +14,7 @@
 if [ -n "$BASH_VERSION" ]; then
     # include .bashrc if it exists
     if [ -f "$HOME/.bashrc" ]; then
-	. "$HOME/.bashrc"
+        . "$HOME/.bashrc"
     fi
 fi
 
@@ -26,10 +28,17 @@ if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
-if [[ -z "$TMUX" ]]; then
-    if tmux has-session 2>/dev/null; then
-        exec tmux attach
-    else
-        exec tmux
-    fi
-fi
+# Password-store extensions
+export PASSWORD_STORE_ENABLE_EXTENSIONS=true
+
+# Tmux
+#if [[ -z "$TMUX" ]]; then
+#    if tmux has-session 2>/dev/null; then
+#        exec tmux attach
+#    else
+#        exec tmux
+#    fi
+#fi
+
+# verify if WSL whether initialized correctly or not
+bash -c "powershell.exe -Command Write-Host 'WSL2 initialized correctly'"

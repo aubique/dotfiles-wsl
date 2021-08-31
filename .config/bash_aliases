@@ -1,22 +1,81 @@
-export OPENVPN_PATH=/mnt/c/dev/vpn
-export DEV_PATH=/mnt/c/dev
+# Get to the real directory
+cdpwdp() {
+    ABS_PWD=$(pwd -P)
+    cd $ABS_PWD
+}
+
+# Relaunch TaskbarX
+restart_taskbar () {
+    PATH_NIX='/mnt/c/Program Files/WindowsApps/40210ChrisAndriessen.FalconX_1.6.8.0_x64__y1dazs5f5wq00/Release/TaskbarX.exe'
+    if [ -e "$PATH_NIX" ]; then
+        #PATH_WIN=$(wslpath -w "$PATH_NIX")
+        /mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe -Command 'start shell:AppsFolder\40210ChrisAndriessen.FalconX_y1dazs5f5wq00!TaskbarX'
+    fi
+}
+
+# Relaunch Explorer.exe
+# `teamv` script depends on this function
+restart_explorer () {
+    read -p "Would you like to restart EXLORER (Y/n)? [default: n] " answer
+    case ${answer:0:1} in
+        y|Y|yes )
+            echo "Restart EXPLORER.exe"
+            /mnt/c/Windows/System32/taskkill.exe /IM explorer.exe /F
+            /mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe -Command 'Start-Process -FilePath C:\Windows\explorer.exe'
+            restart_taskbar
+        ;;
+        * )
+            echo "You can refresh system-tray manually"
+        ;;
+    esac
+}
+
+# XDG Variables
+export OPENVPN_PATH=$XDG_CONFIG_HOME/vpn
+export RUNSCRIPTS_PATH=$XDG_CONFIG_HOME/scripts
+
+# XDG Appliance
+alias wget="wget --hsts-file=$XDG_CACHE_HOME/wget-hsts"
 
 # Alias for aubique/dotfiles
 alias dotfiles="/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME"
 
 # WSL2 Appliance
-alias chrome_win="powershell.exe -Command start chrome"
-alias powershell="powershell.exe -Command start powershell -verb runAs"
+alias mount_z="sudo mount -t drvfs Z: /mnt/z"
+alias chrome-win="powershell.exe -Command start chrome"
+alias powershell="powershell.exe -Command start powershell -Verb runAs"
 alias reboot_now="powershell.exe -Command shutdown /r /t 1;exit"
 alias shutdown_now="powershell.exe -Command shutdown /s /t 1;exit"
 
+# WSL2 BT BluetoothCLTools
+alias stsk_up="powershell.exe -Command \"btpair -n'STSK 2 C3' -p0000\""
+alias stsk_down="powershell.exe -Command \"btpair -u -n'STSK 2 C3'\""
+# WSL2 BT ThinkPad KT-1255 EN
+alias tpkt_up="powershell.exe -Command \"btpair -n'ThinkPad Compact Bluetooth Keyboard with TrackPoint' -p0000\""
+alias tpkt_down="powershell.exe -Command \"btpair -u -n'ThinkPad Compact Bluetooth Keyboard with TrackPoint'\""
+
 # Custom Apps
-alias caffeine="explorer.exe 'C:\Users\MatveevA\Documents\bin\caffeine\caffeine64.exe'"
+alias vlc="bash $RUNSCRIPTS_PATH/vlc_wslpath.sh"
+alias teamv="bash $RUNSCRIPTS_PATH/teamv.sh"
+alias caffeine_up="explorer.exe 'C:\bin\caffeine\caffeine64.exe'"
+alias caffeine_down="/mnt/c/Windows/System32/taskkill.exe /IM caffeine64.exe && /mnt/c/Windows/System32/taskkill.exe /IM caffeine64.exe"
+alias rec="bash $RUNSCRIPTS_PATH/rec_ffmpeg.sh"
+
+# SSHD forwarding WSL2
+alias sshd_up="sudo service ssh start && powershell.exe gsudo cmd /C netsh interface portproxy add v4tov4 listenport=32022 listenaddress=0.0.0.0 connectport=32022 connectaddress=$(ifconfig eth0 | sed -rn '0,/^.*inet (172.(.[0-9]{1,3}){3}).*$/s//\1/p')"
+alias sshd_down="sudo service ssh stop && powershell.exe gsudo cmd /C netsh interface portproxy delete v4tov4 listenport=32022 listenaddress=0.0.0.0"
+alias sshd_status="service ssh status && powershell.exe cmd /c netsh interface portproxy show all"
 
 # OpenVPN
-alias ovpn_on="sudo cp /etc/resolv.conf /tmp/resolvorig.conf && sudo cp $OPENVPN_PATH/resolvovpn.conf /etc/resolv.conf && echo 'OpenVPN mode ON'"
-alias ovpn_off="sudo cp /tmp/resolvorig.conf /etc/resolv.conf && echo 'OpenVPN mode OFF'"
+alias dnsleaktest="cat /etc/resolv.conf && echo 'DNS Leak Test' && bash $RUNSCRIPTS_PATH/dnsleaktest.sh"
+alias ovpn="bash $RUNSCRIPTS_PATH/ovpn_chattr.sh"
+
+# Pass-store
+alias passe="PASS_SUBDIR=ensibs/ PASSWORD_STORE_DIR=$PASSWORD_STORE_DIR/ensibs pass"
+alias passu="PASS_SUBDIR=ubiq/ PASSWORD_STORE_DIR=$PASSWORD_STORE_DIR/ubiq pass"
+alias passm="PASS_SUBDIR=matv/ PASSWORD_STORE_DIR=$PASSWORD_STORE_DIR/matv pass"
 
 # Miscellaneous
-alias chrome="bash $DEV_PATH/bash/run/chrome_pulse.sh"
-alias mount_z="sudo mount -t drvfs Z: /mnt/z"
+alias chrome="bash $RUNSCRIPTS_PATH/chrome_pulse.sh"
+#alias chrome="bash /home/matv/.config/sh/run/chrome_pulse.sh"
+alias doc-admin-lade="/usr/bin/wslview 'C:\Users\MatveevA\.lade\_docs\_273-admin-doc\index-admin.html'"
