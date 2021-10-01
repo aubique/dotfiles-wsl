@@ -5,7 +5,7 @@ ovpn_dns_up () {
     echo 'nameserver 208.67.222.222' | sudo tee /etc/resolv.conf
     echo 'nameserver 208.67.220.220' | sudo tee -a /etc/resolv.conf
     echo 'nameserver 192.168.1.254' | sudo tee -a /etc/resolv.conf
-    sudo cp $OPENVPN_PATH/wsl.conf /etc/wsl.conf
+    #sudo cp $OPENVPN_PATH/wsl.conf /etc/wsl.conf
     sudo chattr +i /etc/resolv.conf
     echo && echo 'OpenVPN mode for DNS: ON' && echo
 }
@@ -13,7 +13,7 @@ ovpn_dns_up () {
 ovpn_dns_off () {
     sudo chattr -i /etc/resolv.conf
     echo "nameserver $NAMESERV" | sudo tee /etc/resolv.conf
-    sudo rm -f /etc/wsl.conf
+    #sudo rm -f /etc/wsl.conf
     echo && echo 'OpenVPN mode for DNS: OFF' && echo
 }
 

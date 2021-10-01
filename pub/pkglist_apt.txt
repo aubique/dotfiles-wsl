@@ -1,6 +1,9 @@
 vim-gtk3
 tmux
 tmuxp
+ranger
+bat
+pv
 qalc
 sxiv
 gpg

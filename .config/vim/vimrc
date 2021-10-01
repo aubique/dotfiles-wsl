@@ -1,7 +1,6 @@
 set nocompatible
-" Set syntax, UTF8-encoding, Line Numbering, Text Width, modelines
+" Set UTF8-encoding, Line Numbering, Text Width, modelines
 language en_US.UTF-8
-syntax on
 set encoding=utf-8
 set number
 set modelines=0
@@ -114,6 +113,7 @@ au BufRead,BufNewFile *.md, set colorcolumn=75
 " ---------------------------------- "
 filetype off
 filetype plugin indent on
+syntax on
 "set rtp+=$VIMDOTDIR/bundle/Vundle.vim
 call vundle#begin()
 let vundle#bundle_dir = expand("$XDG_DATA_HOME/vim/bundle")
@@ -175,6 +175,7 @@ set foldcolumn=2
 " ---------------------------------- "
 hi clear SpellBad
 hi SpellBad cterm=underline,bold
+let g:csv_delimiter = ";"
 
 " ---------------------------------- "
 " Configure Tagbar

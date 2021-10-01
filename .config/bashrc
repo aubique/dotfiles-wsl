@@ -10,16 +10,21 @@ esac
 
 show_sourced_file '~/.bashrc'
 
-# don't put duplicate lines or lines starting with space in the history.
+# don't put some commands or lines starting with space in the history.
 # See bash(1) for more options
+HISTIGNORE="ls:ll:cd:pwd:bg:fg:history"
 HISTCONTROL=ignoreboth
 
 # append to the history file, don't overwrite it
 shopt -s histappend
 
-# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+# HISTSIZE: the number of commands to remember in the command history.
+# HISTFILESIZE: the maximum number of lines contained in the history file.
+# HISTTIMEFORMAT: time stamps for each command
+# for setting history length see bash(1)
 HISTSIZE=1000
 HISTFILESIZE=2000
+HISTTIMEFORMAT="%F %T "
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -167,7 +172,9 @@ export WINTERM_CONF=/mnt/c/Users/MatveevA/AppData/Local/Packages/Microsoft.Windo
 export VIMINIT='let $MYVIMRC="$VIMDOTDIR/vimrc" | source $MYVIMRC'
 #[[ -f $XDG_CONFIG_HOME/bash_env ]] && source $XDG_CONFIG_HOME/bash_env
 
-# Last cardinal lines for SDKMAN
+# Last cardinal lines for SDKMAN and NVM
 export SDKMAN_DIR=$HOME/.sdkman
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
-
+export NVM_DIR="$HOME/.config/nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # nvm loading
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # nvm bash_completion loading
