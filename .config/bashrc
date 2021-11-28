@@ -167,14 +167,7 @@ export BROWSER=/usr/bin/wslview
 export GPG_TTY=$(tty)
 # WIN vars
 export CHROME_EXEC=/mnt/c/Program\ Files\ \(x86\)/Google/Chrome/Application/chrome.exe
-export WINTERM_CONF=/mnt/c/Users/MatveevA/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json
+export WINTERM_CONF="$(readlink -e /mnt/c/Users/*/AppData/Local/Packages/Microsoft.WindowsTerminal_*/LocalState/settings.json)"
 # XDG interactive
 export VIMINIT='let $MYVIMRC="$VIMDOTDIR/vimrc" | source $MYVIMRC'
 #[[ -f $XDG_CONFIG_HOME/bash_env ]] && source $XDG_CONFIG_HOME/bash_env
-
-# Last cardinal lines for SDKMAN and NVM
-export SDKMAN_DIR=$HOME/.sdkman
-[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
-export NVM_DIR="$HOME/.config/nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # nvm loading
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # nvm bash_completion loading

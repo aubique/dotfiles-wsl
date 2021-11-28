@@ -1,6 +1,7 @@
 curl
 apt-transport-https
 ca-certificates
+software-properties-common
 tig
 tree
 zip unzip

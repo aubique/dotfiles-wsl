@@ -86,6 +86,7 @@ alias passf="PASS_SUBDIR=fam/ PASSWORD_STORE_DIR=$PASSWORD_STORE_DIR/fam pass"
 alias passm="PASS_SUBDIR=misc/ PASSWORD_STORE_DIR=$PASSWORD_STORE_DIR/misc pass"
 
 # Docker
+alias docker_info="docker system info 2>/dev/null | grep -e Operating\ System -e Name -e Containers -e Images --"
 alias genact="docker run -it --rm svenstaro/genact"
 
 # Miscellaneous

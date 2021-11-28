@@ -28,22 +28,28 @@ if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
-#export PATH
-
-# Strop out the problematic Windows PATH
-#PATH=$(echo "$PATH" | sed -e 's/:\/mnt.*//g')
-
 # Password-store extensions
 export PASSWORD_STORE_ENABLE_EXTENSIONS=true
 
-# Tmux
-#if [[ -z "$TMUX" ]]; then
-#    if tmux has-session 2>/dev/null; then
-#        exec tmux attach
-#    else
-#        exec tmux
-#    fi
-#fi
+# SDKMAN
+export SDKMAN_DIR=$XDG_DATA_HOME/sdkman
+[[ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ]] && source "$SDKMAN_DIR/bin/sdkman-init.sh"
+
+# VOLTA
+export VOLTA_HOME="$HOME/.local/share/volta"
+export PATH="$VOLTA_HOME/bin:$PATH"
+
+# This is a temporary hack until the following bug is fixed:
+# https://github.com/arkane-systems/genie/issues/201
+if \
+    [[ -v INSIDE_GENIE ]] \
+    && cat /etc/genie.ini | grep --quiet '^clone-path=true' \
+    && ! echo "$PATH" | grep --quiet '/WINDOWS/system32' \
+    && [ -f /run/genie.path ]
+then
+    echo "[DEBUG] Add content of '/run/genie.path' to PATH."
+    PATH="$PATH:$(cat /run/genie.path)"
+fi
 
 # verify if WSL whether initialized correctly or not
 bash -c "powershell.exe -Command Write-Host 'WSL2 initialized correctly'"
