@@ -160,14 +160,15 @@ if [[ -z "$PULSE_SERVER" ]]; then
 fi
 printf "IP WSL : %s\n" $NAMESERV
 
-# ENV vars
+# WIN vars
+export WIN_HOME_RAW="$(cmd.exe /c '<nul set /p=%UserProfile%' 2>/dev/null)"
+export WIN_HOME="$(wslpath -u $WIN_HOME_RAW)"
+export WIN_TERM="$WIN_HOME/AppData/Local/Packages/Microsoft.WindowsTerminal_*/LocalState/settings.json"
+export CHROME_EXEC=/mnt/c/Program\ Files\ \(x86\)/Google/Chrome/Application/chrome.exe
+# ENV vars (interactive)
 export EDITOR=/usr/bin/vim
 export BROWSER=/usr/bin/wslview
 # GPG term mode (ioctl for device)
 export GPG_TTY=$(tty)
-# WIN vars
-export CHROME_EXEC=/mnt/c/Program\ Files\ \(x86\)/Google/Chrome/Application/chrome.exe
-export WINTERM_CONF="$(readlink -e /mnt/c/Users/*/AppData/Local/Packages/Microsoft.WindowsTerminal_*/LocalState/settings.json)"
-# XDG interactive
+# XDG vars (interactive)
 export VIMINIT='let $MYVIMRC="$VIMDOTDIR/vimrc" | source $MYVIMRC'
-#[[ -f $XDG_CONFIG_HOME/bash_env ]] && source $XDG_CONFIG_HOME/bash_env
