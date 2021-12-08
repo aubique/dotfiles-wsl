@@ -1,4 +1,4 @@
-curl
+git curl wget
 apt-transport-https
 ca-certificates
 software-properties-common
@@ -10,8 +10,7 @@ tmux
 tmuxp
 fzf
 pass
-gpg
-gnupg-agent
+gpg gnupg-agent
 ranger
 bat
 pv
@@ -19,8 +18,8 @@ qalc
 sxiv
 traceroute
 ldap-utils
-mlocate
+javascript-common
+grip
 jq
 sox
 libsox-fmt-mp3
-ncdu
