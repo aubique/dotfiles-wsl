@@ -10,7 +10,7 @@
 
 <p align="center">
   <a href="#about">About</a> •
-  <a href="#wsl2">WSL2</a> •
+  <a href="#windows-11">Windows 11</a> •
   <a href="#chocolatey">Chocolatey</a> •
   <a href="#ubuntu">Ubuntu</a> •
   <a href="#todo">Todo</a>
@@ -23,24 +23,44 @@ and [WSL2](https://docs.microsoft.com/en-us/windows/wsl/compare-versions) with U
 The setup is mainly focused on [IntelliJ IDEA](https://www.jetbrains.com/idea/features) being the primary working tool and for tasks related to programming,
 for other tasks I am using [Windows Terminal](https://docs.microsoft.com/en-us/windows/terminal).
 
-## WSL2
+## Windows 11
 
-### Install Windows Linux Subversion 2
+To set up Windows 11 after fresh install in automatic mode,
+let's download the [Sophia Script](https://github.com/farag2/Sophia-Script-for-Windows).
 
-Enable __WSL__ and __VirtualMachinePlatform__ features in Powershell console:
-
+Download and expand the latest Powershell module of the script:
 ```powershell
-dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
-dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
+irm script.sophi.app | iex
 ```
-> Commands are meant to be executed as Administrator
 
-Reboot your PC. Download and install the
-[Linux kernel update package](https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi):
+> Command below are meant to be executed in Administrator mode.
+
+Set execution policy, get into the module directory, download our custom script preset and launch it:
+```powershell
+Set-ExecutionPolicy Bypass -Scope Process -Force; Set-Location -Path ((New-Object -ComObject Shell.Application).Namespace('shell:Downloads').Self.Path + '\Sophi*'); (New-Object System.Net.WebClient).DownloadString('https://gist.githubusercontent.com/aubique/871ad87ef7a801d17942ca3974cd9909/raw/be81fb323bf75ba3e97ee6225a8a26bcb5ff4510/Sophie.ps1') | Out-File .\Sophie.ps1; .\Sophie.ps1
+```
+
+Script will set up environment, customize appearance, remove telemetry and UWPApp bloatware.
+For WSL2 it installs Virtual Machine Platform, WSL Kernel and GUI App Support.
+After you've completed running script functions, restart the PC and proceed with Linux distribution installation:
+```powershell
+wsl --install -d Ubuntu
+```
 
 <details>
-  <summary>Install the update via Powershell (as admin).</summary>
+  <summary>Install WSL2 manually</summary>
 
+  Enable __WSL__ and __VirtualMachinePlatform__ features in Powershell console:
+
+  ```powershell
+  dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
+  dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
+  ```
+
+  Reboot your PC. Download and install the
+  [Linux kernel update package](https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi):
+
+  Install the update via Powershell:
   ```powershell
   $wslUpdateInstallerUrl = "https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi"
   $downloadFolderPath = (New-Object -ComObject Shell.Application).NameSpace('shell:Downloads').Self.Path
@@ -49,15 +69,15 @@ Reboot your PC. Download and install the
   $wc.DownloadFile($wslUpdateInstallerUrl, $wslUpdateInstallerFilePath)
   Start-Process -Filepath "$wslUpdateInstallerFilePath"
   ```
-</details>
 
-Set WSL default version to __2__
-```powershell
-wsl --set-default-version 2
-```
+  Set WSL default version to __2__
+  ```powershell
+  wsl --set-default-version 2
+  ```
 
 - [Install Ubuntu from __Microsoft Store__](https://www.microsoft.com/fr-fr/p/ubuntu/9nblggh4msv6)
 - [Install Ubuntu from __Chocolatey__](https://community.chocolatey.org/packages/wsl-ubuntu-2004)
+</details>
 
 ### Dotfiles
 
@@ -77,12 +97,33 @@ we delete temporary folder, update configs, sub-modules and aliases.
 ```bash
 rm -r tempfiles
 for s in source "/etc/profile" "$HOME/.profile"; do source $s; done
-dotfiles submodule update --init
 ```
+
+Get back to $HOME and synchronize the sub-modules:
+```bash
+cd && dotfiles submodule update --init
+```
+
+<details>
+  <summary>Install <b>Vim</b> plugins</summary>
+
+  This repo contains a [Vundle](https://github.com/gmarik/Vundle.vim) sub-module repository.
+  That's an extension manager that helps to manage environment with plugins properly.
+
+  In case you didn't get managed to download Vundle plugin during the [set above](#dotilfes),
+  clone it directly from GitHub:
+  ```bash
+  git clone https://github.com/VundleVim/Vundle.vim.git ~/.local/share/vim/bundle/Vundle.vim
+  ```
+
+  Afterwards, you have to open **Vim** and run `:PluginInstall`
+  that downloads automatically the plugins listed in your `$VIMDOTDIR/vimrc`.
+</details>
 
 ## Chocolatey
 
-Chocolatey is software management automation for Windows that wraps installers,
+[Chocolatey](https://github.com/chocolatey/choco)
+is software management automation for Windows that wraps installers,
 executables, zips and scripts into compiled packages.
 
 ### Install Chocolatey CLI
@@ -100,12 +141,12 @@ using Chocolatey in administrative shell, check out a list of installed packages
 
 Install a pack of applications listed in `pkglist_choco.txt`:
 ```ps1
-Get-Content \\wsl$\Ubuntu*\home\*\pub\pkglist_choco.txt | Select-String -NotMatch '^#.*' | ForEach {choco install -y $_}
+Get-Content \\wsl$\Ubuntu\home\*\pub\pkglist_choco.txt | Select-String -NotMatch '^#.*' | ForEach {choco install -y $_}
 ```
 
 ### Tweaks
 
-You may want to clean up the context menu and make some useful tweaks for Windows 11.
+You may want to clean up the context menu and make some useful tweaks for Windows.
 
 <details>
   <summary>Remove <b>VLC</b> from context menu.</summary>
@@ -117,34 +158,19 @@ You may want to clean up the context menu and make some useful tweaks for Window
   ```
 </details>
 
-> Prior to running any of the scripts below please inspect files to ensure safety.
+<details>
+  <summary>Hide <b>7-Zip</b> cascaded context menu.</summary>
 
-Commit some tweaks to the Registry Editor by importing the gist.
-```powershell
-Invoke-Command {reg import https://gist.github.com/aubique/cb81f8064cc0e034eb0b2660037c8f33/raw/64c7b9680122eb3d49a63d94f1163d4567385540/windows-tweaks.reg *>&1 | Out-Null}
-```
+  With `regedit.exe` you can find `HKEY_CLASSES_ROOT\CLSID{23170F69-40C1-278A-1000-000100020000}`
+  that's linked to the 7-Zip DLL file.
 
-Then, we debloat Windows and remove unwanted apps:
-```powershell
-Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://gist.githubusercontent.com/y0lopix/bca18265869e5da9068de0a6729bc262/raw/64c7b9680122eb3d49a63d94f1163d4567385540/windows-uninstall-apps.ps1'))
-```
+  All 7-Zip context menu options are defined in this DLL file,
+  they're invoked every time Windows needs to show the menu and thus not static.
 
-> For Windows 11 you can also use the fine-tuning [__Sophia Script__](https://github.com/farag2/Sophia-Script-for-Windows.git) from GitHub.
+  You can disable these options with 7-Zip GUI via menu __Tools -- Options -- 7-Zip -- Integrate 7-Zip to shell context menu__
+</details>
 
-#### Windows Firewall
-
-You can set a rule in `wf.msc` by subnet and interface dedicated to WSL2:
-```powershell
-New-NetFirewallRule -DisplayName "from WSL2" -Direction Inbound -Action Allow -LocalAddress "172.16.0.0/12" -InterfaceAlias "vEthernet (WSL)"
-```
-
-You can also allow SSH connections on 32022 and open other ports to access VMWare virtual machines.
-```powershell
-New-NetFirewallRule -DisplayName "SSH/RDP > WSL2" -Direction Inbound -Action Allow -Protocol TCP -LocalAddress 192.168.1.0/24,172.16.0.0/12 -LocalPort 32022,3389
-New-NetFirewallRule -DisplayName "SSH/HTTP(S) > VMWare" -Direction Inbound -Action Allow -Protocol TCP -LocalAddress 192.168.1.0/24,172.16.0.0/12,172.28.144.0/24 -LocalPort 32020,32021,32023-32025,32080,32443,64190
-```
-
-> To set up SSH Server on WSL2, [check out the step describing it below](#ssh-server).
+> For Windows 10 you can use another [Powershell debloater](https://github.com/Sycnex/Windows10Debloater) from GitHub.
 
 ### Windows Terminal
 
@@ -157,9 +183,10 @@ or to elevate the current shell, in the current console window or a new one.
 
 Now you can elevate permissions `powershell.exe gsudo powershell.exe -nologo`.
 If you set it up in `settings.json` you can launch it on Windows Terminal.
+To do that, you can paste the content of profiles.
 
-To do that, you can paste the content of profiles to
-`C:\Users\YOUR-USER\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json`:
+- Windows 11: `$env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json`
+- WSL 2: `/mnt/c/Users/*/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json`
 
 <details>
   <summary><b><code>settings.json</code></b></summary>
@@ -170,19 +197,32 @@ To do that, you can paste the content of profiles to
       {
           "defaults":
           {
-              ...,
-              "cursorColor": "#FFFFFF",
-              "cursorShape": "bar",
-              "font":
-              {
-                  "face": "Cascadia Code",
-                  "size": 12
-              },
               ...
           },
           "list":
           [
-              {...},
+              {
+                  "acrylicOpacity": 0.90000000000000002,
+                  "bellStyle": 
+                  [
+                      "window",
+                      "taskbar"
+                  ],
+                  "name": "Ubuntu WSL \ud83d\udccc",
+                  "commandline": "wsl genie -c ~/.config/scripts/genie-tmux.sh",
+                  "font": 
+                  {
+                      "face": "Lucida Console"
+                  },
+                  "guid": "{2862b68e-b019-4846-bbdd-5f10c363cb1a}",
+                  "icon": "ms-appdata:///roaming/ubuntu_32px.png",
+                  "suppressApplicationTitle": true,
+                  "useAcrylic": true
+              },
+              {
+                  "name": "Ubuntu WSL \u25a4",
+                  "source": "Windows.Terminal.Wsl",
+              },
               {
                   "name": "PowerShell \u26a1",
                   "commandline": "powershell.exe gsudo powershell.exe -nologo",
@@ -190,17 +230,6 @@ To do that, you can paste the content of profiles to
                   "icon": "ms-appx:///Images/Square44x44Logo.targetsize-32.png",
                   "suppressApplicationTitle": true,
                   "padding": "0, 0, 0, 0"
-              },
-              {
-                  "name": "Ubuntu WSL \ud83d\udccc",
-                  "commandline": "wsl genie -c ~/.config/scripts/genie-tmux.sh",
-                  "guid": "{2862b68e-b019-4846-bbdd-5f10c363cb1a}",
-                  "icon": "ms-appdata:///roaming/ubuntu_32px.png",
-                  "suppressApplicationTitle": true
-              },
-              {
-                  "name": "Ubuntu WSL \u25a4",
-                  "source": "Windows.Terminal.Wsl",
               }
           ]
       }
@@ -217,6 +246,21 @@ Follow the steps above to get Ubuntu and dotfiles installed.
 
 Check out [docs.microsoft.com](https://docs.microsoft.com/en-us/windows/terminal/customize-settings/profile-appearance)
 to figure out the profile settings in Windows Terminal.
+
+### Windows Firewall
+
+You can set a rule in `wf.msc` by subnet and interface dedicated to WSL2:
+```powershell
+New-NetFirewallRule -DisplayName "from WSL2" -Direction Inbound -Action Allow -LocalAddress "172.16.0.0/12" -InterfaceAlias "vEthernet (WSL)"
+```
+
+You can also allow SSH connections on 32022 and open other ports to access VMWare virtual machines.
+```powershell
+New-NetFirewallRule -DisplayName "SSH/RDP > WSL2" -Direction Inbound -Action Allow -Protocol TCP -LocalAddress 192.168.1.0/24,172.16.0.0/12 -LocalPort 32022,3389
+New-NetFirewallRule -DisplayName "SSH/HTTP(S) > VMWare" -Direction Inbound -Action Allow -Protocol TCP -LocalAddress 192.168.1.0/24,172.16.0.0/12,172.28.144.0/24 -LocalPort 32020,32021,32023-32025,32080,32443,64190
+```
+
+> To set up SSH Server on WSL2, [check out the step describing it below](#ssh-server).
 
 ### IntelliJ IDEA
 
@@ -238,21 +282,21 @@ Install Ubuntu packages and proceed with setup of the WSL2 environment.
 
 Now we can install common dependencies and packages to setup our environment:
 ```bash
-grep -vE '^#' ~/pub/pkglist_apt.txt | xargs sudo apt install -y
+sudo apt update && grep -vE '^#' ~/pub/pkglist_apt.txt | xargs sudo apt install -y
 ```
 
-### Vim
+### SSH Server
 
-This repo contains a [Vundle](https://github.com/gmarik/Vundle.vim) sub-module repository.
-That's an extension manager that helps to manage environment with plugins properly.
+To run `sshd` on WSL2 machine, you should generate and upload the SSH key to your WSL2 environment.
+It's well described in the ["How To Generate and Upload SSH keys" gist](https://gist.github.com/aubique/b3ce68a043c46d7ae537bc98e7b4285d).
 
-In case you couldn't download Vundle plugin during the [Dotfiles installation step](#dotilfes),
-clone it directly from GitHub:
+For the first connection you can enable SSH password authentication via port 32022:
+
 ```bash
-git clone https://github.com/VundleVim/Vundle.vim.git ~/.local/share/vim/bundle/Vundle.vim
+sudo ssh-keygen -A
+sudo sed -E -e 's/^[# ]*(Port )[0-9]+$/\132022/g' -e 's/^[# ]*(PasswordAuthentication )no/\1yes/g' -i /etc/ssh/sshd_config
+sudo service ssh restart
 ```
-
-Afterwards, you have to open **Vim** and run `:PluginInstall` that downloads the plugins listed in your `$VIMDOTDIR/vimrc`.
 
 ### GPG keys
 
@@ -320,19 +364,6 @@ Add the generated pubic SSH keys to your profile:
 - [Add your key to __GitHub__](https://github.com/settings/ssh/new)
 - [Add your key to __GitLab__](https://gitlab.com/-/profile/keys)
 > For title you can pick a name of the key, such as `WSL2 (gl-au.pub): 2021-12-07`
-
-### SSH Server
-
-To run `sshd` on WSL2 machine, you should generate and upload the SSH key to your WSL2 environment.
-It's well described in the ["How To Generate and Upload SSH keys" gist](https://gist.github.com/aubique/b3ce68a043c46d7ae537bc98e7b4285d).
-
-For the first connection you can enable SSH password authentication via port 32022:
-
-```bash
-sudo ssh-keygen -A
-sudo sed -E -e 's/^[# ]*(Port )[0-9]+$/\132022/g' -e 's/^[# ]*(PasswordAuthentication )no/\1yes/g' -i /etc/ssh/sshd_config
-sudo service ssh restart
-```
 
 ### Systemd
 
@@ -415,7 +446,7 @@ echo \
   Pin-Priority: 100
   EOF
   ```
-  
+
   > Setting the `Pin-Priority` to a value less than other repositories, which are 500 by default,
   >prevents packages in the Docker repository from overriding packages with the same name from default repositories.
   >This way you don't get the standard system package (e.g. new version of openssl) from Docker repository unless you specifically request it.
@@ -480,7 +511,7 @@ sdk install java 11.0.11.hs-adpt
 ## TODO
 
 - [ ] Upgrade the [Windows Tweaks part](#tweaks) with refined integration scripts for Windows 11.
-- [ ] Add a license and animated GIF screenshot of the IDE.
+- [ ] Add an animated GIF screenshot of the IDE.
 - [ ] Explain how to use git repository to [sync IDE settings](#intellij-idea).
 
 ## Resources

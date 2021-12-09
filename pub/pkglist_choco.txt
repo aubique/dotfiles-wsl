@@ -1,4 +1,3 @@
-#wsl-ubuntu-2004
 #googlechrome
 #dell-system-update
 #dellcommandupdate
@@ -6,6 +5,7 @@
 gsudo
 notepadplusplus
 adobereader
+vim
 vlc
 zoom
 7zip
@@ -15,9 +15,8 @@ caffeine
 ffmpeg
 spotify
 vnc-viewer
+teamviewer
 vmwareworkstation
 intellijidea-ultimate
 vscodium
 postman
-jenkins-x
-vim
