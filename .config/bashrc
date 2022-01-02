@@ -164,10 +164,14 @@ fi
 printf "IP WSL : %s\n" $NAMESERV
 
 # WIN vars
-export WIN_HOME_RAW="$(cmd.exe /c '<nul set /p=%UserProfile%' 2>/dev/null)"
-export WIN_HOME="$(wslpath -u $WIN_HOME_RAW)"
-export WIN_TERM="$WIN_HOME/AppData/Local/Packages/Microsoft.WindowsTerminal_*/LocalState/settings.json"
 export CHROME_EXEC=/mnt/c/Program\ Files\ \(x86\)/Google/Chrome/Application/chrome.exe
+export WIN_HOME_RAW="$(cmd.exe /c '<nul set /p=%UserProfile%' 2>/dev/null)"
+if [[ -z "$WIN_HOME_RAW" ]]; then
+  export WIN_HOME="$(find /mnt/*/Users/ -maxdepth 1 ! -path /mnt/*/Users/ -type d -not -name Default -not -name Public)"
+else
+  export WIN_HOME="$(wslpath -u $WIN_HOME_RAW)"
+fi
+export WIN_TERM="$WIN_HOME/AppData/Local/Packages/Microsoft.WindowsTerminal_*/LocalState/settings.json"
 # ENV vars (interactive)
 export EDITOR=/usr/bin/vim
 export BROWSER=/usr/bin/wslview
@@ -175,3 +179,9 @@ export BROWSER=/usr/bin/wslview
 export GPG_TTY=$(tty)
 # XDG vars (interactive)
 export VIMINIT='let $MYVIMRC="$VIMDOTDIR/vimrc" | source $MYVIMRC'
+# SDKMAN
+export SDKMAN_DIR=$XDG_DATA_HOME/sdkman
+[[ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ]] && source "$SDKMAN_DIR/bin/sdkman-init.sh"
+# VOLTA
+export VOLTA_HOME="$HOME/.local/share/volta"
+export PATH="$VOLTA_HOME/bin:$PATH"

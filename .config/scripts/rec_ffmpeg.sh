@@ -1,6 +1,7 @@
 #!/bin/bash
 
-RECORD_FOLDER=$HOME/_win/Music/rec
+#RECORD_FOLDER=$HOME/mus/_Music/rec
+RECORD_FOLDER=$HOME/mus/rec
 
 EXEC_DATE=$(date '+%Y%m%d_%H%M%S')
 FILE_DIR="$(readlink -e $RECORD_FOLDER)"

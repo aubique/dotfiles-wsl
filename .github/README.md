@@ -37,11 +37,11 @@ irm script.sophi.app | iex
 
 Set execution policy, get into the module directory, download our custom script preset and launch it:
 ```powershell
-Set-ExecutionPolicy Bypass -Scope Process -Force; Set-Location -Path ((New-Object -ComObject Shell.Application).Namespace('shell:Downloads').Self.Path + '\Sophi*'); (New-Object System.Net.WebClient).DownloadString('https://gist.githubusercontent.com/aubique/871ad87ef7a801d17942ca3974cd9909/raw/be81fb323bf75ba3e97ee6225a8a26bcb5ff4510/Sophie.ps1') | Out-File .\Sophie.ps1; .\Sophie.ps1
+Set-ExecutionPolicy Bypass -Scope Process -Force; Set-Location -Path ((New-Object -ComObject Shell.Application).Namespace('shell:Downloads').Self.Path + '\Sophi*'); (New-Object System.Net.WebClient).DownloadString('https://gist.githubusercontent.com/aubique/871ad87ef7a801d17942ca3974cd9909/raw/4fb0da69e585cbf33804bab5feb0339c0ac1d0ad/Sophie.ps1') | Out-File .\Sophie.ps1; .\Sophie.ps1
 ```
 
 Script will set up environment, customize appearance, remove telemetry and UWPApp bloatware.
-For WSL2 it installs Virtual Machine Platform, WSL Kernel and GUI App Support.
+For WSL2 it installs Virtual Machine Platform, WSL Kernel and GUI App Support (WSLg).
 After you've completed running script functions, restart the PC and proceed with Linux distribution installation:
 ```powershell
 wsl --install -d Ubuntu
@@ -120,6 +120,30 @@ cd && dotfiles submodule update --init
   that downloads automatically the plugins listed in your `$VIMDOTDIR/vimrc`.
 </details>
 
+### User Shell Folders
+
+There is no point to keep all the user files on drive `C:\` or the same partition that has the Windows directory.
+You can't move all user files but you can certainly relocate Documents,
+Pictures, Videos, Downloads, Music to a different partition (drive).
+
+While you allocate a distinct partition with `diskmgmt.msc`,
+you may find more intuitive to adapt Linux Filesystem Hierarchy standard (FHS) on it.
+Then synchronize the Windows user shell folders with WSL home user folders.
+
+You can change user folder programmatically executing the script with interactive prompt:
+
+```bash
+bash $RUNSCRIPTS_PATH/relocate_user_shell_folders.sh
+```
+
+> The bash script is backed up by `ps1` scripts so make sure that Powershell is initialized properly.
+
+The script automates such tasks:
+
+1. Move User Shell folder location to another drive or directory
+2. Link the $HOME user folders for WSL to the existing Windows user shell folders
+3. Update Windows system PATH environment variable with the links on new partition
+
 ## Chocolatey
 
 [Chocolatey](https://github.com/chocolatey/choco)
@@ -144,9 +168,10 @@ Install a pack of applications listed in `pkglist_choco.txt`:
 Get-Content \\wsl$\Ubuntu\home\*\pub\pkglist_choco.txt | Select-String -NotMatch '^#.*' | ForEach {choco install -y $_}
 ```
 
-### Tweaks
+### Context Menu
 
-You may want to clean up the context menu and make some useful tweaks for Windows.
+After having installed Chocolatey and packages,
+you may want to clean up the context menu.
 
 <details>
   <summary>Remove <b>VLC</b> from context menu.</summary>
@@ -215,13 +240,15 @@ To do that, you can paste the content of profiles.
                       "face": "Lucida Console"
                   },
                   "guid": "{2862b68e-b019-4846-bbdd-5f10c363cb1a}",
-                  "icon": "ms-appdata:///roaming/ubuntu_32px.png",
+                  "icon": "https://assets.ubuntu.com/v1/49a1a858-favicon-32x32.png",
                   "suppressApplicationTitle": true,
                   "useAcrylic": true
               },
               {
                   "name": "Ubuntu WSL \u25a4",
                   "source": "Windows.Terminal.Wsl",
+                  "colorScheme": "UbuntuLegit",
+                  "guid": "{2c4de342-38b7-51cf-b940-2309a097f518}"
               },
               {
                   "name": "PowerShell \u26a1",
@@ -298,32 +325,6 @@ sudo sed -E -e 's/^[# ]*(Port )[0-9]+$/\132022/g' -e 's/^[# ]*(PasswordAuthentic
 sudo service ssh restart
 ```
 
-### GPG keys
-
-If you have GPG secret keys for signing commits or password manager, restore them.
-
-On old system, create a backup of a GPG key:
-```bash
-gpg --list-secret-keys
-gpg --export-secret-keys {{KEY_ID}} > /tmp/private.key
-```
-
-On new system, import the key:
-```bash
-gpg --import /tmp/private.key
-```
-
-Delete the `/tmp/private.key` on both side and install password manager you prefer.
-
-> You can check permissions for gnupg with `gpg --card-status`
-
-If you have __"Permission Denied"__ problem then you can type:
-```bash
-mkdir -pv ~/.config/gnupg
-find $GNUPGHOME -type d -exec sudo chown $USER:$USER {} \; -exec chmod 700 {} \;
-find $GNUPGHOME -type f -exec sudo chown $USER:$USER {} \; -exec chmod 600 {} \;
-```
-
 ### Git
 
 Configure Git and set username/email:
@@ -365,19 +366,45 @@ Add the generated pubic SSH keys to your profile:
 - [Add your key to __GitLab__](https://gitlab.com/-/profile/keys)
 > For title you can pick a name of the key, such as `WSL2 (gl-au.pub): 2021-12-07`
 
+### GPG keys
+
+If you have GPG secret keys for signing commits or password manager, restore them.
+
+On old system, create a backup of a GPG key:
+```bash
+gpg --list-secret-keys
+gpg --export-secret-keys {{KEY_ID}} > /tmp/private.key
+```
+
+On new system, import the key:
+```bash
+gpg --import /tmp/private.key
+```
+
+Delete the `/tmp/private.key` on both side and install password manager you prefer.
+
+> You can check permissions for gnupg with `gpg --card-status`
+
+If you have __"Permission Denied"__ problem then you can type:
+```bash
+mkdir -pv ~/.config/gnupg
+find $GNUPGHOME -type d -exec sudo chown $USER:$USER {} \; -exec chmod 700 {} \;
+find $GNUPGHOME -type f -exec sudo chown $USER:$USER {} \; -exec chmod 600 {} \;
+```
+
 ### Systemd
 
 Allow starting services like Docker with a systemd "bottle",
 [arkane-systems/genie](https://github.com/arkane-systems/genie).
 
-Setup Microsoft repository (Genie depends on .NET)
+Set up Microsoft repository (Genie depends on .NET)
 ```bash
 curl -sL -o /tmp/packages-microsoft-prod.deb "https://packages.microsoft.com/config/ubuntu/$(lsb_release -rs)/packages-microsoft-prod.deb"
 sudo dpkg -i /tmp/packages-microsoft-prod.deb
 rm -f /tmp/packages-microsoft-prod.deb
 ```
 
-Setup Arkane-Systems GPG key:
+Set up Arkane-Systems GPG key:
 ```bash
 sudo curl -sL -o /usr/share/keyrings/wsl-transdebian.gpg https://arkane-systems.github.io/wsl-transdebian/apt/wsl-transdebian.gpg
 ```
@@ -400,10 +427,9 @@ Disable unwanted `systemd` services:
 cat ~/pub/systemd_disabled.txt | xargs sudo systemctl disable
 ```
 
-Install custom config by replacing the system one:
+Download and install custom config by replacing the system one:
 ```bash
-sudo cp /pub/etc/genie.ini /etc/genie.ini
-```
+sudo curl -sL -o /etc/genie.ini https://gist.githubusercontent.com/aubique/871ad87ef7a801d17942ca3974cd9909/raw/4fb0da69e585cbf33804bab5feb0339c0ac1d0ad/genie.ini```
 
 Or by linking it:
 ```bash
@@ -455,7 +481,7 @@ echo \
 Update the `apt` package index, install the latest version of Docker Engine
 and containerd and add user to `docker` group:
 ```bash
-sudp apt update
+sudo apt update
 sudo apt install -y docker-ce docker-ce-cli containerd.io
 sudo usermod -aG docker $USER
 ```
@@ -503,6 +529,12 @@ mkdir -p $SDKMAN_DIR
 curl -s "https://get.sdkman.io?rcupdate=false" | bash
 ```
 
+To initialize SDKMAN module scripts open a new terminal.
+Otherwise, run the following in the existing one:
+```bash
+source $SDKMAN_DIR/bin/sdkman-init.sh
+```
+
 Install AdoptOpenJDK 11:
 ```bash
 sdk install java 11.0.11.hs-adpt
@@ -510,7 +542,7 @@ sdk install java 11.0.11.hs-adpt
 
 ## TODO
 
-- [ ] Upgrade the [Windows Tweaks part](#tweaks) with refined integration scripts for Windows 11.
+- [x] Upgrade the [Windows Tweaks part](#tweaks) with refined integration scripts for Windows 11.
 - [ ] Add an animated GIF screenshot of the IDE.
 - [ ] Explain how to use git repository to [sync IDE settings](#intellij-idea).
 
@@ -521,8 +553,9 @@ sdk install java 11.0.11.hs-adpt
 - https://github.com/Alex-D/dotfiles
 
 ### Useful links and docs
-- https://github.com/abergs/ubuntuonwindows
+- https://github.com/microsoft/wslg
 - https://github.com/arkane-systems/genie/wiki
+- https://github.com/abergs/ubuntuonwindows
 - https://docs.docker.com/engine/install/ubuntu
 - https://github.com/jonaspetersorensen/dotfiles-wsl
 - https://stackoverflow.com/questions/37776684/which-intellij-config-files-should-i-save-in-my-dotfiles
