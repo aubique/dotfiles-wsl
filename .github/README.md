@@ -127,7 +127,7 @@ You can't move all user files but you can certainly relocate Documents,
 Pictures, Videos, Downloads, Music to a different partition (drive).
 
 While you allocate a distinct partition with `diskmgmt.msc`,
-you may find more intuitive to adapt Linux Filesystem Hierarchy standard (FHS) on it.
+you may find more intuitive to adopt Linux Filesystem Hierarchy Standard (FHS) on it.
 Then synchronize the Windows user shell folders with WSL home user folders.
 
 You can change user folder programmatically executing the script with interactive prompt:
@@ -136,7 +136,7 @@ You can change user folder programmatically executing the script with interactiv
 bash $RUNSCRIPTS_PATH/relocate_user_shell_folders.sh
 ```
 
-> The bash script is backed up by `ps1` scripts so make sure that Powershell is initialized properly.
+> The bash script is provided with `ps1` scripts, so make sure that Powershell is initialized properly.
 
 The script automates such tasks:
 
@@ -165,7 +165,7 @@ using Chocolatey in administrative shell, check out a list of installed packages
 
 Install a pack of applications listed in `pkglist_choco.txt`:
 ```ps1
-Get-Content \\wsl$\Ubuntu\home\*\pub\pkglist_choco.txt | Select-String -NotMatch '^#.*' | ForEach {choco install -y $_}
+Get-Content \\wsl$\Ubuntu\home\*\pub\pkglist_choco.txt | Select-String -NotMatch '^#.*' | ForEach {iex "choco install -y $_"}
 ```
 
 ### Context Menu
@@ -187,12 +187,10 @@ you may want to clean up the context menu.
   <summary>Hide <b>7-Zip</b> cascaded context menu.</summary>
 
   With `regedit.exe` you can find `HKEY_CLASSES_ROOT\CLSID{23170F69-40C1-278A-1000-000100020000}`
-  that's linked to the 7-Zip DLL file.
-
-  All 7-Zip context menu options are defined in this DLL file,
+  that's linked to the 7-Zip DLL file. All 7-Zip context menu options are defined in this DLL file,
   they're invoked every time Windows needs to show the menu and thus not static.
 
-  You can disable these options with 7-Zip GUI via menu __Tools -- Options -- 7-Zip -- Integrate 7-Zip to shell context menu__
+  You can disable these options with 7-Zip GUI (as Admin) via menu __Tools -- Options -- 7-Zip -- Integrate 7-Zip to shell context menu__
 </details>
 
 > For Windows 10 you can use another [Powershell debloater](https://github.com/Sycnex/Windows10Debloater) from GitHub.
@@ -424,12 +422,13 @@ sudo apt update && sudo apt install -y systemd-genie
 
 Disable unwanted `systemd` services:
 ```bash
-cat ~/pub/systemd_disabled.txt | xargs sudo systemctl disable
+curl -sSL https://gist.githubusercontent.com/aubique/871ad87ef7a801d17942ca3974cd9909/raw/4fb0da69e585cbf33804bab5feb0339c0ac1d0ad/genie_systemd_disabled.txt | xargs sudo systemctl disable
 ```
 
 Download and install custom config by replacing the system one:
 ```bash
 sudo curl -sL -o /etc/genie.ini https://gist.githubusercontent.com/aubique/871ad87ef7a801d17942ca3974cd9909/raw/4fb0da69e585cbf33804bab5feb0339c0ac1d0ad/genie.ini```
+```
 
 Or by linking it:
 ```bash
@@ -493,7 +492,7 @@ Now you can start Docker daemon via [Systemd](#systemd).
 ```bash
 sudo curl -sL -o /usr/local/bin/docker-compose \
   $(curl -s https://api.github.com/repos/docker/compose/releases/latest \
-  | grep "browser_download_url.*$(uname -s)-$(uname -m)" | grep -v sha \
+  | grep -i "browser_download_url.*$(uname -s)-$(uname -m)" | grep -v sha \
   | cut -d: -f2,3 | tr -d \")
 ```
 

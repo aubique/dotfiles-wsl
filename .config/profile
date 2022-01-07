@@ -43,5 +43,11 @@ then
     PATH="$PATH:$(cat /run/genie.path)"
 fi
 
+# SDKMAN (login)
+export SDKMAN_DIR=$XDG_DATA_HOME/sdkman
+[[ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ]] && source "$SDKMAN_DIR/bin/sdkman-init.sh"
+# VOLTA (login)
+export VOLTA_HOME="$HOME/.local/share/volta"
+export PATH="$VOLTA_HOME/bin:$PATH"
 # verify if WSL whether initialized correctly or not
 bash -c "powershell.exe -Command Write-Host 'WSL2 initialized correctly'"

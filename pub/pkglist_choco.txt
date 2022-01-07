@@ -17,6 +17,5 @@ spotify
 vnc-viewer
 teamviewer
 vmwareworkstation
-intellijidea-ultimate
-vscodium
+vscode --params="'/NoDesktopIcon /NoAddContextMenuFolders /AssociateWithFiles'"
 postman

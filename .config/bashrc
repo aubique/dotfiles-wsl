@@ -179,9 +179,9 @@ export BROWSER=/usr/bin/wslview
 export GPG_TTY=$(tty)
 # XDG vars (interactive)
 export VIMINIT='let $MYVIMRC="$VIMDOTDIR/vimrc" | source $MYVIMRC'
-# SDKMAN
+# SDKMAN (interactive)
 export SDKMAN_DIR=$XDG_DATA_HOME/sdkman
 [[ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ]] && source "$SDKMAN_DIR/bin/sdkman-init.sh"
-# VOLTA
+# VOLTA (interactive)
 export VOLTA_HOME="$HOME/.local/share/volta"
 export PATH="$VOLTA_HOME/bin:$PATH"

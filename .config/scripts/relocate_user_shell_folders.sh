@@ -15,14 +15,14 @@ ask_params() {
 	# Parent directory (drive) for WSL2 as '/home'
 	WSL_WINDATA_DRIVE="/mnt/d"
 
-	echo "What drive do you prefer for WSL home directory? (Use Unix-based separator symbol)"
+	echo "What drive do you want for WSL home directory? (Use Unix-based separator symbol)"
 	read -p "WSL_WINDATA_DRIVE [default: $WSL_WINDATA_DRIVE]: " WSL_WINDATA_DRIVE_NEW
 	[ "$WSL_WINDATA_DRIVE_NEW" != "" ] && export WSL_WINDATA_DRIVE=$WSL_WINDATA_DRIVE_NEW
 
 	# Final directory containing Windows User Shell Folders, in sync with WSL $HOME
 	WSL_WINDATA_USER="$WSL_WINDATA_DRIVE/home/$USER"
 
-	echo "What directory do you want for User Shell Folders?"
+	echo "What directory do you prefer for User Shell Folders?"
 	read -p "WSL_WINDATA_USER [default: $WSL_WINDATA_USER]: " WSL_WINDATA_USER_NEW
 	[ "$WSL_WINDATA_USER_NEW" != "" ] && export WSL_WINDATA_USER=$WSL_WINDATA_USER_NEW
 
@@ -183,7 +183,7 @@ update_path() {
 	for wsl_path in "${WIN_PATHS[@]}"
 	do
 		win_path="$(wslpath -w $wsl_path)"
-		echo "Add-EnvPath PARAM_PATH Machine" \
+		echo "Add-EnvPath PARAM_PATH User" \
 		| sed -e "s/PARAM_PATH/${win_path//\\/\\\\}/g" \
 		| tee -a $LOCAL_PS1_PATH \
 		> /dev/null 2>&1
