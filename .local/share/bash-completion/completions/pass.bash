@@ -25,3 +25,4 @@ source /usr/share/bash-completion/completions/pass
      PASSWORD_STORE_DIR=$PASSWORD_STORE_DIR/ubiq _pass
  }
  complete -o filenames -o nospace -F _passu passu
+

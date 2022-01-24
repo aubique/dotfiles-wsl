@@ -15,7 +15,8 @@ echo $FILE_PATH:
 #cmd.exe /C ffmpeg -list_devices true -f dshow -i dummy
 
 #cmd.exe /C ffmpeg -hide_banner -f dshow -i audio="Stereo Mix (Realtek Audio)" "$FILE_PATH"
-powershell.exe -Command "ffmpeg -hide_banner -f dshow -i audio=\"Stereo Mix (Realtek Audio)\" \"$FILE_PATH\""
+#powershell.exe -Command "ffmpeg -hide_banner -f dshow -i audio=\"Stereo Mix (Realtek Audio)\" \"$FILE_PATH\""
+powershell.exe -Command "ffmpeg -hide_banner -f dshow -i audio=\"Stereo Mix (Realtek(R) Audio)\" \"$FILE_PATH\""
 echo "---------------------------------------------------"
 echo $FILE_PATH
 echo $(wslpath -u "$FILE_PATH")

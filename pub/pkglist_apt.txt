@@ -12,12 +12,11 @@ fzf
 pass
 gpg gnupg-agent
 ranger
-bat
+sxiv
+sshpass
 pv
 qalc
-sxiv
-traceroute
-ldap-utils
+traceroute ldap-utils
 javascript-common
 grip
 jq

@@ -149,16 +149,16 @@ PS1='\t \[\033[01;32m\]\u\[\033[01;34m\]\[\033[01;3"m\]@\[\033[01;30m\]\[\033[01
 # X Server
 # TODO watch out for the problems upcoming with $NAMESERV
 #export PULSE_SERVER=tcp:$(grep nameserver /etc/resolv.conf | awk '{print $2}');
-if [[ -z "$NAMESERV" ]]; then
+if [[ -z $NAMESERV ]]; then
   export NAMESERV=$(ip route | sed -rn '0,/^.*(172.([0-9.]{1,3}){3}).*$/s//\1/p')
     #export INET=$(ifconfig eth0 | sed -rn '0,/^.*inet (172.([0-9.]{1,3}){3}).*$/s//\1/p')
     #export NAMESERV=$(powershell.exe -Command 'Get-NetIPAddress -AddressFamily ipv4 -InterfaceIndex 47 | Select-Object -ExpandProperty IPAddress')
 fi
-if [[ -z "$DISPLAY" ]]; then
+if [[ -z $DISPLAY ]] || [[ $DISPLAY == ":0" ]]; then
   export DISPLAY=$NAMESERV:0.0
   export LIBGL_ALWAYS_INDERECT=true
 fi
-if [[ -z "$PULSE_SERVER" ]]; then
+if [[ -z $PULSE_SERVER ]]; then
   export PULSE_SERVER=tcp:$NAMESERV
 fi
 printf "IP WSL : %s\n" $NAMESERV

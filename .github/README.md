@@ -37,7 +37,7 @@ irm script.sophi.app | iex
 
 Set execution policy, get into the module directory, download our custom script preset and launch it:
 ```powershell
-Set-ExecutionPolicy Bypass -Scope Process -Force; Set-Location -Path ((New-Object -ComObject Shell.Application).Namespace('shell:Downloads').Self.Path + '\Sophi*'); (New-Object System.Net.WebClient).DownloadString('https://gist.githubusercontent.com/aubique/871ad87ef7a801d17942ca3974cd9909/raw/4fb0da69e585cbf33804bab5feb0339c0ac1d0ad/Sophie.ps1') | Out-File .\Sophie.ps1; .\Sophie.ps1
+Set-ExecutionPolicy Bypass -Scope Process -Force; Set-Location -Path ((New-Object -ComObject Shell.Application).Namespace('shell:Downloads').Self.Path + '\Sophi*'); (New-Object System.Net.WebClient).DownloadString('https://gist.githubusercontent.com/aubique/871ad87ef7a801d17942ca3974cd9909/raw/d12338c680b444bf3c7c6f519dc2c3200cc641b5/Sophie.ps1') | Out-File .\Sophie.ps1; .\Sophie.ps1
 ```
 
 Script will set up environment, customize appearance, remove telemetry and UWPApp bloatware.
@@ -84,7 +84,6 @@ wsl --install -d Ubuntu
 As soon as Ubuntu distribution is installed you can download the dotfiles.
 To avoid conflict with the existing files you can clone it the temporary folder.
 Then copy with `rsync` your dotfiles to $HOME directory.
-
 ```bash
 git clone --separate-git-dir=$HOME/.dotfiles https://github.com/aubique/dotfiles-wsl.git tempfiles
 rsync -vah --exclude '.git' tempfiles/ $HOME/
@@ -93,10 +92,10 @@ sudo rsync -vah $HOME/pub/etc/ /etc/
 
 Once we're done with synchronizing our config files,
 we delete temporary folder, update configs, sub-modules and aliases.
-
 ```bash
-rm -r tempfiles
 for s in source "/etc/profile" "$HOME/.profile"; do source $s; done
+dotfiles config status.showUntrackedFiles no
+rm -r tempfiles
 ```
 
 Get back to $HOME and synchronize the sub-modules:
@@ -118,6 +117,13 @@ cd && dotfiles submodule update --init
 
   Afterwards, you have to open **Vim** and run `:PluginInstall`
   that downloads automatically the plugins listed in your `$VIMDOTDIR/vimrc`.
+
+  If you've got `Warning: Cannot find word list` error message,
+  create *spell* folder and download the files:
+  ```bash
+  mkdir -pv ~/.config/vim/spell
+  vim 1.md +'set spell'
+  ```
 </details>
 
 ### User Shell Folders
@@ -131,7 +137,6 @@ you may find more intuitive to adopt Linux Filesystem Hierarchy Standard (FHS) o
 Then synchronize the Windows user shell folders with WSL home user folders.
 
 You can change user folder programmatically executing the script with interactive prompt:
-
 ```bash
 bash $RUNSCRIPTS_PATH/relocate_user_shell_folders.sh
 ```
@@ -168,7 +173,7 @@ Install a pack of applications listed in `pkglist_choco.txt`:
 Get-Content \\wsl$\Ubuntu\home\*\pub\pkglist_choco.txt | Select-String -NotMatch '^#.*' | ForEach {iex "choco install -y $_"}
 ```
 
-### Context Menu
+### Context Menu & Fixes
 
 After having installed Chocolatey and packages,
 you may want to clean up the context menu.
@@ -190,7 +195,22 @@ you may want to clean up the context menu.
   that's linked to the 7-Zip DLL file. All 7-Zip context menu options are defined in this DLL file,
   they're invoked every time Windows needs to show the menu and thus not static.
 
-  You can disable these options with 7-Zip GUI (as Admin) via menu __Tools -- Options -- 7-Zip -- Integrate 7-Zip to shell context menu__
+  You can disable these options with 7-Zip GUI (as Admin) via menu
+  __Tools -- Options -- 7-Zip -- Integrate 7-Zip to shell context menu__
+</details>
+
+<details>
+  <summary>Bypass Windows requirements check in <b>Ventoy</b></summary>
+
+  Ventoy is a good solution for installing Windows 11 on incompatible devices.
+  That said we have to explicitly set in JSON config the parameter `VTOY_WIN11_BYPASS_CHECK`,
+  that creates certain Registry keys to bypass RAM, TMP, Secure Boot, CPU and Storage checks on the machine.
+
+  Run this in WSL2 to add the configuration JSON file to the `ventoy` subfolder installed with Chocolatey:
+  ```bash
+  powershell.exe "choco list -lo" | grep ventoy && \
+  cp -fT ~/pub/etc/ventoy.json "$(readlink -e /mnt/c/Users/*/AppData/Local/ventoy/ventoy)/ventoy.json"
+  ```
 </details>
 
 > For Windows 10 you can use another [Powershell debloater](https://github.com/Sycnex/Windows10Debloater) from GitHub.
@@ -214,52 +234,97 @@ To do that, you can paste the content of profiles.
 <details>
   <summary><b><code>settings.json</code></b></summary>
 
-  ```
-  {
-      "profiles":
-      {
-          "defaults":
-          {
-              ...
-          },
-          "list":
-          [
-              {
-                  "acrylicOpacity": 0.90000000000000002,
-                  "bellStyle": 
-                  [
-                      "window",
-                      "taskbar"
-                  ],
-                  "name": "Ubuntu WSL \ud83d\udccc",
-                  "commandline": "wsl genie -c ~/.config/scripts/genie-tmux.sh",
-                  "font": 
-                  {
-                      "face": "Lucida Console"
-                  },
-                  "guid": "{2862b68e-b019-4846-bbdd-5f10c363cb1a}",
-                  "icon": "https://assets.ubuntu.com/v1/49a1a858-favicon-32x32.png",
-                  "suppressApplicationTitle": true,
-                  "useAcrylic": true
-              },
-              {
-                  "name": "Ubuntu WSL \u25a4",
-                  "source": "Windows.Terminal.Wsl",
-                  "colorScheme": "UbuntuLegit",
-                  "guid": "{2c4de342-38b7-51cf-b940-2309a097f518}"
-              },
-              {
-                  "name": "PowerShell \u26a1",
-                  "commandline": "powershell.exe gsudo powershell.exe -nologo",
-                  "guid": "{a266a539-53e6-4b70-abf9-dfd2f76a2b97}",
-                  "icon": "ms-appx:///Images/Square44x44Logo.targetsize-32.png",
-                  "suppressApplicationTitle": true,
-                  "padding": "0, 0, 0, 0"
-              }
-          ]
-      }
-  }
-  ```
+```
+{
+    ...<COPY BELOW>...
+
+    "launchMode": "maximized",
+    "defaultProfile": "{2c4de342-38b7-51cf-b940-2309a097f518}",
+    "profiles":
+    {
+        "defaults":
+        {
+            "closeOnExit": "graceful",
+            "cursorColor": "#FFFFFF",
+            "cursorShape": "filledBox",
+            "font": 
+            {
+                "face": "Cascadia Code",
+                "size": 12
+            },
+            "hidden": false,
+            "snapOnInput": true
+        },
+        "list":
+        [
+            {
+                "name": "Ubuntu WSL \ud83d\udccc",
+                "commandline": "wsl genie -c ~/.config/scripts/genie-tmux.sh",
+                "guid": "{2862b68e-b019-4846-bbdd-5f10c363cb1a}",
+                "bellStyle": 
+                [
+                    "window",
+                    "taskbar"
+                ],
+                "font": 
+                {
+                    "face": "Lucida Console"
+                },
+                "icon": "https://assets.ubuntu.com/v1/49a1a858-favicon-32x32.png",
+                "acrylicOpacity": 0.90000000000000002,
+                "suppressApplicationTitle": true,
+                "useAcrylic": true
+            },
+            {
+                "name": "Ubuntu WSL \u25a4",
+                "guid": "{2c4de342-38b7-51cf-b940-2309a097f518}",
+                "source": "Windows.Terminal.Wsl",
+                "colorScheme": "Raspberry"
+            },
+            {
+                "name": "PowerShell \u26a1",
+                "commandline": "powershell.exe gsudo powershell.exe -nologo",
+                "guid": "{a266a539-53e6-4b70-abf9-dfd2f76a2b97}",
+                "icon": "ms-appx:///Images/Square44x44Logo.targetsize-32.png",
+                "suppressApplicationTitle": true,
+                "padding": "0, 0, 0, 0"
+            },
+            {
+                "name": "PowerShell",
+                "commandline": "powershell.exe",
+                "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
+                "colorScheme": "Campbell Powershell"
+            }
+        ]
+    },
+    "schemes": 
+    [
+        {
+            "name" : "Raspberry",
+            "background" : "#3C0315",
+            "black" : "#282A2E",
+            "blue" : "#0170C5",
+            "brightBlack" : "#676E7A",
+            "brightBlue" : "#80c8ff",
+            "brightCyan" : "#8ABEB7",
+            "brightGreen" : "#B5D680",
+            "brightPurple" : "#AC79BB",
+            "brightRed" : "#BD6D85",
+            "brightWhite" : "#FFFFFD",
+            "brightYellow" : "#FFFD76",
+            "cyan" : "#3F8D83",
+            "foreground" : "#FFFFFD",
+            "green" : "#76AB23",
+            "purple" : "#7D498F",
+            "red" : "#BD0940",
+            "white" : "#FFFFFD",
+            "yellow" : "#E0DE48"
+        },
+
+    ...<COPY ABOVE>...
+    ]
+}
+```
 </details>
 
 The WSL environment we're about to setup has an environment variable -
@@ -325,12 +390,16 @@ sudo service ssh restart
 
 ### Git
 
-Configure Git and set username/email:
+Configure Git:
+```bash
+git config --global push.default current
+git config --global core.pager /usr/bin/less
+```
+
+Set username and email:
 ```bash
 git config --global user.email "{{EMAIL}}"
 git config --global user.name "{{USERNAME}}"
-git config --global push.default current
-git config --global core.pager /usr/bin/less
 ```
 
 #### SSH Key
@@ -420,20 +489,21 @@ echo \
 sudo apt update && sudo apt install -y systemd-genie
 ```
 
-Disable unwanted `systemd` services:
+Copy the custom config to the system one:
 ```bash
-curl -sSL https://gist.githubusercontent.com/aubique/871ad87ef7a801d17942ca3974cd9909/raw/4fb0da69e585cbf33804bab5feb0339c0ac1d0ad/genie_systemd_disabled.txt | xargs sudo systemctl disable
+sudo cp -f ~/pub/etc/genie.ini /etc/genie.ini
 ```
 
-Download and install custom config by replacing the system one:
-```bash
-sudo curl -sL -o /etc/genie.ini https://gist.githubusercontent.com/aubique/871ad87ef7a801d17942ca3974cd9909/raw/4fb0da69e585cbf33804bab5feb0339c0ac1d0ad/genie.ini```
-```
+<details>
+  <summary>Disable unwanted <code>systemd</code> services</summary>
 
-Or by linking it:
-```bash
-sudo ln -sf ~/pub/etc/genie.ini /etc/genie.ini
-```
+  Services without `#` are supposed to be disabled, the ones with `#` are for complete masking:
+  ```bash
+  grep -vE '^#' ~/pub/systemd_disabled.txt | xargs sudo systemctl disable
+  grep -E '^#' ~/pub/systemd_disabled.txt | xargs sudo systemctl mask
+  ```
+</details>
+
 
 ### Docker
 
@@ -463,7 +533,7 @@ echo \
 <details>
   <summary><b>Optional step</b>. For further security, create a <i>preferences</i> file.</summary>
 
-  E.g. in `/etc/apt/preferences.d/` have a file named `docker` with the contents:
+  E.g. in `/etc/apt/preferences.d/` have a file named `docker` with the command:
   ```
   sudo tee /etc/apt/preferences.d/docker <<EOF
   Package: *
@@ -524,8 +594,7 @@ Gradle, Maven, Spring Boot and others.
 
 [Install __SDKman__](https://sdkman.io/install) without modifying shell config:
 ```bash
-mkdir -p $SDKMAN_DIR
-curl -s "https://get.sdkman.io?rcupdate=false" | bash
+curl -sSL "https://get.sdkman.io?rcupdate=false" | bash
 ```
 
 To initialize SDKMAN module scripts open a new terminal.
@@ -542,7 +611,6 @@ sdk install java 11.0.11.hs-adpt
 ## TODO
 
 - [x] Upgrade the [Windows Tweaks part](#tweaks) with refined integration scripts for Windows 11.
-- [ ] Add an animated GIF screenshot of the IDE.
 - [ ] Explain how to use git repository to [sync IDE settings](#intellij-idea).
 
 ## Resources
@@ -559,3 +627,4 @@ sdk install java 11.0.11.hs-adpt
 - https://github.com/jonaspetersorensen/dotfiles-wsl
 - https://stackoverflow.com/questions/37776684/which-intellij-config-files-should-i-save-in-my-dotfiles
 - https://askubuntu.com/questions/759880/where-is-the-ubuntu-file-system-root-directory-in-windows-subsystem-for-linux-an
+- https://stefanos.cloud/kb/how-to-clear-the-powershell-command-history
