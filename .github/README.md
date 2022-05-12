@@ -37,7 +37,7 @@ irm script.sophi.app | iex
 
 Set execution policy, get into the module directory, download our custom script preset and launch it:
 ```powershell
-Set-ExecutionPolicy Bypass -Scope Process -Force; Set-Location -Path ((New-Object -ComObject Shell.Application).Namespace('shell:Downloads').Self.Path + '\Sophi*'); (New-Object System.Net.WebClient).DownloadString('https://gist.githubusercontent.com/aubique/871ad87ef7a801d17942ca3974cd9909/raw/d12338c680b444bf3c7c6f519dc2c3200cc641b5/Sophie.ps1') | Out-File .\Sophie.ps1; .\Sophie.ps1
+Set-ExecutionPolicy Bypass -Scope Process -Force; Set-Location -Path ((New-Object -ComObject Shell.Application).Namespace('shell:Downloads').Self.Path + '\Sophi*'); (New-Object System.Net.WebClient).DownloadString('https://gist.githubusercontent.com/aubique/871ad87ef7a801d17942ca3974cd9909/raw/345cb427742f6c835456bb5850737c9f13933bd1/Sophie.ps1') | Out-File .\Sophie.ps1; .\Sophie.ps1
 ```
 
 Script will set up environment, customize appearance, remove telemetry and UWPApp bloatware.
@@ -236,8 +236,7 @@ To do that, you can paste the content of profiles.
 
 ```
 {
-    ...<COPY BELOW>...
-
+    "$schema": "https://aka.ms/terminal-profiles-schema",
     "launchMode": "maximized",
     "defaultProfile": "{2c4de342-38b7-51cf-b940-2309a097f518}",
     "profiles":
@@ -319,11 +318,8 @@ To do that, you can paste the content of profiles.
             "red" : "#BD0940",
             "white" : "#FFFFFD",
             "yellow" : "#E0DE48"
-        },
-
-    ...<COPY ABOVE>...
-    ]
-}
+        }
+    ],
 ```
 </details>
 
@@ -385,8 +381,9 @@ For the first connection you can enable SSH password authentication via port 320
 ```bash
 sudo ssh-keygen -A
 sudo sed -E -e 's/^[# ]*(Port )[0-9]+$/\132022/g' -e 's/^[# ]*(PasswordAuthentication )no/\1yes/g' -i /etc/ssh/sshd_config
-sudo service ssh restart
 ```
+
+Execute the alias `sshd_up` to run SSH server.
 
 ### Git
 
@@ -431,7 +428,7 @@ xclip -sel c < ~/.ssh/id_rsa_gl-user.pub
 Add the generated pubic SSH keys to your profile:
 - [Add your key to __GitHub__](https://github.com/settings/ssh/new)
 - [Add your key to __GitLab__](https://gitlab.com/-/profile/keys)
-> For title you can pick a name of the key, such as `WSL2 (gl-au.pub): 2021-12-07`
+> For title you can pick a name of the key, such as `WSL2 (gl-au.pub): 2022-05-12`
 
 ### GPG keys
 
@@ -500,7 +497,7 @@ sudo cp -f ~/pub/etc/genie.ini /etc/genie.ini
   Services without `#` are supposed to be disabled, the ones with `#` are for complete masking:
   ```bash
   grep -vE '^#' ~/pub/systemd_disabled.txt | xargs sudo systemctl disable
-  grep -E '^#' ~/pub/systemd_disabled.txt | xargs sudo systemctl mask
+  sed -En 's/#([a-z0-9\.-])/\1/p' pub/systemd_disabled.txt | xargs sudo systemctl mask
   ```
 </details>
 
@@ -550,8 +547,7 @@ echo \
 Update the `apt` package index, install the latest version of Docker Engine
 and containerd and add user to `docker` group:
 ```bash
-sudo apt update
-sudo apt install -y docker-ce docker-ce-cli containerd.io
+sudo apt update && sudo apt install -y docker-ce docker-ce-cli containerd.io
 sudo usermod -aG docker $USER
 ```
 
@@ -628,3 +624,4 @@ sdk install java 11.0.11.hs-adpt
 - https://stackoverflow.com/questions/37776684/which-intellij-config-files-should-i-save-in-my-dotfiles
 - https://askubuntu.com/questions/759880/where-is-the-ubuntu-file-system-root-directory-in-windows-subsystem-for-linux-an
 - https://stefanos.cloud/kb/how-to-clear-the-powershell-command-history
+- https://docs.microsoft.com/en-us/sql/linux/sql-server-linux-setup-tools?view=sql-server-ver15#ubuntu

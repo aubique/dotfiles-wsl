@@ -2,23 +2,20 @@ git curl wget
 apt-transport-https
 ca-certificates
 software-properties-common
-tig
 tree
 zip unzip
 vim-gtk3
-tmux
-tmuxp
-fzf
-pass
-gpg gnupg-agent
+tmux tmuxp
 ranger
+fzf
+pass pass-extension-otp
+gpg gnupg-agent
 sxiv
-sshpass
-pv
-qalc
-traceroute ldap-utils
-javascript-common
 grip
-jq
-sox
-libsox-fmt-mp3
+sshpass
+tig pv
+qalc
+javascript-common jq
+sox libsox-fmt-mp3
+#dotnet-sdk-6.0 dotnet-runtime-6.0 dotnet-host
+sqlite3

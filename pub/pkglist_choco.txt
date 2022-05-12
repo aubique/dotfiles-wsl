@@ -12,13 +12,12 @@ zoom
 k-litecodecpackbasic
 caffeine
 ffmpeg
-venoy
 rufus
-adb
-spotify
+ventoy
 vnc-viewer
 teamviewer
-vmwareworkstation
 vscode --params="'/NoDesktopIcon /NoAddContextMenuFolders /AssociateWithFiles'"
-postman
 office-tool
+microsoft-teams
+greenshot
+ripgrep

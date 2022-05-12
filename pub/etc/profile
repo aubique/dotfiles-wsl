@@ -35,9 +35,10 @@ if [ -d /etc/profile.d ]; then
 fi
 
 # XDG Base Directories
-export XDG_CACHE_HOME="$HOME/.cache"
-export XDG_CONFIG_HOME="$HOME/.config"
-export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_CACHE_HOME=$HOME/.cache
+export XDG_CONFIG_HOME=$HOME/.config
+export XDG_DATA_HOME=$HOME/.local/share
+export XDG_STATE_HOME=$HOME/.local/state
 # XDG vars
 export BASH_COMPLETION_USER_FILE=$XDG_CONFIG_HOME/bash_completion
 export MPLAYER_HOME=$XDG_CONFIG_HOME/mplayer

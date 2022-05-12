@@ -81,14 +81,14 @@ esac
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
-test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-alias ls='ls --color=auto'
-#alias dir='dir --color=auto'
-#alias vdir='vdir --color=auto'
+  test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+  alias ls='ls --color=auto'
+  #alias dir='dir --color=auto'
+  #alias vdir='vdir --color=auto'
 
-alias grep='grep --color=auto'
-alias fgrep='fgrep --color=auto'
-alias egrep='egrep --color=auto'
+  alias grep='grep --color=auto'
+  alias fgrep='fgrep --color=auto'
+  alias egrep='egrep --color=auto'
 fi
 
 # colored GCC warnings and errors
@@ -178,10 +178,12 @@ export BROWSER=/usr/bin/wslview
 # GPG term mode (ioctl for device)
 export GPG_TTY=$(tty)
 # XDG vars (interactive)
+export HISTFILE=$XDG_STATE_HOME/bash/history
+export LESSHISTFILE=$XDG_STATE_HOME/less/history
 export VIMINIT='let $MYVIMRC="$VIMDOTDIR/vimrc" | source $MYVIMRC'
 # SDKMAN (interactive)
 export SDKMAN_DIR=$XDG_DATA_HOME/sdkman
-[[ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ]] && source "$SDKMAN_DIR/bin/sdkman-init.sh"
+[[ -s $SDKMAN_DIR/bin/sdkman-init.sh ]] && source $SDKMAN_DIR/bin/sdkman-init.sh
 # VOLTA (interactive)
-export VOLTA_HOME="$HOME/.local/share/volta"
+export VOLTA_HOME=$HOME/.local/share/volta
 export PATH="$VOLTA_HOME/bin:$PATH"

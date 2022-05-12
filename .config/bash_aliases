@@ -77,6 +77,8 @@ alias sshd_status="service ssh status && powershell.exe cmd /c netsh interface p
 # OpenVPN
 alias dnsleaktest="cat /etc/resolv.conf && echo 'DNS Leak Test' && bash $RUNSCRIPTS_PATH/dnsleaktest.sh"
 alias ovpn="bash $RUNSCRIPTS_PATH/ovpn_chattr.sh"
+alias wg0_up="sed -i -E 's/(nameserver [0-9\.]+)/nameserver 10.43.0.10\n\1/g' /etc/resolv.conf"
+alias wg0_down="sed -i '/nameserver 10.43.0.10/d' /etc/resolv.conf"
 
 # Pass-store
 alias passe="PASS_SUBDIR=ensibs/ PASSWORD_STORE_DIR=$PASSWORD_STORE_DIR/ensibs pass"
