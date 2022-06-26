@@ -37,7 +37,7 @@ irm script.sophi.app | iex
 
 Set execution policy, get into the module directory, download our custom script preset and launch it:
 ```powershell
-Set-ExecutionPolicy Bypass -Scope Process -Force; Set-Location -Path ((New-Object -ComObject Shell.Application).Namespace('shell:Downloads').Self.Path + '\Sophi*'); (New-Object System.Net.WebClient).DownloadString('https://gist.githubusercontent.com/aubique/871ad87ef7a801d17942ca3974cd9909/raw/345cb427742f6c835456bb5850737c9f13933bd1/Sophie.ps1') | Out-File .\Sophie.ps1; .\Sophie.ps1
+Set-ExecutionPolicy Bypass -Scope Process -Force; Set-Location -Path ((New-Object -ComObject Shell.Application).Namespace('shell:Downloads').Self.Path + '\Sophi*'); (New-Object System.Net.WebClient).DownloadString('https://gist.githubusercontent.com/aubique/871ad87ef7a801d17942ca3974cd9909/raw/51dd5fc4f88ec8f1cc7a245edafe708851f5632c/Sophie.ps1') | Out-File .\Sophie.ps1; .\Sophie.ps1
 ```
 
 Script will set up environment, customize appearance, remove telemetry and UWPApp bloatware.
