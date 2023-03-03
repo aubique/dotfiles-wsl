@@ -17,5 +17,7 @@ tig pv
 qalc
 javascript-common jq
 sox libsox-fmt-mp3
-#dotnet-sdk-6.0 dotnet-runtime-6.0 dotnet-host
-sqlite3
+#dotnet-sdk-7.0 aspnetcore-runtime-7.0 dotnet-host
+#sqlite3
+#nmap
+#aria2

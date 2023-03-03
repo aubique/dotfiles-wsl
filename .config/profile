@@ -43,6 +43,9 @@ then
     PATH="$PATH:$(cat /run/genie.path)"
 fi
 
+# XDG vars (login)
+#export HISTFILE=$XDG_STATE_HOME/bash/history
+#export LESSHISTFILE=$XDG_STATE_HOME/less/history
 # SDKMAN (login)
 export SDKMAN_DIR=$XDG_DATA_HOME/sdkman
 [[ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ]] && source "$SDKMAN_DIR/bin/sdkman-init.sh"

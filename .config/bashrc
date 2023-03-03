@@ -187,3 +187,9 @@ export SDKMAN_DIR=$XDG_DATA_HOME/sdkman
 # VOLTA (interactive)
 export VOLTA_HOME=$HOME/.local/share/volta
 export PATH="$VOLTA_HOME/bin:$PATH"
+
+
+# Load Angular CLI autocompletion.
+source <(ng completion script)
+eval 
+AI_AC_BASH_SETUP_PATH=/home/matv/.cache/ai/autocomplete/bash_setup && test -f $AI_AC_BASH_SETUP_PATH && source $AI_AC_BASH_SETUP_PATH; # ai autocomplete setup

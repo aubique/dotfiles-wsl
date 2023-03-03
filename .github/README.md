@@ -18,10 +18,11 @@
 
 ## About
 
-These are the dotfiles that I use when I set up a new environment using Windows
-and [WSL2](https://docs.microsoft.com/en-us/windows/wsl/compare-versions) with Ubuntu.
-The setup is mainly focused on [IntelliJ IDEA](https://www.jetbrains.com/idea/features) being the primary working tool and for tasks related to programming,
-for other tasks I am using [Windows Terminal](https://docs.microsoft.com/en-us/windows/terminal).
+This repository contains my personal dotfiles used to set up a new development environment on Windows using
+[WSL2](https://docs.microsoft.com/en-us/windows/wsl/compare-versions) with Ubuntu. The focus of the setup is on two main tools:
+[Visual Studio Code](https://code.visualstudio.com/docs) and IntelliJ IDEA[IntelliJ IDEA](https://www.jetbrains.com/idea/features),
+which are my preferred development environments for programming tasks. Additionally, for other tasks,
+I use Windows Terminal[Windows Terminal](https://docs.microsoft.com/en-us/windows/terminal).
 
 ## Windows 11
 
@@ -29,20 +30,23 @@ To set up Windows 11 after fresh install in automatic mode,
 let's download the [Sophia Script](https://github.com/farag2/Sophia-Script-for-Windows).
 
 Download and expand the latest Powershell module of the script:
+
 ```powershell
-irm script.sophi.app | iex
+irm script.sophi.app -useb | iex
 ```
 
 > Command below are meant to be executed in Administrator mode.
 
 Set execution policy, get into the module directory, download our custom script preset and launch it:
+
 ```powershell
-Set-ExecutionPolicy Bypass -Scope Process -Force; Set-Location -Path ((New-Object -ComObject Shell.Application).Namespace('shell:Downloads').Self.Path + '\Sophi*'); (New-Object System.Net.WebClient).DownloadString('https://gist.githubusercontent.com/aubique/871ad87ef7a801d17942ca3974cd9909/raw/51dd5fc4f88ec8f1cc7a245edafe708851f5632c/Sophie.ps1') | Out-File .\Sophie.ps1; .\Sophie.ps1
+Set-ExecutionPolicy Bypass -Scope Process -Force; Set-Location -Path ((New-Object -ComObject Shell.Application).Namespace('shell:Downloads').Self.Path + '\Sophi*'); (New-Object System.Net.WebClient).DownloadString('https://gist.githubusercontent.com/aubique/871ad87ef7a801d17942ca3974cd9909/raw/ce6a839cc6463fb239996c8a3de1ec74c424b1f3/Sophie.ps1') | Out-File .\Sophie.ps1; .\Sophie.ps1
 ```
 
 Script will set up environment, customize appearance, remove telemetry and UWPApp bloatware.
 For WSL2 it installs Virtual Machine Platform, WSL Kernel and GUI App Support (WSLg).
 After you've completed running script functions, restart the PC and proceed with Linux distribution installation:
+
 ```powershell
 wsl --install -d Ubuntu
 ```
@@ -50,33 +54,35 @@ wsl --install -d Ubuntu
 <details>
   <summary>Install WSL2 manually</summary>
 
-  Enable __WSL__ and __VirtualMachinePlatform__ features in Powershell console:
+Enable **WSL** and **VirtualMachinePlatform** features in Powershell console:
 
-  ```powershell
-  dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
-  dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
-  ```
+```powershell
+dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
+dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
+```
 
-  Reboot your PC. Download and install the
-  [Linux kernel update package](https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi):
+Reboot your PC. Download and install the
+[Linux kernel update package](https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi):
 
-  Install the update via Powershell:
-  ```powershell
-  $wslUpdateInstallerUrl = "https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi"
-  $downloadFolderPath = (New-Object -ComObject Shell.Application).NameSpace('shell:Downloads').Self.Path
-  $wslUpdateInstallerFilePath = "$downloadFolderPath/wsl_update_x64.msi"
-  $wc = New-Object System.Net.WebClient
-  $wc.DownloadFile($wslUpdateInstallerUrl, $wslUpdateInstallerFilePath)
-  Start-Process -Filepath "$wslUpdateInstallerFilePath"
-  ```
+Install the update via Powershell:
 
-  Set WSL default version to __2__
-  ```powershell
-  wsl --set-default-version 2
-  ```
+```powershell
+$wslUpdateInstallerUrl = "https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi"
+$downloadFolderPath = (New-Object -ComObject Shell.Application).NameSpace('shell:Downloads').Self.Path
+$wslUpdateInstallerFilePath = "$downloadFolderPath/wsl_update_x64.msi"
+$wc = New-Object System.Net.WebClient
+$wc.DownloadFile($wslUpdateInstallerUrl, $wslUpdateInstallerFilePath)
+Start-Process -Filepath "$wslUpdateInstallerFilePath"
+```
 
-- [Install Ubuntu from __Microsoft Store__](https://www.microsoft.com/fr-fr/p/ubuntu/9nblggh4msv6)
-- [Install Ubuntu from __Chocolatey__](https://community.chocolatey.org/packages/wsl-ubuntu-2004)
+Set WSL default version to **2**
+
+```powershell
+wsl --set-default-version 2
+```
+
+- [Install Ubuntu from **Microsoft Store**](https://www.microsoft.com/fr-fr/p/ubuntu/9nblggh4msv6)
+- [Install Ubuntu from **Chocolatey**](https://community.chocolatey.org/packages/wsl-ubuntu-2004)
 </details>
 
 ### Dotfiles
@@ -84,6 +90,7 @@ wsl --install -d Ubuntu
 As soon as Ubuntu distribution is installed you can download the dotfiles.
 To avoid conflict with the existing files you can clone it the temporary folder.
 Then copy with `rsync` your dotfiles to $HOME directory.
+
 ```bash
 git clone --separate-git-dir=$HOME/.dotfiles https://github.com/aubique/dotfiles-wsl.git tempfiles
 rsync -vah --exclude '.git' tempfiles/ $HOME/
@@ -92,6 +99,7 @@ sudo rsync -vah $HOME/pub/etc/ /etc/
 
 Once we're done with synchronizing our config files,
 we delete temporary folder, update configs, sub-modules and aliases.
+
 ```bash
 for s in source "/etc/profile" "$HOME/.profile"; do source $s; done
 dotfiles config status.showUntrackedFiles no
@@ -99,6 +107,7 @@ rm -r tempfiles
 ```
 
 Get back to $HOME and synchronize the sub-modules:
+
 ```bash
 cd && dotfiles submodule update --init
 ```
@@ -106,24 +115,27 @@ cd && dotfiles submodule update --init
 <details>
   <summary>Install <b>Vim</b> plugins</summary>
 
-  This repo contains a [Vundle](https://github.com/gmarik/Vundle.vim) sub-module repository.
-  That's an extension manager that helps to manage environment with plugins properly.
+This repo contains a [Vundle](https://github.com/gmarik/Vundle.vim) sub-module repository.
+That's an extension manager that helps to manage environment with plugins properly.
 
-  In case you didn't get managed to download Vundle plugin during the [set above](#dotilfes),
-  clone it directly from GitHub:
-  ```bash
-  git clone https://github.com/VundleVim/Vundle.vim.git ~/.local/share/vim/bundle/Vundle.vim
-  ```
+In case you didn't get managed to download Vundle plugin during the [set above](#dotilfes),
+clone it directly from GitHub:
 
-  Afterwards, you have to open **Vim** and run `:PluginInstall`
-  that downloads automatically the plugins listed in your `$VIMDOTDIR/vimrc`.
+```bash
+git clone https://github.com/VundleVim/Vundle.vim.git ~/.local/share/vim/bundle/Vundle.vim
+```
 
-  If you've got `Warning: Cannot find word list` error message,
-  create *spell* folder and download the files:
-  ```bash
-  mkdir -pv ~/.config/vim/spell
-  vim 1.md +'set spell'
-  ```
+Afterwards, you have to open **Vim** and run `:PluginInstall`
+that downloads automatically the plugins listed in your `$VIMDOTDIR/vimrc`.
+
+If you've got `Warning: Cannot find word list` error message,
+create _spell_ folder and download the files:
+
+```bash
+mkdir -pv ~/.config/vim/spell
+vim 1.md +'set spell'
+```
+
 </details>
 
 ### User Shell Folders
@@ -137,6 +149,7 @@ you may find more intuitive to adopt Linux Filesystem Hierarchy Standard (FHS) o
 Then synchronize the Windows user shell folders with WSL home user folders.
 
 You can change user folder programmatically executing the script with interactive prompt:
+
 ```bash
 bash $RUNSCRIPTS_PATH/relocate_user_shell_folders.sh
 ```
@@ -161,6 +174,7 @@ First, ensure that you are using an administrative shell.
 
 To [install Chocolatey](https://chocolatey.org/install#individual)
 with `powershell.exe` paste the copied text into your shell and press Enter:
+
 ```ps1
 Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
 ```
@@ -169,6 +183,7 @@ Now you can manage Windows applications and [packages](https://community.chocola
 using Chocolatey in administrative shell, check out a list of installed packages with `choco list --local`.
 
 Install a pack of applications listed in `pkglist_choco.txt`:
+
 ```ps1
 Get-Content \\wsl$\Ubuntu\home\*\pub\pkglist_choco.txt | Select-String -NotMatch '^#.*' | ForEach {iex "choco install -y $_"}
 ```
@@ -181,37 +196,60 @@ you may want to clean up the context menu.
 <details>
   <summary>Remove <b>VLC</b> from context menu.</summary>
 
-  ```powershell
-  New-PSDrive -Name HKCR -PSProvider Registry -Root HKEY_CLASSES_ROOT
-  Remove-Item HKCR:\Directory\shell\AddToPlaylistVLC\ -Recurse
-  Remove-Item HKCR:\Directory\shell\PlayWithVLC\ -Recurse
-  ```
+```powershell
+New-PSDrive -Name HKCR -PSProvider Registry -Root HKEY_CLASSES_ROOT
+Remove-Item HKCR:\Directory\shell\AddToPlaylistVLC\ -Recurse
+Remove-Item HKCR:\Directory\shell\PlayWithVLC\ -Recurse
+```
+
 </details>
 
 <details>
   <summary>Hide <b>7-Zip</b> cascaded context menu.</summary>
 
-  With `regedit.exe` you can find `HKEY_CLASSES_ROOT\CLSID{23170F69-40C1-278A-1000-000100020000}`
-  that's linked to the 7-Zip DLL file. All 7-Zip context menu options are defined in this DLL file,
-  they're invoked every time Windows needs to show the menu and thus not static.
+With `regedit.exe` you can find `HKEY_CLASSES_ROOT\CLSID{23170F69-40C1-278A-1000-000100020000}`
+that's linked to the 7-Zip DLL file. All 7-Zip context menu options are defined in this DLL file,
+they're invoked every time Windows needs to show the menu and thus not static.
 
-  You can disable these options with 7-Zip GUI (as Admin) via menu
-  __Tools -- Options -- 7-Zip -- Integrate 7-Zip to shell context menu__
+You can disable these options with 7-Zip GUI (as Admin) via menu
+**Tools -- Options -- 7-Zip -- Integrate 7-Zip to shell context menu**
+
 </details>
 
 <details>
   <summary>Bypass Windows requirements check in <b>Ventoy</b></summary>
 
-  Ventoy is a good solution for installing Windows 11 on incompatible devices.
-  That said we have to explicitly set in JSON config the parameter `VTOY_WIN11_BYPASS_CHECK`,
-  that creates certain Registry keys to bypass RAM, TMP, Secure Boot, CPU and Storage checks on the machine.
+Ventoy is a good solution for installing Windows 11 on incompatible devices.
+That said we have to explicitly set in JSON config the parameter `VTOY_WIN11_BYPASS_CHECK`,
+that creates certain Registry keys to bypass RAM, TMP, Secure Boot, CPU and Storage checks on the machine.
 
-  Run this in WSL2 to add the configuration JSON file to the `ventoy` subfolder installed with Chocolatey:
-  ```bash
-  powershell.exe "choco list -lo" | grep ventoy && \
-  cp -fT ~/pub/etc/ventoy.json "$(readlink -e /mnt/c/Users/*/AppData/Local/ventoy/ventoy)/ventoy.json"
-  ```
+Run this in WSL2 to add the configuration JSON file to the `ventoy` subfolder installed with Chocolatey:
+
+```bash
+powershell.exe "choco list -lo" | grep ventoy && \
+cp -fT ~/pub/etc/ventoy.json "$(readlink -e /mnt/c/Users/*/AppData/Local/ventoy/ventoy)/ventoy.json"
+```
+
 </details>
+
+<details>
+  <summary>Personalize <b>Start</b> menu</summary>
+
+Turn Off **Show recently opened items in Start, Jump Lists, and File Explorer"** for Current User:
+
+```ps1
+Set-ItemProperty -path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -name "Start_TrackDocs" -value "0"
+```
+
+Disable **Recently added** Apps List on the Start Menu for the User:
+
+```ps1
+Set-ItemProperty -path "HKCU:\Software\Policies\Microsoft\Windows\Explorer" -name "HideRecentlyAddedApps" -value "1"
+```
+
+Otherwise, you set it up in Settings **<Win-I> -> Personalization -> Start**
+
+  </details>
 
 > For Windows 10 you can use another [Powershell debloater](https://github.com/Sycnex/Windows10Debloater) from GitHub.
 
@@ -246,7 +284,7 @@ To do that, you can paste the content of profiles.
             "closeOnExit": "graceful",
             "cursorColor": "#FFFFFF",
             "cursorShape": "filledBox",
-            "font": 
+            "font":
             {
                 "face": "Cascadia Code",
                 "size": 12
@@ -257,46 +295,43 @@ To do that, you can paste the content of profiles.
         "list":
         [
             {
-                "name": "Ubuntu WSL \ud83d\udccc",
+                "colorScheme": "Campbell Powershell",
+                "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
+                "name": "PowerShell",
+                "startingDirectory": null
+            },
+            {
+                "colorScheme": "Raspberry",
+                "guid": "{2c4de342-38b7-51cf-b940-2309a097f518}",
+                "hidden": false,
+                "name": "Ubuntu WSL \u25a4",
+                "source": "Windows.Terminal.Wsl"
+            },
+            {
                 "commandline": "wsl genie -c ~/.config/scripts/genie-tmux.sh",
-                "guid": "{2862b68e-b019-4846-bbdd-5f10c363cb1a}",
-                "bellStyle": 
-                [
-                    "window",
-                    "taskbar"
-                ],
-                "font": 
+                "font":
                 {
                     "face": "Lucida Console"
                 },
+                "guid": "{2862b68e-b019-4846-bbdd-5f10c363cb1a}",
                 "icon": "https://assets.ubuntu.com/v1/49a1a858-favicon-32x32.png",
-                "acrylicOpacity": 0.90000000000000002,
+                "name": "Ubuntu WSL \ud83d\udccc",
                 "suppressApplicationTitle": true,
                 "useAcrylic": true
             },
             {
-                "name": "Ubuntu WSL \u25a4",
-                "guid": "{2c4de342-38b7-51cf-b940-2309a097f518}",
-                "source": "Windows.Terminal.Wsl",
-                "colorScheme": "Raspberry"
-            },
-            {
-                "name": "PowerShell \u26a1",
-                "commandline": "powershell.exe gsudo powershell.exe -nologo",
+                "commandline": "%SystemRoot%\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+                "elevate": true,
                 "guid": "{a266a539-53e6-4b70-abf9-dfd2f76a2b97}",
+                "hidden": true,
                 "icon": "ms-appx:///Images/Square44x44Logo.targetsize-32.png",
-                "suppressApplicationTitle": true,
-                "padding": "0, 0, 0, 0"
-            },
-            {
-                "name": "PowerShell",
-                "commandline": "powershell.exe",
-                "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
-                "colorScheme": "Campbell Powershell"
+                "name": "PowerShell \u26a1",
+                "padding": "0, 0, 0, 0",
+                "suppressApplicationTitle": true
             }
         ]
     },
-    "schemes": 
+    "schemes":
     [
         {
             "name" : "Raspberry",
@@ -321,14 +356,15 @@ To do that, you can paste the content of profiles.
         }
     ],
 ```
+
 </details>
 
 The WSL environment we're about to setup has an environment variable -
 `${WIN_TERM}` that stores in `.bashrc` a path to the Windows Terminal `settings.json`.
 Follow the steps above to get Ubuntu and dotfiles installed.
 
-> WSL2 startup `genie-tmux.sh` script uses __Genie__ systemd and __Tmux__ multiplexer,
->mostly described in the [Genie installation step](#systemd).
+> WSL2 startup `genie-tmux.sh` script uses **Genie** systemd and **Tmux** multiplexer,
+> mostly described in the [Genie installation step](#systemd).
 
 Check out [docs.microsoft.com](https://docs.microsoft.com/en-us/windows/terminal/customize-settings/profile-appearance)
 to figure out the profile settings in Windows Terminal.
@@ -336,11 +372,13 @@ to figure out the profile settings in Windows Terminal.
 ### Windows Firewall
 
 You can set a rule in `wf.msc` by subnet and interface dedicated to WSL2:
+
 ```powershell
 New-NetFirewallRule -DisplayName "from WSL2" -Direction Inbound -Action Allow -LocalAddress "172.16.0.0/12" -InterfaceAlias "vEthernet (WSL)"
 ```
 
 You can also allow SSH connections on 32022 and open other ports to access VMWare virtual machines.
+
 ```powershell
 New-NetFirewallRule -DisplayName "SSH/RDP > WSL2" -Direction Inbound -Action Allow -Protocol TCP -LocalAddress 192.168.1.0/24,172.16.0.0/12 -LocalPort 32022,3389
 New-NetFirewallRule -DisplayName "SSH/HTTP(S) > VMWare" -Direction Inbound -Action Allow -Protocol TCP -LocalAddress 192.168.1.0/24,172.16.0.0/12,172.28.144.0/24 -LocalPort 32020,32021,32023-32025,32080,32443,64190
@@ -348,17 +386,28 @@ New-NetFirewallRule -DisplayName "SSH/HTTP(S) > VMWare" -Direction Inbound -Acti
 
 > To set up SSH Server on WSL2, [check out the step describing it below](#ssh-server).
 
-### IntelliJ IDEA
+### IDE
 
 To synchronize IDE settings between different machines you can use 2 ways:
-1. IDE Settings Sync plugin
+
+1. Settings Sync built-in feature or plugin
 2. Git repository for settings
 
+#### VS Code
+
+You can use the built-in feature called **Settings Sync** that allows you to synchronize your Visual Studio Code settings across
+different devices using your GitHub or Microsoft account. 
+
+> More info in [VSCode Docs](https://code.visualstudio.com/docs/editor/settings-sync)
+
+#### IntelliJ IDEA
+
 If you have [JetBrains Account](https://account.jetbrains.com/login) with license activated,
-the no-brainer would be to link the settings to your account, since no additional configuration is required.
+the no-brainer would be to link the settings to your account and use IDE Settings Sync plugin,
+since no additional configuration is required.
 
 > Check out [JetBrains Docs](https://www.jetbrains.com/help/idea/sharing-your-ide-settings.html)
->for more info about sharing IDE settings.
+> for more info about sharing IDE settings.
 
 ## Ubuntu
 
@@ -367,6 +416,7 @@ Install Ubuntu packages and proceed with setup of the WSL2 environment.
 #### Common dependencies
 
 Now we can install common dependencies and packages to setup our environment:
+
 ```bash
 sudo apt update && grep -vE '^#' ~/pub/pkglist_apt.txt | xargs sudo apt install -y
 ```
@@ -388,12 +438,14 @@ Execute the alias `sshd_up` to run SSH server.
 ### Git
 
 Configure Git:
+
 ```bash
 git config --global push.default current
 git config --global core.pager /usr/bin/less
 ```
 
 Set username and email:
+
 ```bash
 git config --global user.email "{{EMAIL}}"
 git config --global user.name "{{USERNAME}}"
@@ -404,12 +456,14 @@ git config --global user.name "{{USERNAME}}"
 In order to manage your git repositories via SSH you should generate a new key on your new machine.
 
 Generate a new SSH key:
+
 ```bash
 ssh-keygen -t rsa -b 4096 -C "$(lsb_release -cs):$(date -I)" -f ~/.ssh/id_rsa_serv-user
 ```
 
 Once generated you can force the key files to be kept permanently in your `~/.ssh/config` file.
 To set the key specific to one host, you can do the following in config:
+
 ```
 Host gitlab
 	User git
@@ -421,26 +475,30 @@ Host gitlab
 #### GitHub / GitLab
 
 Copy the public key to the clipboard:
+
 ```bash
 xclip -sel c < ~/.ssh/id_rsa_gl-user.pub
 ```
 
 Add the generated pubic SSH keys to your profile:
-- [Add your key to __GitHub__](https://github.com/settings/ssh/new)
-- [Add your key to __GitLab__](https://gitlab.com/-/profile/keys)
-> For title you can pick a name of the key, such as `WSL2 (gl-au.pub): 2022-05-12`
+
+- [Add your key to **GitHub**](https://github.com/settings/ssh/new)
+- [Add your key to **GitLab**](https://gitlab.com/-/profile/keys)
+  > For title you can pick a name of the key, such as `${hostname.exe}-WSL2 (gl-au.pub): 2023-03-03`
 
 ### GPG keys
 
 If you have GPG secret keys for signing commits or password manager, restore them.
 
 On old system, create a backup of a GPG key:
+
 ```bash
 gpg --list-secret-keys
 gpg --export-secret-keys {{KEY_ID}} > /tmp/private.key
 ```
 
 On new system, import the key:
+
 ```bash
 gpg --import /tmp/private.key
 ```
@@ -449,7 +507,8 @@ Delete the `/tmp/private.key` on both side and install password manager you pref
 
 > You can check permissions for gnupg with `gpg --card-status`
 
-If you have __"Permission Denied"__ problem then you can type:
+If you have **"Permission Denied"** problem then you can type:
+
 ```bash
 mkdir -pv ~/.config/gnupg
 find $GNUPGHOME -type d -exec sudo chown $USER:$USER {} \; -exec chmod 700 {} \;
@@ -462,6 +521,7 @@ Allow starting services like Docker with a systemd "bottle",
 [arkane-systems/genie](https://github.com/arkane-systems/genie).
 
 Set up Microsoft repository (Genie depends on .NET)
+
 ```bash
 curl -sL -o /tmp/packages-microsoft-prod.deb "https://packages.microsoft.com/config/ubuntu/$(lsb_release -rs)/packages-microsoft-prod.deb"
 sudo dpkg -i /tmp/packages-microsoft-prod.deb
@@ -469,11 +529,13 @@ rm -f /tmp/packages-microsoft-prod.deb
 ```
 
 Set up Arkane-Systems GPG key:
+
 ```bash
 sudo curl -sL -o /usr/share/keyrings/wsl-transdebian.gpg https://arkane-systems.github.io/wsl-transdebian/apt/wsl-transdebian.gpg
 ```
 
 Add its repository to the sources.list:
+
 ```bash
 echo \
   "deb [arch=amd64 signed-by=/usr/share/keyrings/wsl-transdebian.gpg] \
@@ -481,12 +543,14 @@ echo \
   | sudo tee /etc/apt/sources.list.d/wsl-transdebian.list > /dev/null
 ```
 
-[Install __Genie__](https://github.com/arkane-systems/genie#debian):
+[Install **Genie**](https://github.com/arkane-systems/genie#debian):
+
 ```bash
 sudo apt update && sudo apt install -y systemd-genie
 ```
 
 Copy the custom config to the system one:
+
 ```bash
 sudo cp -f ~/pub/etc/genie.ini /etc/genie.ini
 ```
@@ -494,28 +558,31 @@ sudo cp -f ~/pub/etc/genie.ini /etc/genie.ini
 <details>
   <summary>Disable unwanted <code>systemd</code> services</summary>
 
-  Services without `#` are supposed to be disabled, the ones with `#` are for complete masking:
-  ```bash
-  grep -vE '^#' ~/pub/systemd_disabled.txt | xargs sudo systemctl disable
-  sed -En 's/#([a-z0-9\.-])/\1/p' pub/systemd_disabled.txt | xargs sudo systemctl mask
-  ```
-</details>
+Services without `#` are supposed to be disabled, the ones with `#` are for complete masking:
 
+```bash
+grep -vE '^#' ~/pub/systemd_disabled.txt | xargs sudo systemctl disable
+sed -En 's/#([a-z0-9\.-])/\1/p' pub/systemd_disabled.txt | xargs sudo systemctl mask
+```
+
+</details>
 
 ### Docker
 
 First, download a repository key into individual file in a directory dedicated for them.
 
-> On __Ubuntu__ the standard convention is `/usr/share/keyrings`
->but any directory works (aside from `/etc/apt/trusted.gpg` which is the system keystore)
+> On **Ubuntu** the standard convention is `/usr/share/keyrings`
+> but any directory works (aside from `/etc/apt/trusted.gpg` which is the system keystore)
 
 For the key provided in ascii-armor, like Docker's is, you'll need to dearmor the key to create a binary version, e.g.:
+
 ```bash
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
 ```
 
 Then update your source file to refer to the Docker's key.
 E.g., in `/etc/apt/sources.list.d/` have a file named `docker.list` with the contents:
+
 ```bash
 echo \
   "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] \
@@ -524,28 +591,31 @@ echo \
 ```
 
 > This ensure that only files downloaded from official Docker repository can be signed by the that gpg key.
->Having the key in the system keystore allows any package in any repository to be signed by the docker key.
->Should that key ever compromised, it could be used to sign *anything*, coming from *anywhere*, like a hacked version of your kernel.
+> Having the key in the system keystore allows any package in any repository to be signed by the docker key.
+> Should that key ever compromised, it could be used to sign _anything_, coming from _anywhere_, like a hacked version of your kernel.
 
 <details>
   <summary><b>Optional step</b>. For further security, create a <i>preferences</i> file.</summary>
 
-  E.g. in `/etc/apt/preferences.d/` have a file named `docker` with the command:
-  ```
-  sudo tee /etc/apt/preferences.d/docker <<EOF
-  Package: *
-  Pin: origin "download.docker.com"
-  Pin-Priority: 100
-  EOF
-  ```
+E.g. in `/etc/apt/preferences.d/` have a file named `docker` with the command:
 
-  > Setting the `Pin-Priority` to a value less than other repositories, which are 500 by default,
-  >prevents packages in the Docker repository from overriding packages with the same name from default repositories.
-  >This way you don't get the standard system package (e.g. new version of openssl) from Docker repository unless you specifically request it.
+```
+sudo tee /etc/apt/preferences.d/docker <<EOF
+Package: *
+Pin: origin "download.docker.com"
+Pin-Priority: 100
+EOF
+```
+
+> Setting the `Pin-Priority` to a value less than other repositories, which are 500 by default,
+> prevents packages in the Docker repository from overriding packages with the same name from default repositories.
+> This way you don't get the standard system package (e.g. new version of openssl) from Docker repository unless you specifically request it.
+
 </details>
 
 Update the `apt` package index, install the latest version of Docker Engine
 and containerd and add user to `docker` group:
+
 ```bash
 sudo apt update && sudo apt install -y docker-ce docker-ce-cli containerd.io
 sudo usermod -aG docker $USER
@@ -563,6 +633,7 @@ sudo curl -sL -o /usr/local/bin/docker-compose \
 ```
 
 Make `docker-compose` executable:
+
 ```bash
 sudo chmod +x /usr/local/bin/docker-compose
 ```
@@ -571,13 +642,15 @@ sudo chmod +x /usr/local/bin/docker-compose
 
 [Volta](https://github.com/volta-cli/volta) is a fast and reliable JavaScript tool manager.
 
-[Install __Volta__](https://docs.volta.sh/advanced/installers#skipping-volta-setup) while skipping `volta setup`:
+[Install **Volta**](https://docs.volta.sh/advanced/installers#skipping-volta-setup) while skipping `volta setup`:
+
 ```bash
 mkdir -p $VOLTA_HOME
 curl https://get.volta.sh | bash -s -- --skip-setup
 ```
 
 Install package managers and `ng-cli`:
+
 ```bash
 volta install node npm @angular/cli
 ```
@@ -588,34 +661,40 @@ volta install node npm @angular/cli
 parallel versions of multiple Software Development Kits for the JVM such as Java,
 Gradle, Maven, Spring Boot and others.
 
-[Install __SDKman__](https://sdkman.io/install) without modifying shell config:
+[Install **SDKman**](https://sdkman.io/install) without modifying shell config:
+
 ```bash
 curl -sSL "https://get.sdkman.io?rcupdate=false" | bash
 ```
 
 To initialize SDKMAN module scripts open a new terminal.
 Otherwise, run the following in the existing one:
+
 ```bash
 source $SDKMAN_DIR/bin/sdkman-init.sh
 ```
 
 Install AdoptOpenJDK 11:
+
 ```bash
 sdk install java 11.0.11.hs-adpt
 ```
 
 ## TODO
 
-- [x] Upgrade the [Windows Tweaks part](#tweaks) with refined integration scripts for Windows 11.
-- [ ] Explain how to use git repository to [sync IDE settings](#intellij-idea).
+- [x] Upgrade the [Windows Tweaks part](#tweaks) with refined integration scripts for Windows 11
+- [x] Migration from IntelliJ IDEA to VSCode
+- [ ] Decouple `relocate_user_shell_folders.sh` from gist dependencies whose links are regularly updated
 
 ## Resources
 
 ### Examples
+
 - https://github.com/daniellwdb/dotfiles
 - https://github.com/Alex-D/dotfiles
 
 ### Useful links and docs
+
 - https://github.com/microsoft/wslg
 - https://github.com/arkane-systems/genie/wiki
 - https://github.com/abergs/ubuntuonwindows
