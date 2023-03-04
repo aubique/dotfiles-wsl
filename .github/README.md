@@ -20,9 +20,9 @@
 
 This repository contains my personal dotfiles used to set up a new development environment on Windows using
 [WSL2](https://docs.microsoft.com/en-us/windows/wsl/compare-versions) with Ubuntu. The focus of the setup is on two main tools:
-[Visual Studio Code](https://code.visualstudio.com/docs) and IntelliJ IDEA[IntelliJ IDEA](https://www.jetbrains.com/idea/features),
+[Visual Studio Code](https://code.visualstudio.com/docs) and [IntelliJ IDEA](https://www.jetbrains.com/idea/features),
 which are my preferred development environments for programming tasks. Additionally, for other tasks,
-I use Windows Terminal[Windows Terminal](https://docs.microsoft.com/en-us/windows/terminal).
+I use [Windows Terminal](https://docs.microsoft.com/en-us/windows/terminal).
 
 ## Windows 11
 
@@ -40,7 +40,7 @@ irm script.sophi.app -useb | iex
 Set execution policy, get into the module directory, download our custom script preset and launch it:
 
 ```powershell
-Set-ExecutionPolicy Bypass -Scope Process -Force; Set-Location -Path ((New-Object -ComObject Shell.Application).Namespace('shell:Downloads').Self.Path + '\Sophi*'); (New-Object System.Net.WebClient).DownloadString('https://gist.githubusercontent.com/aubique/871ad87ef7a801d17942ca3974cd9909/raw/ce6a839cc6463fb239996c8a3de1ec74c424b1f3/Sophie.ps1') | Out-File .\Sophie.ps1; .\Sophie.ps1
+# Set-ExecutionPolicy Bypass -Scope Process -Force; Set-Location -Path ((New-Object -ComObject Shell.Application).Namespace('shell:Downloads').Self.Path + '\Sophi*'); (New-Object System.Net.WebClient).DownloadString('https://gist.githubusercontent.com/aubique/871ad87ef7a801d17942ca3974cd9909/raw/170d0bf1c5d2fc8187df622c63c9025928d0baa5/Sophie.ps1') | Out-File .\Sophie.ps1; .\Sophie.ps1
 ```
 
 Script will set up environment, customize appearance, remove telemetry and UWPApp bloatware.
@@ -396,7 +396,7 @@ To synchronize IDE settings between different machines you can use 2 ways:
 #### VS Code
 
 You can use the built-in feature called **Settings Sync** that allows you to synchronize your Visual Studio Code settings across
-different devices using your GitHub or Microsoft account. 
+different devices using your GitHub or Microsoft account.
 
 > More info in [VSCode Docs](https://code.visualstudio.com/docs/editor/settings-sync)
 
