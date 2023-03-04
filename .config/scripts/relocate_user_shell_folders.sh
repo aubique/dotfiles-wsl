@@ -81,8 +81,8 @@ set_params() {
 
 	# Global vars
 	export LOCAL_PS1_PATH="/tmp/powershell-gist.ps1"
-	export GIST_UPDATE_PATH="https://gist.githubusercontent.com/aubique/871ad87ef7a801d17942ca3974cd9909/raw/170d0bf1c5d2fc8187df622c63c9025928d0baa5/update-win11-path.ps1"
-	export GIST_MOVE_USER_DIRS="https://gist.githubusercontent.com/aubique/871ad87ef7a801d17942ca3974cd9909/raw/170d0bf1c5d2fc8187df622c63c9025928d0baa5/mv-win11-user-dirs.ps1"
+	export GIST_UPDATE_PATH="https://gist.githubusercontent.com/aubique/871ad87ef7a801d17942ca3974cd9909/raw/0deebdbb7a015399b2408cd790357ab4afce6248/update-win11-path.ps1"
+	export GIST_MOVE_USER_DIRS="https://gist.githubusercontent.com/aubique/871ad87ef7a801d17942ca3974cd9909/raw/0deebdbb7a015399b2408cd790357ab4afce6248/mv-win11-user-dirs.ps1"
 	# Directories to link on $HOME
 	export HOME_DIRS=($WINUSER_DIR $DEVELOPMENT_DIR $RECORD_DIR $DESKTOP_DIR $DOWNLOADS_DIR $DOCUMENTS_DIR $MUSIC_DIR $PICTURES_DIR $VIDEOS_DIR)
 	export MISC_DIRS=($USRBIN_DIR $USRLOCALBIN_DIR $USRLIB_DIR $USRSHAREDOC_DIR $TMP_DIR $OPT_DIR $REC_DIR $SCR_DIR)
