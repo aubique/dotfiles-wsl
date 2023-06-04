@@ -272,89 +272,80 @@ To do that, you can paste the content of profiles.
 <details>
   <summary><b><code>settings.json</code></b></summary>
 
-```
-{
-    "$schema": "https://aka.ms/terminal-profiles-schema",
-    "launchMode": "maximized",
-    "defaultProfile": "{2c4de342-38b7-51cf-b940-2309a097f518}",
-    "profiles":
-    {
-        "defaults":
-        {
-            "closeOnExit": "graceful",
-            "cursorColor": "#FFFFFF",
-            "cursorShape": "filledBox",
-            "font":
-            {
-                "face": "Cascadia Code",
-                "size": 12
-            },
-            "hidden": false,
-            "snapOnInput": true
-        },
-        "list":
-        [
-            {
-                "colorScheme": "Campbell Powershell",
-                "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
-                "name": "PowerShell",
-                "startingDirectory": null
-            },
-            {
-                "colorScheme": "Raspberry",
-                "guid": "{2c4de342-38b7-51cf-b940-2309a097f518}",
-                "hidden": false,
-                "name": "Ubuntu WSL \u25a4",
-                "source": "Windows.Terminal.Wsl"
-            },
-            {
-                "commandline": "wsl genie -c ~/.config/scripts/genie-tmux.sh",
-                "font":
-                {
-                    "face": "Lucida Console"
-                },
-                "guid": "{2862b68e-b019-4846-bbdd-5f10c363cb1a}",
-                "icon": "https://assets.ubuntu.com/v1/49a1a858-favicon-32x32.png",
-                "name": "Ubuntu WSL \ud83d\udccc",
-                "suppressApplicationTitle": true,
-                "useAcrylic": true
-            },
-            {
-                "commandline": "%SystemRoot%\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
-                "elevate": true,
-                "guid": "{a266a539-53e6-4b70-abf9-dfd2f76a2b97}",
-                "hidden": true,
-                "icon": "ms-appx:///Images/Square44x44Logo.targetsize-32.png",
-                "name": "PowerShell \u26a1",
-                "padding": "0, 0, 0, 0",
-                "suppressApplicationTitle": true
-            }
-        ]
+```json
+  "defaultProfile": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
+  "launchMode": "maximized",
+  "profiles": {
+    "defaults": {
+      "closeOnExit": "graceful",
+      "cursorColor": "#FFFFFF",
+      "cursorShape": "filledBox",
+      "font": {
+        "face": "Cascadia Code",
+        "size": 12
+      },
+      "hidden": false,
+      "snapOnInput": true
     },
-    "schemes":
-    [
-        {
-            "name" : "Raspberry",
-            "background" : "#3C0315",
-            "black" : "#282A2E",
-            "blue" : "#0170C5",
-            "brightBlack" : "#676E7A",
-            "brightBlue" : "#80c8ff",
-            "brightCyan" : "#8ABEB7",
-            "brightGreen" : "#B5D680",
-            "brightPurple" : "#AC79BB",
-            "brightRed" : "#BD6D85",
-            "brightWhite" : "#FFFFFD",
-            "brightYellow" : "#FFFD76",
-            "cyan" : "#3F8D83",
-            "foreground" : "#FFFFFD",
-            "green" : "#76AB23",
-            "purple" : "#7D498F",
-            "red" : "#BD0940",
-            "white" : "#FFFFFD",
-            "yellow" : "#E0DE48"
-        }
-    ],
+    "list": [
+      {
+        "colorScheme": "Campbell Powershell",
+        "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
+        "name": "PowerShell",
+        "startingDirectory": null
+      },
+      {
+        "colorScheme": "Ubuntu-ColorScheme",
+        "guid": "{2c4de342-38b7-51cf-b940-2309a097f518}",
+        "name": "Ubuntu WSL \u25a4",
+        "source": "CanonicalGroupLimited.Ubuntu_79rhkp1fndgsc"
+      },
+      {
+        "commandline": "wsl genie -c ~/.config/scripts/genie-tmux.sh",
+        "font": {
+          "face": "Lucida Console"
+        },
+        "guid": "{2862b68e-b019-4846-bbdd-5f10c363cb1a}",
+        "icon": "https://assets.ubuntu.com/v1/49a1a858-favicon-32x32.png",
+        "name": "Ubuntu WSL \ud83d\udccc",
+        "suppressApplicationTitle": true,
+        "useAcrylic": true
+      },
+      {
+        "commandline": "%SystemRoot%\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+        "guid": "{a266a539-53e6-4b70-abf9-dfd2f76a2b97}",
+        "hidden": true,
+        "icon": "ms-appx:///Images/Square44x44Logo.targetsize-32.png",
+        "name": "PowerShell \u26a1",
+        "padding": "0, 0, 0, 0",
+        "suppressApplicationTitle": true
+      }
+    ]
+  },
+  "schemes": [
+    {
+      "background": "#0C0C0C",
+      "black": "#0C0C0C",
+      "blue": "#0037DA",
+      "brightBlack": "#767676",
+      "brightBlue": "#3B78FF",
+      "brightCyan": "#61D6D6",
+      "brightGreen": "#16C60C",
+      "brightPurple": "#B4009E",
+      "brightRed": "#E74856",
+      "brightWhite": "#F2F2F2",
+      "brightYellow": "#F9F1A5",
+      "cursorColor": "#FFFFFF",
+      "cyan": "#3A96DD",
+      "foreground": "#CCCCCC",
+      "green": "#13A10E",
+      "name": "Campbell",
+      "purple": "#881798",
+      "red": "#C50F1F",
+      "selectionBackground": "#FFFFFF",
+      "white": "#CCCCCC",
+      "yellow": "#C19C00"
+    },
 ```
 
 </details>
