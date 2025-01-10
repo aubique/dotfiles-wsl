@@ -32,7 +32,7 @@ let's download the [Sophia Script](https://github.com/farag2/Sophia-Script-for-W
 Download and expand the latest Powershell module of the script:
 
 ```powershell
-irm script.sophi.app -useb | iex
+iwr script.sophia.team -useb | iex
 ```
 
 > Command below are meant to be executed in Administrator mode.
@@ -40,7 +40,7 @@ irm script.sophi.app -useb | iex
 Set execution policy, get into the module directory, download our custom script preset and launch it:
 
 ```powershell
-# Set-ExecutionPolicy Bypass -Scope Process -Force; Set-Location -Path ((New-Object -ComObject Shell.Application).Namespace('shell:Downloads').Self.Path + '\Sophi*'); (New-Object System.Net.WebClient).DownloadString('https://gist.githubusercontent.com/aubique/871ad87ef7a801d17942ca3974cd9909/raw/0deebdbb7a015399b2408cd790357ab4afce6248/Sophie.ps1') | Out-File .\Sophie.ps1; .\Sophie.ps1
+Set-ExecutionPolicy Bypass -Scope Process -Force; Set-Location -Path ((New-Object -ComObject Shell.Application).Namespace('shell:Downloads').Self.Path + '\Sophi*'); (New-Object System.Net.WebClient).DownloadString('https://gist.githubusercontent.com/aubique/871ad87ef7a801d17942ca3974cd9909/raw/e7d2d14297f6b098972dae0213f0072716b6a186/Sophie.ps1') | Out-File .\Sophie.ps1; .\Sophie.ps1
 ```
 
 Script will set up environment, customize appearance, remove telemetry and UWPApp bloatware.
@@ -51,40 +51,6 @@ After you've completed running script functions, restart the PC and proceed with
 wsl --install -d Ubuntu
 ```
 
-<details>
-  <summary>Install WSL2 manually</summary>
-
-Enable **WSL** and **VirtualMachinePlatform** features in Powershell console:
-
-```powershell
-dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
-dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
-```
-
-Reboot your PC. Download and install the
-[Linux kernel update package](https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi):
-
-Install the update via Powershell:
-
-```powershell
-$wslUpdateInstallerUrl = "https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi"
-$downloadFolderPath = (New-Object -ComObject Shell.Application).NameSpace('shell:Downloads').Self.Path
-$wslUpdateInstallerFilePath = "$downloadFolderPath/wsl_update_x64.msi"
-$wc = New-Object System.Net.WebClient
-$wc.DownloadFile($wslUpdateInstallerUrl, $wslUpdateInstallerFilePath)
-Start-Process -Filepath "$wslUpdateInstallerFilePath"
-```
-
-Set WSL default version to **2**
-
-```powershell
-wsl --set-default-version 2
-```
-
-- [Install Ubuntu from **Microsoft Store**](https://www.microsoft.com/fr-fr/p/ubuntu/9nblggh4msv6)
-- [Install Ubuntu from **Chocolatey**](https://community.chocolatey.org/packages/wsl-ubuntu-2004)
-</details>
-
 ### Dotfiles
 
 As soon as Ubuntu distribution is installed you can download the dotfiles.
@@ -92,8 +58,8 @@ To avoid conflict with the existing files you can clone it the temporary folder.
 Then copy with `rsync` your dotfiles to $HOME directory.
 
 ```bash
-git clone --separate-git-dir=$HOME/.dotfiles https://github.com/aubique/dotfiles-wsl.git tempfiles
-rsync -vah --exclude '.git' tempfiles/ $HOME/
+git clone --separate-git-dir=$HOME/.dotfiles https://github.com/aubique/dotfiles-wsl.git tempfiles &&
+rsync -vah --exclude '.git' tempfiles/ $HOME/ &&
 sudo rsync -vah $HOME/pub/etc/ /etc/
 ```
 
@@ -101,8 +67,8 @@ Once we're done with synchronizing our config files,
 we delete temporary folder, update configs, sub-modules and aliases.
 
 ```bash
-for s in source "/etc/profile" "$HOME/.profile"; do source $s; done
-dotfiles config status.showUntrackedFiles no
+for s in source "/etc/profile" "$HOME/.profile"; do source $s; done &&
+dotfiles config status.showUntrackedFiles no &&
 rm -r tempfiles
 ```
 
@@ -202,12 +168,14 @@ Remove-Item HKCR:\Directory\shell\AddToPlaylistVLC\ -Recurse
 Remove-Item HKCR:\Directory\shell\PlayWithVLC\ -Recurse
 ```
 
+> Should be ran in Admin mode
+
 </details>
 
 <details>
   <summary>Hide <b>7-Zip</b> cascaded context menu.</summary>
 
-With `regedit.exe` you can find `HKEY_CLASSES_ROOT\CLSID{23170F69-40C1-278A-1000-000100020000}`
+With `regedit.exe` you can find `HKEY_CLASSES_ROOT\CLSID\{23170F69-40C1-278A-1000-000100020000}`
 that's linked to the 7-Zip DLL file. All 7-Zip context menu options are defined in this DLL file,
 they're invoked every time Windows needs to show the menu and thus not static.
 
@@ -215,43 +183,6 @@ You can disable these options with 7-Zip GUI (as Admin) via menu
 **Tools -- Options -- 7-Zip -- Integrate 7-Zip to shell context menu**
 
 </details>
-
-<details>
-  <summary>Bypass Windows requirements check in <b>Ventoy</b></summary>
-
-Ventoy is a good solution for installing Windows 11 on incompatible devices.
-That said we have to explicitly set in JSON config the parameter `VTOY_WIN11_BYPASS_CHECK`,
-that creates certain Registry keys to bypass RAM, TMP, Secure Boot, CPU and Storage checks on the machine.
-
-Run this in WSL2 to add the configuration JSON file to the `ventoy` subfolder installed with Chocolatey:
-
-```bash
-powershell.exe "choco list -lo" | grep ventoy && \
-cp -fT ~/pub/etc/ventoy.json "$(readlink -e /mnt/c/Users/*/AppData/Local/ventoy/ventoy)/ventoy.json"
-```
-
-</details>
-
-<details>
-  <summary>Personalize <b>Start</b> menu</summary>
-
-Turn Off **Show recently opened items in Start, Jump Lists, and File Explorer"** for Current User:
-
-```ps1
-Set-ItemProperty -path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -name "Start_TrackDocs" -value "0"
-```
-
-Disable **Recently added** Apps List on the Start Menu for the User:
-
-```ps1
-Set-ItemProperty -path "HKCU:\Software\Policies\Microsoft\Windows\Explorer" -name "HideRecentlyAddedApps" -value "1"
-```
-
-Otherwise, you set it up in Settings **<Win-I> -> Personalization -> Start**
-
-  </details>
-
-> For Windows 10 you can use another [Powershell debloater](https://github.com/Sycnex/Windows10Debloater) from GitHub.
 
 ### Windows Terminal
 
@@ -354,9 +285,6 @@ The WSL environment we're about to setup has an environment variable -
 `${WIN_TERM}` that stores in `.bashrc` a path to the Windows Terminal `settings.json`.
 Follow the steps above to get Ubuntu and dotfiles installed.
 
-> WSL2 startup `genie-tmux.sh` script uses **Genie** systemd and **Tmux** multiplexer,
-> mostly described in the [Genie installation step](#systemd).
-
 Check out [docs.microsoft.com](https://docs.microsoft.com/en-us/windows/terminal/customize-settings/profile-appearance)
 to figure out the profile settings in Windows Terminal.
 
@@ -449,18 +377,19 @@ In order to manage your git repositories via SSH you should generate a new key o
 Generate a new SSH key:
 
 ```bash
-ssh-keygen -t rsa -b 4096 -C "$(lsb_release -cs):$(date -I)" -f ~/.ssh/id_rsa_serv-user
+ssh-keygen -t ed25519 -C "$(hostname | sed 's/^DESKTOP-//; s/.*/\L&/'):$(date -I)" -f ~/.ssh/id_ed25519_serv-user
 ```
 
 Once generated you can force the key files to be kept permanently in your `~/.ssh/config` file.
 To set the key specific to one host, you can do the following in config:
 
 ```
-Host gitlab
+Host gl-user
 	User git
-	HostName gitlab.com
+	HostName altssh.gitlab.com
+	Port 443
 	PreferredAuthentications publickey
-	IdentityFile ~/.ssh/id_rsa_gl-user
+	IdentityFile ~/.ssh/id_ed25519_gl-user
 ```
 
 #### GitHub / GitLab
@@ -468,13 +397,13 @@ Host gitlab
 Copy the public key to the clipboard:
 
 ```bash
-xclip -sel c < ~/.ssh/id_rsa_gl-user.pub
+xclip -sel c < ~/.ssh/id_ed25519_gl-user.pub
 ```
 
 Add the generated pubic SSH keys to your profile:
 
 - [Add your key to **GitHub**](https://github.com/settings/ssh/new)
-- [Add your key to **GitLab**](https://gitlab.com/-/profile/keys)
+- [Add your key to **GitLab**](https://gitlab.com/-/user_settings/ssh_keys)
   > For title you can pick a name of the key, such as `${hostname.exe}-WSL2 (gl-au.pub): 2023-03-03`
 
 ### GPG keys
@@ -506,127 +435,85 @@ find $GNUPGHOME -type d -exec sudo chown $USER:$USER {} \; -exec chmod 700 {} \;
 find $GNUPGHOME -type f -exec sudo chown $USER:$USER {} \; -exec chmod 600 {} \;
 ```
 
-### Systemd
-
-Allow starting services like Docker with a systemd "bottle",
-[arkane-systems/genie](https://github.com/arkane-systems/genie).
-
-Set up Microsoft repository (Genie depends on .NET)
-
-```bash
-curl -sL -o /tmp/packages-microsoft-prod.deb "https://packages.microsoft.com/config/ubuntu/$(lsb_release -rs)/packages-microsoft-prod.deb"
-sudo dpkg -i /tmp/packages-microsoft-prod.deb
-rm -f /tmp/packages-microsoft-prod.deb
-```
-
-Set up Arkane-Systems GPG key:
-
-```bash
-sudo curl -sL -o /usr/share/keyrings/wsl-transdebian.gpg https://arkane-systems.github.io/wsl-transdebian/apt/wsl-transdebian.gpg
-```
-
-Add its repository to the sources.list:
-
-```bash
-echo \
-  "deb [arch=amd64 signed-by=/usr/share/keyrings/wsl-transdebian.gpg] \
-  https://arkane-systems.github.io/wsl-transdebian/apt/  $(lsb_release -cs) main" \
-  | sudo tee /etc/apt/sources.list.d/wsl-transdebian.list > /dev/null
-```
-
-[Install **Genie**](https://github.com/arkane-systems/genie#debian):
-
-```bash
-sudo apt update && sudo apt install -y systemd-genie
-```
-
-Copy the custom config to the system one:
-
-```bash
-sudo cp -f ~/pub/etc/genie.ini /etc/genie.ini
-```
-
-<details>
-  <summary>Disable unwanted <code>systemd</code> services</summary>
-
-Services without `#` are supposed to be disabled, the ones with `#` are for complete masking:
-
-```bash
-grep -vE '^#' ~/pub/systemd_disabled.txt | xargs sudo systemctl disable
-sed -En 's/#([a-z0-9\.-])/\1/p' pub/systemd_disabled.txt | xargs sudo systemctl mask
-```
-
-</details>
-
 ### Docker
 
-First, download a repository key into individual file in a directory dedicated for them.
+#### 1. Remove Conflicting Packages
 
-> On **Ubuntu** the standard convention is `/usr/share/keyrings`
-> but any directory works (aside from `/etc/apt/trusted.gpg` which is the system keystore)
-
-For the key provided in ascii-armor, like Docker's is, you'll need to dearmor the key to create a binary version, e.g.:
+Before installing Docker, remove any conflicting Docker-related packages to avoid issues:
 
 ```bash
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+sudo apt-get remove docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc
 ```
 
-Then update your source file to refer to the Docker's key.
-E.g., in `/etc/apt/sources.list.d/` have a file named `docker.list` with the contents:
+#### 2. Add Docker's GPG Key and Repository
+
+##### Install Prerequisites
+
+Update your system and install the necessary tools for managing repositories:
+```bash
+sudo apt-get update
+sudo apt-get install -y ca-certificates curl
+```
+
+##### Add Docker's GPG Key
+
+Create the keyring directory (if not already present) and download Docker's GPG key:
+```bash
+sudo install -m 0755 -d /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo tee /etc/apt/keyrings/docker.asc > /dev/null
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+```
+
+##### Add Docker’s Repository
+
+Finally, configure the Docker `apt` repository:
+```bash
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] \
+https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | \
+sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+```
+
+#### 3. Install Docker Engine
+
+Update your package index and install Docker Engine along with its essential components:
+```bash
+sudo apt-get update
+sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+```
+
+#### 4. Run Docker as a Non-Root User
+
+> By default, Docker requires `sudo`. To use Docker without `sudo`, follow this step.
+
+Create the docker group (if not already present) and add your user to it:
 
 ```bash
-echo \
-  "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] \
-  https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" \
-  | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-```
-
-> This ensure that only files downloaded from official Docker repository can be signed by the that gpg key.
-> Having the key in the system keystore allows any package in any repository to be signed by the docker key.
-> Should that key ever compromised, it could be used to sign _anything_, coming from _anywhere_, like a hacked version of your kernel.
-
-<details>
-  <summary><b>Optional step</b>. For further security, create a <i>preferences</i> file.</summary>
-
-E.g. in `/etc/apt/preferences.d/` have a file named `docker` with the command:
-
-```
-sudo tee /etc/apt/preferences.d/docker <<EOF
-Package: *
-Pin: origin "download.docker.com"
-Pin-Priority: 100
-EOF
-```
-
-> Setting the `Pin-Priority` to a value less than other repositories, which are 500 by default,
-> prevents packages in the Docker repository from overriding packages with the same name from default repositories.
-> This way you don't get the standard system package (e.g. new version of openssl) from Docker repository unless you specifically request it.
-
-</details>
-
-Update the `apt` package index, install the latest version of Docker Engine
-and containerd and add user to `docker` group:
-
-```bash
-sudo apt update && sudo apt install -y docker-ce docker-ce-cli containerd.io
+sudo groupadd docker
 sudo usermod -aG docker $USER
 ```
 
-Now you can start Docker daemon via [Systemd](#systemd).
-
-### Docker compose
-
+Close your terminal out, log back in, or run:
 ```bash
-sudo curl -sL -o /usr/local/bin/docker-compose \
-  $(curl -s https://api.github.com/repos/docker/compose/releases/latest \
-  | grep -i "browser_download_url.*$(uname -s)-$(uname -m)" | grep -v sha \
-  | cut -d: -f2,3 | tr -d \")
+newgrp docker
 ```
 
-Make `docker-compose` executable:
+#### 5. Verify Installation
+
+Check if Docker is installed and running correctly:
 
 ```bash
-sudo chmod +x /usr/local/bin/docker-compose
+docker run hello-world
+```
+
+> This command pulls and runs a test container. If successful, a confirmation message will appear.
+
+#### 6. Enable Docker on Startup
+
+Ensure Docker starts automatically on system boot:
+
+```bash
+sudo systemctl enable docker.service
+sudo systemctl enable containerd.service
 ```
 
 ### Volta

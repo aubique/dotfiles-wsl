@@ -21,3 +21,12 @@ office-tool
 microsoft-teams
 greenshot
 ripgrep
+ngrok
+lazygit
+lf
+adb
+wireguard
+zoxide
+screentogif
+fiddler
+brave

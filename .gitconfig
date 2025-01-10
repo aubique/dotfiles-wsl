@@ -1,0 +1,7 @@
+[push]
+	default = current
+[core]
+	pager = /usr/bin/less
+[user]
+	email = aubicque@gmail.com
+	name = aubique

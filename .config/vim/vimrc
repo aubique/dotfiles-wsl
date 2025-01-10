@@ -1,6 +1,6 @@
 set nocompatible
 " Set UTF8-encoding, Line Numbering, Text Width, modelines
-language en_US.UTF-8
+language C.UTF-8
 set encoding=utf-8
 set number
 set modelines=0
@@ -148,6 +148,8 @@ Plugin 'plasticboy/vim-markdown'
 " Color themes
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'morhetz/gruvbox'
+" Misc
+Plugin 'jamessan/vim-gnupg'
 " Finish loading VUNDLE
 call vundle#end()
 
